@@ -1,0 +1,61 @@
+{% extends "store/main.html" %}
+{% load static %}
+
+{% block content %}
+<h2 class="text-center">Rendeléseid</h2>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div id="ordersContainer" class="col-12 col-md-10"></div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10">
+           {% for transaction_id, orders in orders_by_transaction.items %}
+                <h3>Rendelés azonosító: {{ transaction_id }}</h3>
+                <table class="table table-striped table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Kép</th>
+                            <th>Megnevezés</th>
+                            <th>Mennyiség</th>                        
+                            <th>Rendelési dátum</th>
+                            <th>Egységár</th>
+                            <th>Összeg</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                            {% for order_item in order.orderitem_set.all %}
+                            <tr>
+                                <td><img src="{{ order_item.product.image.url }}" alt="{{ order_item.product.name }}"></td>
+                                <td>{{ order_item.product.name }}</td>
+                                <td>{{ order_item.quantity }}</td>
+                                <td>{{ order_item.date_added|date:"Y-m-d H:i:s" }}</td> <!-- Rendelési dátum -->
+                                <td>{{ order_item.product.price }}Ft</td>
+                                <td>{{ order_item.total_price }} Ft</td>
+
+                            </tr>
+                            
+                            
+                            {% endfor %}
+                            <tr>
+                                <td colspan="6" class="text-right">
+                                    <h3>Kosár végösszege: {{ order.get_cart_total }} Ft</h3>
+                                </td>
+                            </tr>
+                    {% endfor %}
+                </tbody>
+                </table>
+            
+            
+
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock content %}

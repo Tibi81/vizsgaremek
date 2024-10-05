@@ -1,0 +1,90 @@
+1. Projekt létrehozása és környezet beállítása
+	Virtuális környezet létrehozása:
+
+	python -m venv venv
+	Aktiváld a virtuális környezetet:
+	Windows: venv\Scripts\activate
+Django telepítése:
+
+	pip install django
+
+	Új Django projekt létrehozása:
+
+	django-admin startproject myshop
+	cd myshop
+2. Alkalmazások létrehozása
+	A Django projekt több alkalmazásra lesz bontva. Például:
+	
+	python manage.py startapp products  # Termékek kezelése
+	python manage.py startapp orders    # Rendelések kezelése
+	python manage.py startapp cart      # Kosár kezelése
+	python manage.py startapp accounts  # Felhasználói fiókok
+3. Adatbázis tervezése
+	Modellek létrehozása: Definiáld azokat a modelleket, amelyek az e-shop adatbázisát alkotják. Néhány fontos modell lehet:
+
+	Product (Termék):
+
+	class Product(models.Model):
+    	name = models.CharField(max_length=255)
+    	description = models.TextField()
+    	price = models.DecimalField(max_digits=10, decimal_places=2)
+    	stock = models.IntegerField()
+    	image = models.ImageField(upload_to='products/')
+	Order (Rendelés):
+
+	class Order(models.Model):
+    	user = models.ForeignKey(User, on_delete=models.CASCADE)
+    	created_at = models.DateTimeField(auto_now_add=True)
+    	status = models.CharField(max_length=50)
+    	total_price = models.DecimalField(max_digits=10, decimal_places=2)
+
+Migrációk létrehozása és futtatása:
+
+
+	python manage.py makemigrations
+	python manage.py migrate
+
+4. Admin felület testreszabása
+	Hozzáadhatod a modelleket a Django admin felülethez, hogy könnyebben kezelhesd a termékeket, rendeléseket stb.
+	
+
+	from django.contrib import admin
+	from .models import Product
+
+	admin.site.register(Product)
+
+5. Termékek kezelése és megjelenítése
+	URL-ek és nézetek létrehozása: Hozz létre nézeteket a terméklisták és részletek megjelenítéséhez:
+
+	
+	
+	from django.shortcuts import render
+	from .models import Product
+
+	def product_list(request):
+    	products = Product.objects.all()
+    	return render(request, 'products/product_list.html', {'products': products})
+
+	Sablonok készítése: Készíts HTML sablonokat a termékek megjelenítéséhez (pl. products/product_list.html).
+
+6. Kosár funkció megvalósítása
+	A kosár egy ideiglenes tároló lesz a vásárló által kiválasztott termékek számára. Használhatod a session-öket vagy adatbázist a kosár kezelésére.
+	Készíts nézetet, amely lehetővé teszi a termékek kosárba helyezését, eltávolítását, és a kosár összegének megjelenítését.
+
+7. Rendelések és fizetési rendszer
+	Rendeléskezelés: Hozz létre nézeteket a rendelés létrehozásához és feldolgozásához.
+	Fizetési integráció: Beépíthetsz harmadik féltől származó fizetési szolgáltatásokat, például PayPal vagy Stripe. Ezt a szolgáltató API-jával tudod megtenni.
+
+8. Felhasználói fiókok és bejelentkezés
+	Hozz létre egy fiókkezelési rendszert, ahol a felhasználók regisztrálhatnak, bejelentkezhetnek és megtekinthetik a rendeléseiket.
+	Használhatod a Django beépített felhasználói modelljét és hitelesítési rendszerét.
+
+9. Tesztelés és hibakezelés
+	Teszteld az alkalmazást, hogy minden funkció megfelelően működik-e, beleértve a kosár, rendelés és fizetési funkciókat.
+	Írj teszteket a kritikus funkciókhoz a Django beépített tesztelési keretrendszerével:
+
+	python manage.py test
+
+10. Telepítés és biztonsági beállítások
+	Készülj fel az alkalmazás telepítésére. Django alkalmazást elérhetővé tehetsz Heroku-n, AWS-en vagy más platformokon.
+	Konfiguráld a biztonságot, beleértve az SSL-t és a biztonságos bejelentkezést.

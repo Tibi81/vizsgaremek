@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <title>Ecom</title>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="#">Ecom</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'store' %}">store <span class="sr-only"></span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'order_list' %}">Rendeléseim</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Termékek
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="{% url 'filtered_products' %}?filter=FÁB">Fából készült</a>
+                  <a class="dropdown-item" href="{% url 'filtered_products' %}?filter=kotott">Kötött-horgolt</a>
+                  <a class="dropdown-item" href="{% url 'filtered_products' %}?filter=pottos">Pöttyös cicák</a>
+                  <a class="dropdown-item" href="{% url 'filtered_products' %}?filter=textil">Textil</a>	          
+              </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#">Disabled</a>
+            </li>
+        </ul>
+
+        <form class="d-flex align-items-center my-2 my-lg-0" method="GET" action="{% url 'search' %}">
+            <input class="form-control mr-2" type="search" name="q" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
+        </form>
+
+        <div class="form-inline my-2 my-lg-0">
+            <div class="user-status" style="display: flex; align-items: center;">
+                {% if user.is_authenticated %}
+                    <form id="logout-form" method="POST" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button class="btn btn-warning">Kijelentkezés</button>
+                    </form>
+                    <p class="user">{{ user.username }}</p>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-warning">Bejelentkezés</a>
+                {% endif %}
+            </div>
+            {% if user.is_authenticated %}
+            <div class="cart-container">
+                <a href="{% url 'cart' %}" id="cart-icon-link">
+                    <img id="cart-icon" src="{% static 'images/cart.png' %}">
+                    <span id="cart-total">{{ cartItems }}</span>
+                </a>
+                <div class="cart-tooltip" id="cart-tooltip" style="display: none;">
+                    {% if items %}
+                        {% for item in items %}
+                            <div class="cart-row">
+                                <div style="flex:2"><img class="row-image" src="{{ item.product.imageURL }}"></div>
+                                <div style="flex:2"><p>{{ item.product.name }}</p></div>
+                                <div style="flex:1"><p>${{ item.product.price|floatformat:2 }}</p></div>
+                                <div style="flex:1"><p>x{{ item.quantity }}</p></div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>A kosár üres.</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <br>
+    {% block content %}
+    {% endblock content %}
+</div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+
+<script type="text/javascript">
+	// Itt adjuk át a Django felhasználói információkat a JavaScript-nek
+	var user = '{% if request.user.is_authenticated %}{{ request.user.username }}{% else %}AnonymousUser{% endif %}';
+	var csrftoken = '{{ csrf_token }}';
+	console.log('USER:', user);  // Ellenőrizd, hogy megfelelően átmegy-e a user változó
+</script>
+
+<script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var cartIconLink = document.getElementById('cart-icon-link');
+        var cartTooltip = document.getElementById('cart-tooltip');
+
+        if (cartIconLink && cartTooltip) {
+            cartIconLink.addEventListener('mouseover', function() {
+                cartTooltip.style.display = 'block';
+            });
+
+            cartIconLink.addEventListener('mouseout', function() {
+                cartTooltip.style.display = 'none';
+            });
+        }
+    });
+</script>
+
+</body>
+</html>
