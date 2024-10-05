@@ -1,0 +1,26 @@
+{% extends 'store/main.html' %}
+
+{% block content %}
+
+
+
+{% if products %}
+<div class="row justify-content-center">
+        {% for product in products %}
+        
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="product-detail">
+                <h3>{{ product.name }}</h3>
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width:100px;height:auto;">
+                <p>Ár: {{ product.price }} Ft</p>
+                <a href="{% url 'store' %}" class="btn btn-outline-secondary">Back to Store</a>
+                <a href="{% url 'product_detail' product.id %}" class="btn btn-outline-success">View</a>  <!-- View gomb -->
+            </div>
+        </div>
+        {% endfor %}
+</div>
+{% else %}
+    <p>Nincs találat.</p>
+{% endif %}
+
+{% endblock content %}

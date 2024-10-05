@@ -1,0 +1,29 @@
+{% extends "store/main.html" %}
+{% load static %}
+{% block content %}
+
+<h1>Szűrt Termékek</h1>
+
+<div class="row">
+    {% for product in products %}
+    <div class="col-lg-4">
+        <img class="thumbnail" src="{{ product.imageURL }}" alt="{{ product.name }}">
+        <div class="box-element product">
+            <h6><strong>{{ product.name }}</strong></h6>
+            <hr>
+            <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+            <a class="btn btn-outline-success" href="{% url 'product_detail' product.id %}">View</a>
+            <h4 style="display: inline-block; float: right;"><strong>{{ product.price }} Ft</strong></h4><br>
+            <p style="display: inline-block;"><strong>{{ product.description }}</strong></p>
+        </div>
+    </div>
+    {% empty %}
+    <div>
+        <h2>Nincsenek szűrt termékek.</h2>
+    </div>
+    {% endfor %}
+</div>
+
+<a href="{% url 'store' %}" class="btn btn-outline-primary">Vissza a termékek listájához</a>
+
+{% endblock content %}
