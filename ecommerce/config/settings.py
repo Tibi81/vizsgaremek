@@ -39,8 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'store.apps.StoreConfig',
     'crispy_forms',
-    'crispy_bootstrap5',  # Ha a Bootstrap 5-öt használod
-    #
+    'crispy_bootstrap5',  # Ha a Bootstrap 5-öt használod    
     'django.contrib.sites',  # Ez szükséges az allauth-hoz
     'allauth',
     'allauth.account',

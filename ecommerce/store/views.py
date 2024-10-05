@@ -81,7 +81,7 @@ def processOrder(request):
             order=order,
             address=data['shipping']['address'],
             city=data['shipping']['city'],
-            state=data['shipping']['state'],
+            street_number=data['shipping']['street_number'],
             zipcode=data['shipping']['zipcode'],
         )
         
@@ -167,17 +167,12 @@ def filtered_products(request):
 
 
 
-
-
 def order_list(request):
     if request.user.is_authenticated:
         customer = request.user.customer
-        
-        # Befejezett rendelések lekérdezése
-        #completed_orders = Order.objects.filter(customer=customer, complete=True).prefetch_related('orderitem_set')
+
         # Befejezett rendelések lekérdezése időrendben csökkenő sorrendben
         completed_orders = Order.objects.filter(customer=customer, complete=True).order_by('-date_order').prefetch_related('orderitem_set')
-
 
         # Kosár adatok lekérdezése a cartData függvényből
         cart_data = cartData(request)
@@ -192,12 +187,12 @@ def order_list(request):
                 orders_by_transaction[transaction_id] = []
             orders_by_transaction[transaction_id].append(order)
 
-          # Összeadás minden rendelési tételhez
+            # Összeadás minden rendelési tételhez
             for order_item in order.orderitem_set.all():
-                order_item.total_price = order_item.product.price * order_item.quantity    
-            
-
-         
+                if order_item.product:  # Ellenőrizd, hogy a product nem None
+                    order_item.total_price = order_item.product.price * order_item.quantity
+                else:
+                    order_item.total_price = 0  # Vagy más logika, ha a product nem található
 
         context = {
             'orders_by_transaction': orders_by_transaction,
@@ -213,6 +208,7 @@ def order_list(request):
         }
 
     return render(request, 'store/order_list.html', context)
+
 
 
 
