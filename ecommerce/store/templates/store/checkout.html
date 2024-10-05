@@ -12,17 +12,19 @@
                     <p>Shipping Information:</p>
                     <hr>
                     <div class="form-field">
-                        <input required class="form-control" type="text" name="address" placeholder="Address..">
+                        <input required class="form-control" type="text" name="zipcode" placeholder="Irányítószám...">
+                    </div>
+                    
+                    <div class="form-field">
+                        <input required class="form-control" type="text" name="city" placeholder="Város...">
                     </div>
                     <div class="form-field">
-                        <input required class="form-control" type="text" name="city" placeholder="City..">
+                        <input required class="form-control" type="text" name="address" placeholder="Utca...">
                     </div>
                     <div class="form-field">
-                        <input required class="form-control" type="text" name="state" placeholder="State..">
+                        <input required class="form-control" type="text" name="street_number" placeholder="Házszám...">
                     </div>
-                    <div class="form-field">
-                        <input required class="form-control" type="text" name="zipcode" placeholder="Zip code..">
-                    </div>
+                   
                     <!-- A country mező eltávolítva -->
                 </div>
 
@@ -71,7 +73,7 @@
         var shippingInfo = {
             'address': form.address.value,
             'city': form.city.value,
-            'state': form.state.value,
+            'street_number': form.street_number.value,
             'zipcode': form.zipcode.value,
         };
 
