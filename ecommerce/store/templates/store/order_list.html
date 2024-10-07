@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-<h2 class="text-center">Rendeléseid</h2>
+<h2 class="text-center">Rendeléseim</h2>
 
 <div class="container">
     <div class="row justify-content-center">
@@ -19,11 +19,11 @@
                         <thead>
                             <tr>
                                 <th>Kép</th>
-                                <th>Megnevezés</th>
+                                <th>Termék</th>
                                 <th>Mennyiség</th>                        
-                                <th>Rendelési dátum</th>
+                                <th>Rendelés ideje</th>
                                 <th>Egységár</th>
-                                <th>Összeg</th>
+                                <th>Összesen</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -48,7 +48,7 @@
                     </table>
                 {% endfor %}
             {% else %}
-                <p>Nincsenek befejezett rendeléseid.</p>
+                <p>Nincsenek leadott rendeléseid.</p>
             {% endif %}
         {% else %}
             <p>{{ message }}</p>
