@@ -39,24 +39,24 @@
         <div class="box-element">
             <a class="btn btn-outline-dark" href="{% url 'cart' %}">&#x2190; Back to Cart</a>
             <hr>
-            <h3>Order Summary</h3>
+            <h3>Rendelés összefoglaló</h3>
             <hr>
             {% for item in items %}
             <div class="cart-row">
                 <div style="flex:2"><img class="row-image" src="{{item.product.imageURL}}"></div>
                 <div style="flex:2"><p>{{item.product.name}}</p></div>
-                <div style="flex:1"><p>${{item.product.price|floatformat:2}}</p></div>
+                <div style="flex:1"><p>Ft{{item.product.price}}</p></div>
                 <div style="flex:1"><p>x{{item.quantity}}</p></div>
             </div>
             {% endfor %}
             <h5>Items:   {{order.get_cart_items}}</h5>
-            <h5>Total:   ${{order.get_cart_total|floatformat:2}}</h5>
+            <h5>Total:   ${{order.get_cart_total}}</h5>
         </div>
     </div>
 </div>
 
 <script type="text/javascript">
-    var total = '{{order.get_cart_total|floatformat:2}}';
+    var total = '{{order.get_cart_total}}';
     var csrftoken = '{{ csrf_token }}'; // CSRF token
     var user = '{{ request.user.username }}'; // Jelenlegi felhasználó neve
 
@@ -91,14 +91,14 @@
         .then((response) => response.json())
         .then((data) => {
             console.log('Success:', data);
-            alert('Order completed');
+            alert('Megrendelés kész!');
 
             // Kosár kiürítése
             cart = {};
             document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/";
 
             // Átirányítás a rendelés véglegesítési oldalra
-            window.location.href = "{% url 'order_list' %}"; // Itt helyettesítsd a saját véglegesítési URL-ed
+            window.location.href = "{% url 'order_list' %}"; 
         });
     }
 </script>
