@@ -202,7 +202,10 @@ td.left-align {
     object-fit: cover;
 }
 
+.product-detail {
+    float: left;
 
+}
 
 
 
