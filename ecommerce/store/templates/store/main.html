@@ -9,13 +9,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
-    <title>EcomBecom</title>
+    <title>Saka-Fa Bt Webshopja</title>
 </head>
 
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="#">Ecom</a>
+    <a class="navbar-brand" href="#">Saka-Fa Bt</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -23,14 +23,14 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="{% url 'store' %}">store <span class="sr-only"></span></a>
+                <a class="nav-link" href="{% url 'store' %}">Főoldal <span class="sr-only"></span></a>
             </li>
             <li class="nav-item active">
                 <a class="nav-link" href="{% url 'order_list' %}">Rendeléseim</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Termékek
+                  Kategóriák
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <a class="dropdown-item" href="{% url 'filtered_products' %}?filter=FÁB">Fából készült</a>
@@ -39,12 +39,12 @@
                   <a class="dropdown-item" href="{% url 'filtered_products' %}?filter=textil">Textil</a>	          
               </li>
             <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
+                <a class="nav-link disabled" href="#">Fogyatékos</a>
             </li>
         </ul>
 
         <form class="d-flex align-items-center my-2 my-lg-0" method="GET" action="{% url 'search' %}">
-            <input class="form-control mr-2" type="search" name="q" placeholder="Search" aria-label="Search">
+            <input class="form-control mr-2" type="search" name="q" placeholder="Keresés" aria-label="Search">
             <button class="btn btn-outline-success" type="submit"><i class="bi bi-search" ></i></button>
         </form>
 
@@ -72,7 +72,7 @@
                             <div class="cart-row">
                                 <div style="flex:2"><img class="row-image" src="{{ item.product.imageURL }}"></div>
                                 <div style="flex:2"><p>{{ item.product.name }}</p></div>
-                                <div style="flex:1"><p>${{ item.product.price|floatformat:2 }}</p></div>
+                                <div style="flex:1"><p>{{ item.product.price}}Ft</p></div>
                                 <div style="flex:1"><p>x{{ item.quantity }}</p></div>
                             </div>
                         {% endfor %}
