@@ -8,10 +8,10 @@
         <div class="product-detail">
             <h1>{{ product.name }}</h1>
             <img src="{{ product.imageURL }}" alt="{{ product.name }}">
-            <h4>Price: ${{ product.price }}</h4>
+            <h4>Ár: {{ product.price }}Ft</h4>
             <h8 style="display: inline-block"; float: right><strong>{{product.description}}</strong></h8><br>
-            <a href="{% url 'store' %}" class="btn btn-outline-secondary">Back to Store</a>
-            <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+            <a href="{% url 'store' %}" class="btn btn-outline-secondary">Vissza az üzletbe</a>
+            <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Kosárba</button>
         </div>
     </div>
 </div>   

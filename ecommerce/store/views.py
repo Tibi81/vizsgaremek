@@ -15,18 +15,40 @@ from rest_framework import status
 
 from .forms import CustomUserCreationForm
 
+'''
+def cartData(request):
+    customer = request.user.customer
+    orders = Order.objects.filter(customer=customer, complete=False)
+    if orders.exists():
+        order = orders.first()
+        items = order.orderitem_set.all()
+        cartItems = order.get_cart_items
+    else:
+        items = []
+        cartItems = 0
+        order = {'get_cart_total': 0, 'get_cart_items': 0}  # Üres kosár
+    
+    return {'cartItems': cartItems, 'order': order, 'items': items}
+
+'''
 
 def cartData(request):
     if request.user.is_authenticated:
         customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        items = order.orderitem_set.all()
-        cartItems = order.get_cart_items
-
+        orders = Order.objects.filter(customer=customer, complete=False)
+        if orders.exists():
+            order = orders.first()
+            items = order.orderitem_set.all()
+            cartItems = order.get_cart_items
+        else:
+            items = []
+            cartItems = 0
+            order = {'get_cart_total': 0, 'get_cart_items': 0}  # Üres kosár
     else:
-        cartItems = 0
         items = []
-        order = {'get_cart_total': 0, 'get_cart_items': 0}  # Üres kosár nem bejelentkezett felhasználóknál
+        cartItems = 0
+        order = {'get_cart_total': 0, 'get_cart_items': 0}  # Üres kosár
+
     return {'cartItems': cartItems, 'order': order, 'items': items}
 
 
@@ -48,6 +70,7 @@ class ProductList(APIView):
 from django.contrib.auth.views import LoginView
 from .models import Order
 
+
 class CustomLoginView(LoginView):
     template_name = 'store/login.html'
 
@@ -59,8 +82,13 @@ class CustomLoginView(LoginView):
             customer = getattr(self.request.user, 'customer', None)
             # Csak bejelentkezett felhasználók esetén kérdezzük le a kosár tartalmát
             if customer:
-                order, created = Order.objects.get_or_create(customer=customer, complete=False)
-                cartItems = order.get_cart_items
+                orders = Order.objects.filter(customer=customer, complete=False)
+                if orders.exists():
+                    order = orders.first()
+                    cartItems = order.get_cart_items
+                else:
+                    # Ha nincs létező kosár, ne hozzunk létre újat
+                    order = None
 
         context['cartItems'] = cartItems
         return context
@@ -70,7 +98,7 @@ def processOrder(request):
     data = json.loads(request.body)
 
     if request.user.is_authenticated:
-        customer = request.user.customer
+        customer, created = Customer.objects.get_or_create(user=request.user)
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         order.complete = True
         order.transaction_id = transaction_id
@@ -85,10 +113,14 @@ def processOrder(request):
             zipcode=data['shipping']['zipcode'],
         )
         
-        return JsonResponse('Order processed successfully', safe=False)
+        return JsonResponse('A rendelés feldolgozása sikeresen megtörtént', safe=False)
+    
+    
     else:
         return JsonResponse({'message': 'A rendelés feldolgozásához be kell jelentkezni!'}, status=401)
-    
+
+
+
 def updateItem(request):
     if not request.user.is_authenticated:
         return JsonResponse({'message': 'A rendeléshez be kell jelentkeznie!'}, status=401)
@@ -178,6 +210,8 @@ def order_list(request):
         cart_data = cartData(request)
         cart_items_count = cart_data['cartItems']
         cart_items = cart_data['items']
+        order = cart_data['order']
+        products = Product.objects.all()
 
         # Rendelések csoportosítása transaction_id alapján
         orders_by_transaction = {}
@@ -196,15 +230,22 @@ def order_list(request):
 
         context = {
             'orders_by_transaction': orders_by_transaction,
+            
             'cartItems': cart_items_count,
             'cart_items': cart_items,  # Az aktuális kosár tételei a kontextusban
+            'order': order,
+            'products': products,
+            'items': cart_items
+
         }
     else:
         # Csak bejelentkezett felhasználóknak üzenet
         context = {
             'message': 'Csak bejelentkezett felhasználóknak!',
-            'cartItems': 0,
+            'cartItems': 0,             
             'cart_items': []  # Üres kosár nem bejelentkezett felhasználóknál
+            
+
         }
 
     return render(request, 'store/order_list.html', context)
