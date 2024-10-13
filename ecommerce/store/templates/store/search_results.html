@@ -13,14 +13,14 @@
                 <h3>{{ product.name }}</h3>
                 <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width:100px;height:auto;">
                 <p>Ár: {{ product.price }} Ft</p>
-                <a href="{% url 'store' %}" class="btn btn-outline-secondary">Back to Store</a>
-                <a href="{% url 'product_detail' product.id %}" class="btn btn-outline-success">View</a>  <!-- View gomb -->
+                <a href="{% url 'store' %}" class="btn btn-outline-secondary">Vissza az üzletbe</a>
+                <a href="{% url 'product_detail' product.id %}" class="btn btn-outline-success">Megtekintés</a>  <!-- View gomb -->
             </div>
         </div>
         {% endfor %}
 </div>
 {% else %}
-    <p>Nincs találat.</p>
+    <p>Nincs találat</p>
 {% endif %}
 
 {% endblock content %}
