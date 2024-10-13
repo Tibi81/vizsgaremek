@@ -8,6 +8,9 @@ class Customer(models.Model):
     user = models.OneToOneField(User, null=True, blank=True, on_delete=models.CASCADE)
     name = models.CharField(max_length=200, null=True)
     email = models.EmailField(max_length=200)
+    class Meta:
+        verbose_name = "Vásárló"
+        verbose_name_plural = "Vásárlók"
 
     def __str__(self):
         return self.name if self.name else "névtelen ügyfél"  # Vagy bármilyen más alapértelmezett string
@@ -28,6 +31,10 @@ class Product(models.Model):
     description = models.TextField(blank=True)  # Új mező a leíráshoz
     category = models.CharField(max_length=10, choices=CATEGORY_CHOICES, default='option1')  # Legördülő menü mező
 
+    class Meta:
+        verbose_name = "Termék"
+        verbose_name_plural = "Termékek"
+
     def __str__(self):
         return self.name
     
@@ -41,10 +48,14 @@ class Product(models.Model):
 
     
 class Order(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True)
-    date_order = models.DateTimeField(auto_now_add=True)
-    complete = models.BooleanField(default=False)
-    transaction_id = models.CharField(max_length=100, null=True)
+    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Vásárló")
+    date_order = models.DateTimeField(auto_now_add=True, verbose_name="Rendelés dátuma")
+    complete = models.BooleanField(default=False, verbose_name="Befejezett")
+    transaction_id = models.CharField(max_length=100, null=True, verbose_name="Tranzakció azonosító")
+
+    class Meta:
+        verbose_name = "Rendelés"
+        verbose_name_plural = "Rendelések"
 
     def __str__(self):
         return str(self.id)
@@ -68,6 +79,15 @@ class Order(models.Model):
         for item in order_items:
             summary.append(f"{item.product.name} (x{item.quantity})")  # Termék név és mennyiség
         return ", ".join(summary)  # Összesített szöveg
+    
+    def get_item_names(self):
+        return ", ".join([f"{item.product.name}" for item in self.orderitem_set.all()])
+
+    def get_item_quantities(self):
+        return ", ".join([f"{item.quantity}" for item in self.orderitem_set.all()])
+
+    def get_item_prices(self):
+        return ", ".join([f"{item.product.price} Ft" for item in self.orderitem_set.all()])
         
 
 class OrderItem(models.Model):
@@ -75,6 +95,10 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
     quantity = models.IntegerField(default=0, null=True, blank=True)
     date_added = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Rendelési tétel"
+        verbose_name_plural = "Rendelési tételek"
 
     @property
     def get_total(self):
@@ -90,6 +114,10 @@ class ShippingAddress(models.Model):
     street_number = models.CharField(max_length=200, null=False)
     zipcode = models.CharField(max_length=200, null=False)
     date_added = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Szállítási cím"
+        verbose_name_plural = "Szállítási címek"
     
 
     def __str__(self):
