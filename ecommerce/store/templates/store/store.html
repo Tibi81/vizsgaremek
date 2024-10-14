@@ -1,5 +1,6 @@
 {% extends "store/main.html" %}
 {% load static %}
+{% load markdown_extras %}
 {% block content %}
 
     <div class="row">
@@ -12,7 +13,8 @@
                 <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Kosárba</button>
                 <a class="btn btn-outline-success" href="{% url 'product_detail' product.id %}">Megtekintés</a>
                 <h4 style="display: inline-block"; float: right><strong>{{product.price}}Ft</strong></h4><br>
-                <h8 style="display: inline-block"; float: right><strong>{{product.description}}</strong></h8>
+                <p style="display: inline-block; float: right;"><strong>{{ product.description| markdown | safe }}</strong></p>
+                
             </div>
         </div>
         {% endfor %}
