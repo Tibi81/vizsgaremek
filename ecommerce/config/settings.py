@@ -25,7 +25,10 @@ SECRET_KEY = 'django-insecure-8-@4nbaug_i^e-=eze2io=0-xlj=_3g2&)+b2)=t)6zf2gsw9i
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+#ALLOWED_HOSTS = []  EZ az alap az alsó csak teszthez kell!!!!!!!!!!!!!!
+
+ALLOWED_HOSTS = ['e6c2-37-220-207-85.ngrok-free.app', 'localhost', '127.0.0.1']
+
 
 
 # Application definition
