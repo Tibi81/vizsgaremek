@@ -215,6 +215,37 @@ td.left-align {
     margin-bottom: 20px;
     border-radius: 10px;
 }
+.footer {
+    background-color: #007bff; /* Sötétszürke háttér */
+    color: #ffffff; /* Fehér szöveg */
+    padding: 40px 0; /* Függőleges tér */
+}
+
+.footer a {
+    color: #ffffff; /* Fehér linkek */
+    text-decoration: none; /* Linkek aláhúzás nélkül */
+}
+
+.footer a:hover {
+    color: #d3d3d3; /* Halványabb szín linkek lebegéskor */
+}
+
+.footer h5 {
+    margin-bottom: 20px; /* Címek és tartalom közötti távolság */
+}
+
+.footer p, .footer ul {
+    margin-bottom: 10px; /* P és UL elemek közötti tér */
+}
+
+.footer ul {
+    padding-left: 0; /* Listaelemek bal oldali margó nélkül */
+}
+
+.footer ul li {
+    list-style: none; /* Listaelem pontok eltüntetése */
+}
+
 
 
 
