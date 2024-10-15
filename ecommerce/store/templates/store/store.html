@@ -8,13 +8,13 @@
         <div class=" col-lg-4">
             <img class="thumbnail" src="{{product.imageURL}}">
             <div class="box-element product">
-                <h6><strong>{{product.name}}</strong></h6>
-                <hr>
+                
                 <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Kosárba</button>
                 <a class="btn btn-outline-success" href="{% url 'product_detail' product.id %}">Megtekintés</a>
-                <h4 style="display: inline-block"; float: right><strong>{{product.price}}Ft</strong></h4><br>
-                <p style="display: inline-block; float: right;"><strong>{{ product.description| markdown | safe }}</strong></p>
-                
+                <h4 style="display: inline-block"; float: right><strong>{{product.price|floatformat:0}}Ft</strong></h4><br><br>
+                <!--<p style="display: inline-block; float: right;"><strong>{{ product.description| markdown | safe }}</strong></p>-->
+                <h6><strong>{{product.name}}</strong></h6>
+                <hr>
             </div>
         </div>
         {% endfor %}

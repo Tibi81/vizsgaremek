@@ -203,31 +203,17 @@ td.left-align {
 }
 
 .product-detail {
-    float: left;
-
-}
-
-.product-detail h1, .product-detail .description {
-    width: 800px; /* Kétszer nagyobb méret */
-    height: 800px; /* Kétszer nagyobb méret */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #ddd; /* Határ a keret körül */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Árnyék */
-    margin: 10px; /* Távolság a keretek között */
-    padding: 10px; /* Belső térköz */
-    background-color: #fff; /* Fehér háttér */
-    border-radius: 4px; /* Lekerekített sarkok */
-    text-align: center; /* Középre igazítás */
+    padding: 20px;
 }
 
 .product-detail h1 {
-    font-size: 2em; /* Nagyobb betűméret a névhez */
+    font-size: 2em;
+    margin-bottom: 20px;
 }
 
-.product-detail .description {
-    font-size: 1.2em; /* Nagyobb betűméret a leíráshoz */
+.product-detail img {
+    margin-bottom: 20px;
+    border-radius: 10px;
 }
 
 

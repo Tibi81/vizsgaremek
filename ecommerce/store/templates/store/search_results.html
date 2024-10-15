@@ -1,20 +1,22 @@
 {% extends 'store/main.html' %}
-
+{% load static %}
+{% load markdown_extras %}
 {% block content %}
 
 
 
 {% if products %}
-<div class="row justify-content-center">
+<div class="row ">
         {% for product in products %}
         
         <div class="col-12 col-md-6 col-lg-4">
             <div class="product-detail">
-                <h3>{{ product.name }}</h3>
+                
                 <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width:100px;height:auto;">
-                <p>Ár: {{ product.price }} Ft</p>
+                <p>Ár: {{ product.price|floatformat:0 }} Ft</p>
                 <a href="{% url 'store' %}" class="btn btn-outline-secondary">Vissza az üzletbe</a>
                 <a href="{% url 'product_detail' product.id %}" class="btn btn-outline-success">Megtekintés</a>  <!-- View gomb -->
+                <h3>{{ product.name }}</h3><hr>
             </div>
         </div>
         {% endfor %}
