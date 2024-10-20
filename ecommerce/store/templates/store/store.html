@@ -3,29 +3,24 @@
 {% load markdown_extras %}
 {% block content %}
 
-    <div class="row">
-        {% for product in products %}
-        <div class=" col-lg-4">
-            <img class="thumbnail" src="{{product.imageURL}}">
-            <div class="box-element product">
-                
-                <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Kosárba</button>
-                <a class="btn btn-outline-success" href="{% url 'product_detail' product.id %}">Megtekintés</a>
-                <h4 style="display: inline-block"; float: right><strong>{{product.price|floatformat:0}}Ft</strong></h4><br><br>
-                <!--<p style="display: inline-block; float: right;"><strong>{{ product.description| markdown | safe }}</strong></p>-->
-                <h6><strong>{{product.name}}</strong></h6>
-                <hr>
+
+<div class="row">
+    {% for product in products %}
+    <div class="col-12 col-md-6 col-lg-4">
+        <div class="card">
+            <img class="card_img" src="{{ product.imageURL }}">
+            <div class="card-body">
+                <div>                    
+                    <h6 class="truncated"><strong>{{ product.name|markdown|safe }}</strong></h6>
+                    <strong>{{ product.description|markdown|safe }}</strong>
+                    <h4><strong>{{ product.price|floatformat:0 }} Ft</strong></h4>
+                    <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Kosárba</button>
+                    <a class="btn btn-outline-success" href="{% url 'product_detail' product.id %}">Megtekintés</a>
+                </div>
             </div>
         </div>
-        {% endfor %}
     </div>
+    {% endfor %}
+</div>
+
 {% endblock content %}
-
-
-
-
-
-
-
-
-
