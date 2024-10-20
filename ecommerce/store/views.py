@@ -321,3 +321,12 @@ def search(request):
     }
 
     return render(request, 'store/search_results.html', context)
+
+def index(request):
+    cart_data = cartData(request)  # Kosár adatok lekérdezése a cartData függvényből
+    cartItems = cart_data['cartItems']
+    items = cart_data['items']
+
+    products = Product.objects.all()
+    context = {'products': products, 'cartItems': cartItems, 'items': items}
+    return render(request, 'store/index.html', context)
