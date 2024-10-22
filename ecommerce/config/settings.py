@@ -27,7 +27,7 @@ DEBUG = True
 
 #ALLOWED_HOSTS = []  EZ az alap az alsó csak teszthez kell!!!!!!!!!!!!!!
 
-ALLOWED_HOSTS = ['e6c2-37-220-207-85.ngrok-free.app', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['37d1-37-220-207-85.ngrok-free.app', 'localhost', '127.0.0.1']
 
 
 
