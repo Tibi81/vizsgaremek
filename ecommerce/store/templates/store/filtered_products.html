@@ -8,15 +8,17 @@
 
 <div class="row">
     {% for product in products %}
-    <div class="col-lg-4">
-        <img class="thumbnail" src="{{ product.imageURL }}" alt="{{ product.name }}" style="width:100%; height:auto;">
-        <div class="box-element product">
-            <h6><strong>{{ product.name }}</strong></h6>
-            <hr>
-            <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Kosárba</button>
-            <a href="{% url 'product_detail' product.id %}" class="btn btn-outline-success">Megtekintés</a> <!-- View gomb -->
-            <h4 style="display: inline-block; float: right;"><strong>{{ product.price|floatformat:0 }} Ft</strong></h4><br>
-            <p style="display: inline-block;"><strong>{{ product.description|markdown|safe }}</strong></p>
+    <div class="col-12 col-md-6 col-lg-4">
+        <div class="filter-card">
+            <img class="thumbnail" src="{{ product.imageURL }}" alt="{{ product.name }}">
+            <div class="box-element product">
+                <h6><strong>{{ product.name }}</strong></h6>
+                <hr>
+                <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Kosárba</button>
+                <a href="{% url 'product_detail' product.id %}" class="btn btn-outline-success">Megtekintés</a> <!-- View gomb -->
+                <h4 style="display: inline-block; float: right;"><strong>{{ product.price|floatformat:0 }} Ft</strong></h4><br>
+                
+            </div>
         </div>
     </div>
     {% endfor %}
