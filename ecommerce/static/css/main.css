@@ -353,11 +353,6 @@ h6 {
     border-radius: 8px 0 0 8px; /* Bal oldalon lekerekítés (felül, alul), jobb oldalon nem */
 }
 
-.row-image{
-	max-width: 40px;
-  
-}
-
 .form-field{
 	width:250px;
 	display: inline-block;
@@ -471,6 +466,7 @@ td.left-align {
 
 .row-image {
     width: 50px;
+    max-width: 50px;
     height: 50px;
     object-fit: cover;
 }
@@ -719,4 +715,72 @@ td.left-align {
 }
 
 /* filtered-products.html -- filtered-products.html -- filtered-products.html -- filtered-products.html -- filtered-products.html -- filtered-products.html*/
+.left-column {
+    background-color: #bbb;
+    padding: 20px;
+    margin-top: 30px;
+    border-radius: 5px;
+    height: 500px;   
 
+}
+
+.custom-list li {
+    cursor: pointer;
+    padding: 5px 10px;
+    transition: color 0.3s, text-decoration 0.3s;
+}
+
+.custom-list li:hover {
+    color: #3b3939;
+    text-decoration: underline;
+}
+
+.custom-list li.selected {
+    text-decoration: underline;
+    
+    
+}
+
+
+
+
+
+    
+/* Jobb oldali oszlop: termékek */
+.right-column {
+    padding-left: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.pagination a {
+    margin: 0 5px;
+    padding: 10px 15px;
+    border: 1px solid #007bff;
+    color: #007bff;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.pagination a:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.pagination .current {
+    margin: 0 5px;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: white;
+    background-color: #007bff;
+}

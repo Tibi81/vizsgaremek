@@ -14,30 +14,136 @@
 
 <div class="container">
     <div class="row">
-        {% for product in products %}
-        <div class="col-12 col-md-6 col-lg-4 mb-4"> <!-- mb-4 added for margin-bottom -->
-            <div class="filter-card">            
-                <div class="filter-card-img">
-                    <a href="{% url 'product_detail' product.id %}">
-                        <img class="thumbnail" src="{{ product.imageURL }}" alt="{{ product.name }}">                </a>
-                </div>            
-                <div class="filter-card-description-trigger">Leírás</div> <!-- Hover trigger -->            
-                <div class="filter-card-description">
-                    <h6><strong>{{ product.name }}</strong></h6>
-                    <p>{{ product.description|markdown|safe }}</p>
-                </div>
-                <div class="box-element">
-                    <h6 class="product-name"><strong>{{ product.name }}</strong></h6>
-                    <hr>
-                    <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart"><i class="fas fa-shopping-cart"></i></button>
-                    <h4 style="display: inline-block; float: right;">
-                        <strong>{{ product.price|floatformat:0 }} Ft</strong>
-                    </h4><br>
-                </div>
+        <div class="left-column col-12 col-md-3">
+            <div class="store-container">
+                <form method="get" action=".">
+                    <div class="sidebar-menu">
+                        <h3>Termék kategóriák</h3>
+                        <hr>
+                        <ul class="custom-list">
+                            <li onclick="toggleCategory(this, 'option1');" class="{% if 'option1' in selected_categories %}selected{% endif %}">
+                                Fából készült
+                            </li>
+                            <li onclick="toggleCategory(this, 'option2');" class="{% if 'option2' in selected_categories %}selected{% endif %}">
+                                Kötött-horgolt
+                            </li>
+                            <li onclick="toggleCategory(this, 'option3');" class="{% if 'option3' in selected_categories %}selected{% endif %}">
+                                Pöttyös cicák
+                            </li>
+                            <li onclick="toggleCategory(this, 'option4');" class="{% if 'option4' in selected_categories %}selected{% endif %}">
+                                Textil
+                            </li>
+                        </ul>    
+                    </div>
+                    <div class="sidebar-menu">
+                        <h3>Termékek rendezése</h3>
+                        <hr>
+                        <ul class="custom-list">
+                            <li onclick="sortBy(this, 'name', 'asc');" class="{% if sort_by == 'name' and order == 'asc' %}selected{% endif %}">
+                                ABC szerint (A-Z)
+                            </li>
+                            <li onclick="sortBy(this, 'name', 'desc');" class="{% if sort_by == 'name' and order == 'desc' %}selected{% endif %}">
+                                ABC szerint (Z-A)
+                            </li>
+                            <li onclick="sortBy(this, 'price', 'asc');" class="{% if sort_by == 'price' and order == 'asc' %}selected{% endif %}">
+                                Ár szerint (növekvő)
+                            </li>
+                            <li onclick="sortBy(this, 'price', 'desc');" class="{% if sort_by == 'price' and order == 'desc' %}selected{% endif %}">
+                                Ár szerint (csökkenő)
+                            </li>
+                        </ul>
+                        
+                    </div>
+                    <input type="hidden" name="order" id="order" value="{{ order }}">
+
+                    <script>
+                        function toggleCategory(element, category) {
+                            element.classList.toggle('selected');
+                            let url = new URL(window.location.href);
+                            let params = new URLSearchParams(url.search);
+                            let categories = params.getAll('filter_category');
+                    
+                            if (categories.includes(category)) {
+                                categories = categories.filter(cat => cat !== category);
+                            } else {
+                                categories.push(category);
+                            }
+                    
+                            params.delete('filter_category');
+                            categories.forEach(cat => params.append('filter_category', cat));
+                    
+                            url.search = params.toString();
+                            window.location.href = url;
+                        }
+                    
+                        function sortBy(element, sort_by, order) {
+                            let url = new URL(window.location.href);
+                            let params = new URLSearchParams(url.search);
+                    
+                            params.set('sort_by', sort_by);
+                            params.set('order', order);
+                    
+                            url.search = params.toString();
+                            window.location.href = url;
+                        }
+                    </script>
+
+                    <a href="{% url 'reset_filters' %}" class="btn btn-outline-secondary btn-checkbox">Szűrők törlése</a>
+
+                </form>
             </div>
         </div>
-        {% endfor %}
+
+        <div class="right-column col-12 col-md-9">
+            <div class="row">
+                {% for product in products %}
+                <div class="col-12 col-md-6 col-lg-4 mb-4">
+                    <div class="filter-card">
+                        <div class="filter-card-img">
+                            <a href="{% url 'product_detail' product.id %}">
+                                <img class="thumbnail" src="{{ product.imageURL }}" alt="{{ product.name }}">
+                            </a>
+                        </div>
+                        <div class="filter-card-description-trigger">Leírás</div>
+                        <div class="filter-card-description">
+                            <h6><strong>{{ product.name }}</strong></h6>
+                            <p>{{ product.description|markdown|safe }}</p>
+                        </div>
+                        <div class="box-element">
+                            <h6 class="product-name"><strong>{{ product.name }}</strong></h6>
+                            <hr>
+                            <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart"><i class="fas fa-shopping-cart"></i></button>
+                            <h4 style="display: inline-block; float: right;">
+                                <strong>{{ product.price|floatformat:0 }} Ft</strong>
+                            </h4><br>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
     </div>
 </div>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if products.has_previous %}
+            <a href="?page=1&sort_by={{ sort_by }}&order={{ order }}&{% for cat in selected_categories %}filter_category={{ cat }}&{% endfor %}">&laquo; Első</a>
+            <a href="?page={{ products.previous_page_number }}&sort_by={{ sort_by }}&order={{ order }}&{% for cat in selected_categories %}filter_category={{ cat }}&{% endfor %}">Előző</a>
+        {% endif %}
+        {% for num in products.paginator.page_range %}
+            {% if products.number == num %}
+                <span class="current">{{ num }} oldal</span>
+            {% else %}
+                <a href="?page={{ num }}&sort_by={{ sort_by }}&order={{ order }}&{% for cat in selected_categories %}filter_category={{ cat }}&{% endfor %}">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+        {% if products.has_next %}
+            <a href="?page={{ products.next_page_number }}&sort_by={{ sort_by }}&order={{ order }}&{% for cat in selected_categories %}filter_category={{ cat }}&{% endfor %}">Következő</a>
+            <a href="?page={{ products.paginator.num_pages }}&sort_by={{ sort_by }}&order={{ order }}&{% for cat in selected_categories %}filter_category={{ cat }}&{% endfor %}">Utolsó &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
 
 {% endblock content %}
