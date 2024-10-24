@@ -15,22 +15,6 @@ from rest_framework import status
 
 from .forms import CustomUserCreationForm
 
-'''
-def cartData(request):
-    customer = request.user.customer
-    orders = Order.objects.filter(customer=customer, complete=False)
-    if orders.exists():
-        order = orders.first()
-        items = order.orderitem_set.all()
-        cartItems = order.get_cart_items
-    else:
-        items = []
-        cartItems = 0
-        order = {'get_cart_total': 0, 'get_cart_items': 0}  # Üres kosár
-    
-    return {'cartItems': cartItems, 'order': order, 'items': items}
-
-'''
 
 def cartData(request):
     if request.user.is_authenticated:
@@ -155,6 +139,9 @@ def checkout(request):
     context = {'items': data['items'], 'order': data['order'], 'cartItems': data['cartItems']}
     return render(request, 'store/checkout.html', context)
 
+
+
+
 def filtered_products(request):
     filter_option = request.GET.get('filter')
     print(f"Filter option: {filter_option}")  # Debug üzenet
@@ -255,11 +242,6 @@ def order_list(request):
     return render(request, 'store/order_list.html', context)
 
 
-
-
-
-
-
 def product_detail(request, product_id):
     product = get_object_or_404(Product, id=product_id)
 
@@ -298,16 +280,46 @@ def register(request):
     context = {'form': form, 'cartItems': cartItems}
     return render(request, 'store/register.html', context)
 
+from django.core.paginator import Paginator
+
+from django.core.paginator import Paginator
 
 def store(request):
-    cart_data = cartData(request)  # Kosár adatok lekérdezése a cartData függvényből
+    cart_data = cartData(request)  # Kosár adatok lekérdezése
     cartItems = cart_data['cartItems']
     items = cart_data['items']
 
+    sort_by = request.GET.get('sort_by', 'name')  # Alapértelmezett rendezés név szerint
+    order = request.GET.get('order', 'asc')  # Alapértelmezett sorrend növekvő
+    filter_categories = request.GET.getlist('filter_category', [])  # Több kategória támogatása
+
     products = Product.objects.all()
-    context = {'products': products, 'cartItems': cartItems, 'items': items}
+
+    if filter_categories:
+        products = products.filter(category__in=filter_categories)
+
+    if sort_by and order:
+        if order == 'asc':
+            products = products.order_by(sort_by)
+        else:
+            products = products.order_by(f'-{sort_by}')
+
+    paginator = Paginator(products, 10)  # 10 termék oldalanként
+    page_number = request.GET.get('page')
+    products_page = paginator.get_page(page_number)
+
+    context = {
+        'products': products_page,
+        'cartItems': cartItems,
+        'items': items,
+        'selected_categories': filter_categories,
+        'sort_by': sort_by,
+        'order': order,
+    }
     return render(request, 'store/store.html', context)
 
+def reset_filters(request):
+    return redirect('store')
 
 def search(request):
     query = request.GET.get('q')

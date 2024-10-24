@@ -3,62 +3,107 @@
 {% load markdown_extras %}
 {% block content %}
 
-  
-
 <div class="title-banner">
     <div class="title-text-section">
+        {% if filter_option %}
+            <h2>{{ display_name }} termékek</h2>
+        {% else %}
+            <h2>Termékek</h2>
+        {% endif %}
         
-            {% if filter_option %}
-              <h2>{{ display_name }} termékek</h2>
-            {% else %}
-              
-            {% endif %}
-            
-        
-          {% if message %}
+        {% if message %}
             <p>{{ message }}</p>
-          {% endif %}  
+        {% endif %}
     </div>
-
     <div class="image-section">
         <img src="{% static 'images/hamvas.png' %}" style="width:100%">
     </div>
-
 </div>
 
-{% if products %}
-
-
-<div class="row">
-    {% for product in products %}
-    <div class="col-12 col-md-6 col-lg-4">
-        <div class="filter-card">            
-            <div class="filter-card-img">
-                <a href="{% url 'product_detail' product.id %}">
-                    <img class="thumbnail" src="{{ product.imageURL }}" alt="{{ product.name }}">                </a>
-            </div>            
-            <div class="filter-card-description-trigger">Leírás</div> <!-- Hover trigger -->            
-            <div class="filter-card-description">
-                <h6><strong>{{ product.name }}</strong></h6>
-                <p>{{ product.description|markdown|safe }}</p>
-            </div>
-            <div class="box-element">
-                <h6 class="product-name"><strong>{{ product.name }}</strong></h6>
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-3">
+            <div class="sidebar-menu">
+                <h3>Termékek rendezése</h3>
                 <hr>
-                <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart"><i class="fas fa-shopping-cart"></i></button>
-                <h4 style="display: inline-block; float: right;">
-                    <strong>{{ product.price|floatformat:0 }} Ft</strong>
-                </h4><br>
+                <ul class="custom-list">
+                    <li id="sort-abc-asc" onclick="sortProducts('name', 'asc')">ABC szerint (A-Z)</li>
+                    <li id="sort-abc-desc" onclick="sortProducts('name', 'desc')">ABC szerint (Z-A)</li>
+                    <li id="sort-price-asc" onclick="sortProducts('price', 'asc')">Ár szerint (növekvő)</li>
+                    <li id="sort-price-desc" onclick="sortProducts('price', 'desc')">Ár szerint (csökkenő)</li>
+                </ul>
+            </div> 
+        </div>
+
+        <div class="col-12 col-md-9">
+            <div class="row" id="product-list">
+                {% if products %}
+                    {% for product in products %}
+                        <div class="col-12 col-md-6 col-lg-4 mb-4 product-card" data-name="{{ product.name }}" data-price="{{ product.price }}">
+                            <div class="filter-card">
+                                <div class="filter-card-img">
+                                    <a href="{% url 'product_detail' product.id %}">
+                                        <img class="thumbnail" src="{{ product.imageURL }}" alt="{{ product.name }}">
+                                    </a>
+                                </div>
+                                <div class="filter-card-description-trigger">Leírás</div>
+                                <div class="filter-card-description">
+                                    <h6><strong>{{ product.name }}</strong></h6>
+                                    <p>{{ product.description|markdown|safe }}</p>
+                                </div>
+                                <div class="box-element">
+                                    <h6 class="product-name"><strong>{{ product.name }}</strong></h6>
+                                    <hr>
+                                    <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </button>
+                                    <h4 style="display: inline-block; float: right;">
+                                        <strong>{{ product.price|floatformat:0 }} Ft</strong>
+                                    </h4><br>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>Nincs találat</p>
+                {% endif %}
             </div>
         </div>
     </div>
-    
-    {% endfor %}
 </div>
+<script>
+    function sortProducts(property, order) {
+        const productList = document.getElementById('product-list');
+        const products = Array.from(productList.getElementsByClassName('product-card'));
+    
+        products.sort((a, b) => {
+            const aValue = property === 'name' ? a.dataset.name.toLowerCase() : parseFloat(a.dataset.price);
+            const bValue = property === 'name' ? b.dataset.name.toLowerCase() : parseFloat(b.dataset.price);
+    
+            return order === 'asc' ? (aValue < bValue ? -1 : 1) : (aValue > bValue ? -1 : 1);
+        });
+    
+        productList.innerHTML = '';
+        products.forEach(product => productList.appendChild(product));
+    
+        resetSortStyles();
+        const activeSortId = `sort-${property}-${order}`;
+        const activeItem = document.getElementById(activeSortId);
+        
+        // Aláhúzás beállítása
+        
+        activeItem.classList.add('selected');
+    }
+    
+    function resetSortStyles() {
+        const sortItems = document.querySelectorAll('.custom-list li');
+        sortItems.forEach(item => {
+            
+            item.classList.remove('selected');
+        });
+    }
+    
 
-
-{% else %}
-<p>Nincs találat</p>
-{% endif %}
+</script>
 
 {% endblock content %}
