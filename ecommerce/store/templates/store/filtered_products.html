@@ -3,24 +3,52 @@
 {% load markdown_extras %}
 {% block content %}
 
+  
+
+<div class="title-banner">
+    <div class="title-text-section">
+        
+            {% if filter_option %}
+              <h2>{{ display_name }} termékek</h2>
+            {% else %}
+              
+            {% endif %}
+            
+        
+          {% if message %}
+            <p>{{ message }}</p>
+          {% endif %}  
+    </div>
+
+    <div class="image-section">
+        <img src="{% static 'images/hamvas.png' %}" style="width:100%">
+    </div>
+
+</div>
+
 {% if products %}
-<h1>Termékek</h1>
+
 
 <div class="row">
     {% for product in products %}
     <div class="col-12 col-md-6 col-lg-4">
         <div class="filter-card">
-            <img class="thumbnail" src="{{ product.imageURL }}" alt="{{ product.name }}">
-            <div class="box-element product">
+            <div class="filter-card-img">
+                <a href="{% url 'product_detail' product.id %}">
+                    <img class="thumbnail" src="{{ product.imageURL }}" alt="{{ product.name }}">
+                </a>
+            </div>
+            <div class="box-element">
                 <h6><strong>{{ product.name }}</strong></h6>
                 <hr>
-                <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Kosárba</button>
-                <a href="{% url 'product_detail' product.id %}" class="btn btn-outline-success">Megtekintés</a> <!-- View gomb -->
-                <h4 style="display: inline-block; float: right;"><strong>{{ product.price|floatformat:0 }} Ft</strong></h4><br>
-                
+                <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart"><i class="fas fa-shopping-cart"></i></button>
+                <h4 style="display: inline-block; float: right;">
+                    <strong>{{ product.price|floatformat:0 }} Ft</strong>
+                </h4><br>
             </div>
         </div>
     </div>
+    
     {% endfor %}
 </div>
 

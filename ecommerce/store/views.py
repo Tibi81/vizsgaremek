@@ -160,12 +160,13 @@ def filtered_products(request):
     print(f"Filter option: {filter_option}")  # Debug üzenet
 
     category_map = {
-        'FÁB': 'option1',
-        'kotott': 'option2',
-        'pottos': 'option3',
-        'textil': 'option4',
+        'FÁB': ('option1', 'Fából készűlt'),
+        'kotott': ('option2', 'Kötött - horgolt'),
+        'pottos': ('option3','Pöttyös cicák'),
+        'textil': ('option4','Textil'),
     }
-    filter_option = category_map.get(filter_option, None)
+    category_info = category_map.get(filter_option,( None, None))
+    filter_option, display_name = category_info
     print(f"Mapped filter option: {filter_option}")  # Debug üzenet
 
     if filter_option:
@@ -177,6 +178,7 @@ def filtered_products(request):
             message = ""
     else:
         products = Product.objects.all()
+        display_name = 'Összes termék'
         message = ""
 
     # Kosár kezelés a cartData függvény használatával
@@ -190,7 +192,9 @@ def filtered_products(request):
         'items': items,  # Kosár elemek
         'order': order,  # Kosár adatok
         'cartItems': cartItems,  # Kosárban lévő elemek száma
-        'message': message  # Üzenet a szűrésről
+        'message': message,  # Üzenet a szűrésről
+        'filter_option': filter_option,  # Az eredeti filter opció
+        'display_name': display_name  
     }
 
     return render(request, 'store/filtered_products.html', context)
