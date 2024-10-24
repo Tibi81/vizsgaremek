@@ -2,6 +2,15 @@
 {%load static%}
 {%block content%}
 
+<div class="title-banner">
+    <div class="title-text-section">
+        <h2>Bejelentkezés</h2>          
+    </div>
+    <div class="image-section">
+        <img src="{% static 'images/hamvas.png' %}" style="width:100%">
+    </div>
+</div>
+
 <!-- templates/store/login.html -->
 <div class="container mt-5">
 <form method="POST" action="{% url 'login' %}">
