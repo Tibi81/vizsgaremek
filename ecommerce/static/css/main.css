@@ -11,19 +11,27 @@ body{
 }
 
 .background-index{
-    background-color: #d4edf5 ;
+    background-color: #f0f3f3 ;
 }
 
 h1,h2,h3,h4,h5,h6{
 	color:hsl(0, 0%, 30%);
+    font-family: 'Lora', serif; /* Elegáns betűtípus */
 }
 
 .box-element{
-	box-shadow:hsl(0, 0%, 80%) 0 0 16px;
+	box-shadow:hsl(0, 0%, 53%) 0 0 16px;
 	background-color: #fff;
-	border-radius: 4px;
+	border-radius: 8px;
 	padding: 10px;
-   
+    flex-grow: 1;   
+    position: relative;
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.8);
+
+}
+.box-elemet p {
+    color:hsl(0, 0%, 30%);
 }
 
 /* Filter Card */
@@ -34,20 +42,26 @@ h1,h2,h3,h4,h5,h6{
     width: 100%;
     height: 450px; /* Kártya egységes magassága */
     padding: 10px;
-    box-sizing: border-box;
-    background-color: white;
-    border: 1px solid #b1e2ed;
+    margin: 20px 0; /* Alsó és felső távolság növelése */
+    box-sizing: border-box;    
+    border: 8px solid #ae9dd8;
     border-radius: 8px;
     overflow: hidden;
-    -webkit-box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 10px 0px 10px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 10px 0px 10px 2px rgba(0, 0, 0, 0.2);    
+    position: relative; 
     
 }
+.filter-card-img {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;    
+    transition: transform 0.3s ease;
+    z-index: 1;
+}
 
-.filter-card img.thumbnail {
-    width: 100%;   
-    height: 350px; /* Kép maximális magassága a kártyában */
-    object-fit: contain; /* A kép teljes tartalma megjelenik a keretben */
+.filter-card-img:hover {
+    transform: scale(1.2);
 }
 
 
@@ -61,54 +75,79 @@ h1,h2,h3,h4,h5,h6{
     box-shadow: -1px -3px 5px -2px rgba(214, 214, 214, 1);
 }
 
-.box-element {
-    flex-grow: 1; /* Kitölti a fennmaradó helyet */
-    padding: 10px;
-}
 
-.box-element h4 {
-    margin: 10px 0 0 0;
-    font-size: 18px;
-    font-weight: bold;
-    color: #212529;
+
+.box-element h4, h6 {    
+    font-family: 'Lora', serif; /* Elegáns betűtípus */
+    font-size: 2em; /* Nagy betűméret */
+    color: #333; /* Sötétszürke szín */
+    font-weight: bold; 
 }
 
 .card {
+    height: 450px;
     position: relative;
     overflow: hidden;
     margin-bottom: 20px;
     background-color: #f8f9fa;
     border-radius: 20px;
+    
 }
-
-
-
 .card:hover .card-body {
     left: 0; /* Hover esetén a kép fölé csúszik */
 }
-
-
-
 .card-body {
     position: absolute;
-    top: 0;
+    bottom: 0;
     left: -100%; /* Kezdés a kép bal oldalán kívül */
     width: 100%; /* Csak a kép szélességében */
     height: 100%; /* A kép magasságában marad */
-    background: rgba(0, 0, 0, 0.7); /* Átlátszó fekete háttér */
+    background: rgba(107, 120, 189, 0.9); /* Átlátszó fekete háttér */
     color: white;
     display: flex;
-    flex-direction: column;
+    flex-direction:column;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
     text-align: center;
     transition: all 0.5s ease;
+    padding: 10px;
 }
 
+
+
+/* .card-body szövegek stílusai */
+.card-body h6 {
+    font-family: 'Montserrat', sans-serif; /* Modern betűtípus */
+    font-size: 1.5em; /* Kicsit nagyobb betűméret */
+    color: #ffffff; /* Fehér szín */
+    font-weight: 600; /* Közepesen vastag betűk */
+    margin-bottom: 10px;
+}
+
+.card-body p {
+    font-family: 'Lora', serif; /* Elegáns betűtípus */
+    font-size: 1em; /* Normál betűméret */
+    color: #ffffff; /* Fehér szín */
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.card-body h4 {
+    font-family: 'Lora', serif; /* Elegáns betűtípus */
+    font-size: 1.5em; /* Kicsit nagyobb betűméret */
+    color: #ffffff; /* Fehér szín */
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+
+
 .btn, h4, h6 {
-    margin: 5px;
-    color: #fff; /* Szöveg színének világosra állítása */
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5); /* Szöveg árnyékolás */
+    font-family: 'Montserrat', sans-serif; /* Modern betűtípus */
+    font-size: 1.5em; /* Kicsit nagyobb betűméret */
+    color: #333333; /* Sötétszürke szín */
+    font-weight: 600; /* Közepesen vastag betűk */
+    margin-bottom: 10px; /* Térköz az alatta lévő elemtől */
 }
 
 h4 {
@@ -146,6 +185,7 @@ h6 {
     background-color: #add8e6;
     border-radius: 20px;
     transition: transform 0.3s ease; /* Animáció simítása */
+    border: 3px solid #ae9dd8;
   }
 
   .index_card img{
@@ -161,17 +201,20 @@ h6 {
     transform: scale(1.1); /* Kép nagyítása, amikor az egér fölé kerül */
 }
 
-  .index_card-tetx{
+.text-overlay {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #48bce1 ; /* Félátlátszó fekete háttér */
-    color: white; /* Szöveg színe */
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);    
+    background-color: rgba(255, 255, 255, 0.8); /* Fehér háttér 80%-os átlátszósággal */
+    padding: 10px 20px;
+    border-radius: 15px 15px 15px 15px; /* Csak az alsó sarkok lekerekítése */
     text-align: center;
-    padding: 10px;
-    border-bottom-left-radius: 20px; /* Alsó bal sarok lekerekítése */
-    border-bottom-right-radius: 20px; /* Alsó jobb sarok lekerekítése */
+    font-size: 1em;
+    font-weight: 700; /* Vastag betűk */
+    color: #333333; /* Szöveg színe */
+    width: 90%;
+    border: 3px solid #ae9dd8;
 }
 
 
@@ -406,20 +449,17 @@ td.left-align {
 .image-text-container{
     display: flex;
     justify-content: space-between; /* Szöveg és kép közötti távolság */
-    border: 1px solid #ccc; /* Keret */    
+    border: 3px solid #ccc; /* Keret */    
     background-color: #add8e6;
+    
 }
 
 .text-section {
     flex: 1; /* A szöveg szekciója */    
     padding: 20px;
     text-align: center;
-    max-width: 50%;
-    
-    
+    max-width: 50%;    
 }
-
-
 
 /* Slideshow container */
 .slideshow-container {
@@ -513,7 +553,8 @@ td.left-align {
     display: inline-flex;
     overflow: hidden;
     white-space: nowrap;
-    animation: scroll 30s linear infinite; /* Lassított animáció */
+    animation: scroll 25s linear infinite; /* Lassított animáció */
+   
 }
 
 @keyframes scroll {
@@ -522,26 +563,86 @@ td.left-align {
 }
 
 .scroll-card {
-    display: inline-block;
-    width: 300px; /* vagy a kívánt kártyaszélesség */
-    height: 450px; /* egységes kártyamagasság */
-    margin: 0 10px; /* a kártyák közötti távolság */
-    box-sizing: border-box;
-    background-color: white;
-    border: 1px solid #b1e2ed; /* Visszaállítva a keret */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 300px;
+    height: 450px; /* Kártya egységes magassága */
+    margin: 0 20px;
+    padding: 10px;
+    box-sizing: border-box;    
+    border: 1px solid #ae9dd8;
     border-radius: 8px;
     overflow: hidden;
-    -webkit-box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 10px 0px 10px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 10px 0px 10px 2px rgba(0, 0, 0, 0.2);        
+    transition: border 0.3s ease; 
 }
+
+.scroll-card:hover {
+    border: 8px solid #ae9dd8; /* Keret megjelenítése hover állapotban */
+}
+
 .card-container:hover {
     animation-play-state: paused;
 }
 
-.scroll-card img.thumbnail {
+.scroll-card img {
     width: 100%;
+    height: 300px;
+    object-fit: cover;
+    overflow: hidden;
+    position: relative;  
    
-    height: 350px; /* Kép maximális magassága a kártyában */
-    object-fit: contain; /* A kép teljes tartalma megjelenik a keretben */
 }
+
+.product-name {
+    white-space: nowrap; /* Szöveg egy sorban tartása */
+    overflow: hidden; /* Túlcsorduló szöveg elrejtése */
+    text-overflow: ellipsis; /* Három pont a túl hosszú szöveg végén */
+}
+
+
+/* filtered-products.html -- filtered-products.html -- filtered-products.html -- filtered-products.html -- filtered-products.html -- filtered-products.html*/
+@media (max-width: 768px) {
+    .title-banner {
+        height: 230px;
+    }
+}
+.title-banner{
+    display: flex;
+    justify-content: space-between; /* Szöveg és kép közötti térköz */
+    align-items: center; /* Függőleges középre igazítás */
+    background-color: #ae9dd8;
+}
+
+.title-text-section{
+    flex: 1; /* A szöveg szekciója */    
+    padding: 20px;
+    text-align: left;
+    max-width: 50%;
+    font-family: 'Montserrat', sans-serif; /* Vagy 'Montserrat', sans-serif */
+    font-size: 2.5em;
+    font-weight: 700; 
+    color: #333333;
+}
+
+.image-section{
+    flex: 1;
+    max-width: 50%;
+    background-color: transparent; /* A háttér színét átlátszóra állítjuk */
+    overflow: hidden;
+    position: relative; /* Pozíció beállítása a pontokhoz */
+    text-align: right;
+    
+  }
+.image-section img{
+    
+        width: 100%;
+        height: 250px;
+        object-fit:contain;
+        
+}
+
+/* filtered-products.html -- filtered-products.html -- filtered-products.html -- filtered-products.html -- filtered-products.html -- filtered-products.html*/
 
