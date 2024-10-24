@@ -32,14 +32,18 @@
 <div class="row">
     {% for product in products %}
     <div class="col-12 col-md-6 col-lg-4">
-        <div class="filter-card">
+        <div class="filter-card">            
             <div class="filter-card-img">
                 <a href="{% url 'product_detail' product.id %}">
-                    <img class="thumbnail" src="{{ product.imageURL }}" alt="{{ product.name }}">
-                </a>
+                    <img class="thumbnail" src="{{ product.imageURL }}" alt="{{ product.name }}">                </a>
+            </div>            
+            <div class="filter-card-description-trigger">Leírás</div> <!-- Hover trigger -->            
+            <div class="filter-card-description">
+                <h6><strong>{{ product.name }}</strong></h6>
+                <p>{{ product.description|markdown|safe }}</p>
             </div>
             <div class="box-element">
-                <h6><strong>{{ product.name }}</strong></h6>
+                <h6 class="product-name"><strong>{{ product.name }}</strong></h6>
                 <hr>
                 <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart"><i class="fas fa-shopping-cart"></i></button>
                 <h4 style="display: inline-block; float: right;">
@@ -51,6 +55,7 @@
     
     {% endfor %}
 </div>
+
 
 {% else %}
 <p>Nincs találat</p>

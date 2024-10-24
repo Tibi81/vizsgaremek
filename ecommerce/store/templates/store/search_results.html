@@ -3,9 +3,16 @@
 {% load static %}
 {% load markdown_extras %}
 {% block content %}
-<body class="background1">
+<body class="background-index">
 
-
+    <div class="title-banner">
+        <div class="title-text-section">
+            <h2>Találatok</h2>          
+        </div>
+        <div class="image-section">
+            <img src="{% static 'images/hamvas.png' %}" style="width:100%">
+        </div>
+    </div>
 
 
 {% if products %}
@@ -13,18 +20,25 @@
         {% for product in products %}
         
         <div class="col-12 col-md-6 col-lg-4">
-		<div class="card">
-            <img class="card_img" src="{{ product.imageURL }}">
-            <div class="card-body">
-                <div>                    
-                    <h6 class="truncated"><strong>{{ product.name|markdown|safe }}</strong></h6>
-                    <strong>{{ product.description|markdown|safe }}</strong>
-                    <h4><strong>{{ product.price|floatformat:0 }} Ft</strong></h4>
-                    <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Kosárba</button>
-                    <a class="btn btn-outline-success" href="{% url 'product_detail' product.id %}">Megtekintés</a>
+            <div class="filter-card">            
+                <div class="filter-card-img">
+                    <a href="{% url 'product_detail' product.id %}">
+                        <img class="thumbnail" src="{{ product.imageURL }}" alt="{{ product.name }}">                </a>
+                </div>            
+                <div class="filter-card-description-trigger">Leírás</div> <!-- Hover trigger -->            
+                <div class="filter-card-description">
+                    <h6><strong>{{ product.name }}</strong></h6>
+                    <p>{{ product.description|markdown|safe }}</p>
+                </div>
+                <div class="box-element">
+                    <h6 class="product-name"><strong>{{ product.name }}</strong></h6>
+                    <hr>
+                    <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart"><i class="fas fa-shopping-cart"></i></button>
+                    <h4 style="display: inline-block; float: right;">
+                        <strong>{{ product.price|floatformat:0 }} Ft</strong>
+                    </h4><br>
                 </div>
             </div>
-        </div>
    
 </div>
             
