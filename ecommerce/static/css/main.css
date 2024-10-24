@@ -2,14 +2,23 @@ body{
 	background-color: hsl(0, 0%, 98%);
 }
 
+.custom-banner {
+    background-color: #fc9038;
+    color: #721c24; /* Sötét piros szöveg */
+    padding: 5px 0; /* Függőleges padding */
+    text-align: center; /* Középre igazítás */
+  }
 
+.navbar {
+    background-color: #6090f7 !important; 
+  }
 
-
-
-
-
-
-
+.separator {
+    height: 3px; /* Csík vastagsága */
+    background-color:#fd7e14; /* Csík színe, állítsd be a kívánt színre */
+    margin-top: 8px; /* Felső margó */
+    margin-bottom: 8px; /* Alsó margó */
+  }
 
 .background1 {
     background-color: lightblue;
@@ -235,11 +244,11 @@ h6 {
     text-overflow: ellipsis;
   }
   
-  .truncated:hover {
+.truncated:hover {
     white-space: normal;
   }
 
-  .index_card{
+.index_card{
     position: relative;
     display: inline-block;
     margin-bottom: 20px;
@@ -249,7 +258,7 @@ h6 {
     border: 3px solid #ae9dd8;
   }
 
-  .index_card img{
+.index_card img{
     width: 100%;
     height: 400px;
     display: block;  
@@ -329,10 +338,17 @@ h6 {
 	border-radius: 5px;
 }
 
-.btn btn-outline-success{
-    border-radius: 0 0 8px 8px; 
+.btn btn-search{
+    border-radius: 0 0 8px 8px !important; 
+    
 }
 
+.user-btn{
+    color: white !important;
+}
+.custom-button {
+    border-radius: 0 8px 8px 0; /* Itt állítsd be a kívánt értéket */
+  }
 .form-control {
     border-radius: 8px 0 0 8px; /* Bal oldalon lekerekítés (felül, alul), jobb oldalon nem */
 }
@@ -403,6 +419,7 @@ h6 {
     text-overflow: ellipsis;
 	margin: 5px 0px 5px 8px;
     border-radius: 5px;
+    margin-right: 5px;
 	
 }
 
@@ -451,13 +468,7 @@ td.left-align {
 	height: 500px;
 
 }
-/*
-.cart-row {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
-*/
+
 .row-image {
     width: 50px;
     height: 50px;
