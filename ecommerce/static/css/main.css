@@ -61,12 +61,13 @@ h1,h2,h3,h4,h5,h6{
     padding: 10px;
     margin: 20px 0;
     box-sizing: border-box;    
-    border: 3px solid #ae9dd8;
+    border: 1px solid #6090f7;
     border-radius: 8px;
     overflow: hidden;
     position: relative; 
     box-shadow: 10px 0px 10px 2px rgba(0, 0, 0, 0.2);    
     background-color: #add8e6;
+    color: white;
 }
 
 /* Leírás gomb a kártya tetején */
@@ -75,13 +76,20 @@ h1,h2,h3,h4,h5,h6{
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    background-color: rgba(107, 120, 189, 0.9);
-    color: white;
+    background-color: #6090f7 ;
     padding: 5px 15px;
     border-radius: 0 0 8px 8px;
     cursor: pointer;
     z-index: 10;
     text-align: center;
+    border-width: 0 1px 1px 1px;
+    border-style: solid;
+    border-color: #6090f7;
+    
+}
+
+.filter-card-description-trigger a {
+    color: white;
 }
 
 /* A termékleírás alapértelmezés szerint rejtve */
@@ -91,8 +99,6 @@ h1,h2,h3,h4,h5,h6{
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(107, 120, 189, 0.9);
-    color: white;
     padding: 20px;
     text-align: center;
     display: flex;
@@ -102,7 +108,38 @@ h1,h2,h3,h4,h5,h6{
     transition: all 0.5s ease;
     z-index: 5;
     opacity: 0; /* Láthatatlan, míg nem történik hover */
+    font-family: "Montserrat", sans-serif;
+    background: #add8e6; /* Kicsit sötétebb háttér a jobb olvashatóság érdekében */
+    border-radius: 8px;
+    margin-top: 20px;
 }
+
+.filter-card-description h6 {
+    font-size: 1.2em;
+    font-weight: 300; /* Vékonyabb cím */
+    color: #fc9038; /* Aranyszín a címhez */
+    margin-bottom: 8px;
+}
+
+.filter-card-description h4, h5 {
+    font-size: 1em;
+    font-weight: 400; /* Vékonyabb szöveg */
+    color: #1E1F20;
+    margin-bottom: 8px;
+}
+
+.filter-card-description p {
+    line-height: 1.5;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300; /* Még vékonyabb a leíráshoz */
+    font-size: 0.9em;
+    color: #1E1F20;
+    
+    padding: 8px 20px;
+    border-radius: 0 0 8px 8px;
+    cursor: pointer;
+}
+
 
 /* Hover esemény: A leírás becsúszik felülről */
 .filter-card-description-trigger:hover + .filter-card-description {
@@ -161,7 +198,7 @@ h1,h2,h3,h4,h5,h6{
     left: -100%; /* Kezdés a kép bal oldalán kívül */
     width: 100%; /* Csak a kép szélességében */
     height: 100%; /* A kép magasságában marad */
-    background: rgba(107, 120, 189, 0.9); /* Átlátszó fekete háttér */
+    background: rgba(107, 120, 189, 0.9); 
     color: white;
     display: flex;
     flex-direction:column;
@@ -255,7 +292,7 @@ h6 {
     background-color: #add8e6;
     border-radius: 20px;
     transition: transform 0.3s ease; /* Animáció simítása */
-    border: 3px solid #ae9dd8;
+    border: 1px solid #6090f7;
   }
 
 .index_card img{
@@ -284,7 +321,7 @@ h6 {
     font-weight: 700; /* Vastag betűk */
     color: #333333; /* Szöveg színe */
     width: 90%;
-    border: 3px solid #ae9dd8;
+    border: 1px solid #6090f7;
 }
 
 
@@ -569,6 +606,10 @@ td.left-align {
   
 }
 
+.dot.active {
+    background-color: #717171; 
+}
+
 .dots-container {
     position: absolute;
     bottom: 10px; /* Közvetlenül a kép alá helyezzük */
@@ -640,7 +681,7 @@ td.left-align {
     margin: 0 20px;
     padding: 10px;
     box-sizing: border-box;    
-    border: 1px solid #ae9dd8;
+    border: 1px solid #6090f7;
     border-radius: 8px;
     overflow: hidden;
     -webkit-box-shadow: 10px 0px 10px 2px rgba(0, 0, 0, 0.2);
@@ -650,7 +691,7 @@ td.left-align {
 }
 
 .scroll-card:hover {
-    border: 8px solid #ae9dd8; /* Keret megjelenítése hover állapotban */
+    border: 8px solid #6090f7; /* Keret megjelenítése hover állapotban */
 }
 
 .card-container:hover {
@@ -720,13 +761,86 @@ td.left-align {
     padding: 20px;
     margin-top: 30px;
     border-radius: 5px;
-    height: 500px;   
+    height: auto; /* Dinamikus magasság */
+    max-height: 560px;
+    min-height: 300px; /* Minimális magasság */
+    position: sticky; /* Ragadós pozicionálás */
+    top: 30px; /* Rögzítési távolság */
+    z-index: 1000; /* Z-index a rétegezéshez */
+}
 
+
+/* Média lekérdezés kisebb képernyőkhöz (pl. mobil) */
+@media (max-width: 768px) { /* Példa: 768px a határérték, módosítsd igényeid szerint */
+    .left-column {
+        position: relative; /* Sticky eltávolítása */
+        top: auto; /* Reset a top érték */
+        min-height: 200px; /* Kisebb minimális magasság mobilon */
+    }    
+}
+
+
+
+.left-column-category {
+    background-color: #bbb;
+    padding: 20px;
+    margin-top: 30px;
+    border-radius: 5px;
+    height: auto; /* Dinamikus magasság */
+    max-height: 250px;
+    position: sticky; /* Ragadós pozicionálás */
+    top: 30px; /* Rögzítési távolság */
+    z-index: 1000; /* Z-index a rétegezéshez */
+}
+
+
+/* Média lekérdezés kisebb képernyőkhöz (pl. mobil) */
+@media (max-width: 768px) { /* Példa: 768px a határérték, módosítsd igényeid szerint */
+    .left-column {
+        position: relative; /* Sticky eltávolítása */
+        top: auto; /* Reset a top érték */
+        min-height: 200px; /* Kisebb minimális magasság mobilon */
+    }
+    .left-column-category {
+            position: relative; /* Sticky eltávolítása */
+            top: auto; /* Reset a top érték */
+            min-height: 200px; /* Kisebb minimális magasság mobilon */
+        }
+    }
+
+
+
+
+.sidebar-menu {
+    display: inline-block; /* Igazítja a méretet a tartalomhoz */
+    background-color: #f8f9fa;
+    padding: 15px; /* Módosítsd a paddingot, ha szükséges */
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px; /* Adjunk egy kis távolságot a menük között */
+}
+
+.sidebar-menu h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.sidebar-menu hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 10px 0;
+}
+
+.custom-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
 }
 
 .custom-list li {
     cursor: pointer;
-    padding: 5px 10px;
+    padding: 5px 10px; /* A padding csökkenthető, ha szükséges */
     transition: color 0.3s, text-decoration 0.3s;
 }
 
@@ -737,9 +851,25 @@ td.left-align {
 
 .custom-list li.selected {
     text-decoration: underline;
-    
-    
+    text-decoration-color: #fc9038;
 }
+
+.custom-list a {
+    text-decoration: none; /* Eltávolítja az alapértelmezett aláhúzást */
+    color: inherit; /* Örökli a szülő elem színét */
+}
+
+.custom-list a:hover {
+    color: #3b3939; /* Hover szín */
+    text-decoration: underline; /* Hover alatt aláhúzás */
+}
+
+.custom-list a.active-link {
+    text-decoration: underline; /* Aktív link aláhúzás */
+    text-decoration-color: #fc9038;
+    color: #3b3939; /* Aktív link szín */
+}
+
 
 
 
@@ -784,3 +914,68 @@ td.left-align {
     color: white;
     background-color: #007bff;
 }
+
+
+
+.sidebar-menu {
+    width: 250px;
+    background-color: #c1bcbc;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-menu h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.sidebar-menu hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 10px 0;
+}
+
+.sidebar-menu button {
+    
+    text-align: center;
+}
+
+/* login-login-login-login-login-login-login-login-login-login-login-login-login-login-login-login*/
+
+.login-container {
+    max-width: 500px; /* Maximális szélesség */
+    margin: 0 auto; /* Középre igazítás */
+    padding: 20px; /* Belső margó */
+    border: 1px solid #ddd; /* Szürke keret */
+    border-radius: 8px; /* Lekerekített sarkok */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Árnyék hozzáadása */
+    background-color: #add8e6; /* Háttérszín */
+}
+
+.login-container .form-group {
+    margin-bottom: 15px; /* Alsó margó */
+}
+
+.login-container .form-control {
+    width: calc(100% - 40px); /* Szélesség beállítása az ikon figyelembevételével */
+    padding: 10px; /* Belső margó */
+    border-radius: 4px; /* Lekerekített sarkok */
+    border: 1px solid #ccc; /* Szürke keret */
+    margin-left: 10px; /* Belső margó balra az ikonhoz képest */
+}
+
+.login-container label {
+    margin-right: 10px; /* Jobb oldali margó */
+}
+
+.login-btn {
+    text-align: center;
+    color: white !important;
+    font-size: 1em;
+    font-weight: 400; 
+    text-shadow: 2px  #6090f7;
+    
+}
+

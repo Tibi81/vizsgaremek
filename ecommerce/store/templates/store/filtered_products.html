@@ -6,7 +6,7 @@
 <div class="title-banner">
     <div class="title-text-section">
         {% if filter_option %}
-            <h2>{{ display_name }} termékek</h2>
+            <h2>{{ display_name }}</h2>
         {% else %}
             <h2>Termékek</h2>
         {% endif %}
@@ -22,20 +22,41 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-12 col-md-3">
+        <div class="left-column-category col-12 col-md-3">
             <div class="sidebar-menu">
                 <h3>Termékek rendezése</h3>
                 <hr>
                 <ul class="custom-list">
-                    <li id="sort-abc-asc" onclick="sortProducts('name', 'asc')">ABC szerint (A-Z)</li>
-                    <li id="sort-abc-desc" onclick="sortProducts('name', 'desc')">ABC szerint (Z-A)</li>
-                    <li id="sort-price-asc" onclick="sortProducts('price', 'asc')">Ár szerint (növekvő)</li>
-                    <li id="sort-price-desc" onclick="sortProducts('price', 'desc')">Ár szerint (csökkenő)</li>
+                    <li>
+                        <a href="?filter={{ filter_option }}&orderby=name&direction=asc"
+                           class="{% if orderby == 'name' and direction == 'asc' %}active-link{% endif %}">
+                           ABC szerint (A-Z)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="?filter={{ filter_option }}&orderby=name&direction=desc"
+                           class="{% if orderby == 'name' and direction == 'desc' %}active-link{% endif %}">
+                           ABC szerint (Z-A)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="?filter={{ filter_option }}&orderby=price&direction=asc"
+                           class="{% if orderby == 'price' and direction == 'asc' %}active-link{% endif %}">
+                           Ár szerint (növekvő)
+                        </a>
+                    </li>
+                    <li>
+                        <a href="?filter={{ filter_option }}&orderby=price&direction=desc"
+                           class="{% if orderby == 'price' and direction == 'desc' %}active-link{% endif %}">
+                           Ár szerint (csökkenő)
+                        </a>
+                    </li>
                 </ul>
-            </div> 
+            </div>
+            
         </div>
 
-        <div class="col-12 col-md-9">
+        <div class="right-column col-12 col-md-9">
             <div class="row" id="product-list">
                 {% if products %}
                     {% for product in products %}
@@ -46,7 +67,9 @@
                                         <img class="thumbnail" src="{{ product.imageURL }}" alt="{{ product.name }}">
                                     </a>
                                 </div>
-                                <div class="filter-card-description-trigger">Leírás</div>
+                                <div class="filter-card-description-trigger">
+                                    <a href="{% url 'product_detail' product.id %}">Leírás</a>
+                                </div>
                                 <div class="filter-card-description">
                                     <h6><strong>{{ product.name }}</strong></h6>
                                     <p>{{ product.description|markdown|safe }}</p>
@@ -71,39 +94,29 @@
         </div>
     </div>
 </div>
-<script>
-    function sortProducts(property, order) {
-        const productList = document.getElementById('product-list');
-        const products = Array.from(productList.getElementsByClassName('product-card'));
-    
-        products.sort((a, b) => {
-            const aValue = property === 'name' ? a.dataset.name.toLowerCase() : parseFloat(a.dataset.price);
-            const bValue = property === 'name' ? b.dataset.name.toLowerCase() : parseFloat(b.dataset.price);
-    
-            return order === 'asc' ? (aValue < bValue ? -1 : 1) : (aValue > bValue ? -1 : 1);
-        });
-    
-        productList.innerHTML = '';
-        products.forEach(product => productList.appendChild(product));
-    
-        resetSortStyles();
-        const activeSortId = `sort-${property}-${order}`;
-        const activeItem = document.getElementById(activeSortId);
-        
-        // Aláhúzás beállítása
-        
-        activeItem.classList.add('selected');
-    }
-    
-    function resetSortStyles() {
-        const sortItems = document.querySelectorAll('.custom-list li');
-        sortItems.forEach(item => {
-            
-            item.classList.remove('selected');
-        });
-    }
-    
 
-</script>
+<div class="pagination">
+    <span class="step-links">
+        {% if products.has_previous %}
+            <a href="?page=1&filter={{ filter_option }}&orderby={{ orderby }}&direction={{ direction }}">&laquo; Első</a>
+            <a href="?page={{ products.previous_page_number }}&filter={{ filter_option }}&orderby={{ orderby }}&direction={{ direction }}">Előző</a>
+        {% endif %}
+        {% for num in products.paginator.page_range %}
+            {% if products.number == num %}
+                <span class="current">{{ num }} oldal</span>
+            {% else %}
+                <a href="?page={{ num }}&filter={{ filter_option }}&orderby={{ orderby }}&direction={{ direction }}">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+        {% if products.has_next %}
+            <a href="?page={{ products.next_page_number }}&filter={{ filter_option }}&orderby={{ orderby }}&direction={{ direction }}">Következő</a>
+            <a href="?page={{ products.paginator.num_pages }}&filter={{ filter_option }}&orderby={{ orderby }}&direction={{ direction }}">Utolsó &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+
+
+
 
 {% endblock content %}

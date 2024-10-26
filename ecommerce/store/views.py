@@ -142,49 +142,58 @@ def checkout(request):
 
 
 
+from django.core.paginator import Paginator
+
 def filtered_products(request):
-    filter_option = request.GET.get('filter')
-    print(f"Filter option: {filter_option}")  # Debug üzenet
+    filter_option = request.GET.get('filter', '').lower()
+    orderby = request.GET.get('orderby', 'name')  # Alapértelmezett rendezés név szerint
+    direction = request.GET.get('direction', 'asc')  # Alapértelmezett sorrend növekvő
 
     category_map = {
-        'FÁB': ('option1', 'Fából készűlt'),
-        'kotott': ('option2', 'Kötött - horgolt'),
-        'pottos': ('option3','Pöttyös cicák'),
-        'textil': ('option4','Textil'),
+        'fabol': ('option1', 'FÁBÓL KÉSZÜLT'),
+        'kotott': ('option2', 'KÖTÖTT-HORGOLT'),
+        'pottos': ('option3', 'PÖTTYÖSCICA'),
+        'textil': ('option4', 'TEXTIL'),
     }
-    category_info = category_map.get(filter_option,( None, None))
-    filter_option, display_name = category_info
-    print(f"Mapped filter option: {filter_option}")  # Debug üzenet
 
-    if filter_option:
-        products = Product.objects.filter(category=filter_option)
-        print(f"Filtered products: {products}")  # Debug üzenet
-        if not products.exists():
-            message = "Nincs ilyen termék a megadott kategóriában."
-        else:
-            message = ""
+    if filter_option in category_map:
+        products = Product.objects.filter(category=category_map[filter_option][0])
+        display_name = category_map[filter_option][1]
     else:
         products = Product.objects.all()
-        display_name = 'Összes termék'
+        display_name = "Összes termék"
+
+    if not products.exists():
+        message = "Nincs ilyen termék a megadott kategóriában."
+    else:
         message = ""
 
-    # Kosár kezelés a cartData függvény használatával
-    cart_info = cartData(request)  # Hívjuk meg a cartData függvényt
-    items = cart_info['items']  # Kosár elemek
-    order = cart_info['order']  # Kosár adatok
-    cartItems = cart_info['cartItems']  # Kosár elemek száma
+    if orderby:
+        direction_prefix = '-' if direction == 'desc' else ''
+        products = products.order_by(f"{direction_prefix}{orderby}")
+    else:
+        products = products.order_by('name')
+
+    cart_info = cartData(request)
+    paginator = Paginator(products, 6)  # 6 termék oldalanként
+    page_number = request.GET.get('page')
+    products_page = paginator.get_page(page_number)
 
     context = {
-        'products': products,
-        'items': items,  # Kosár elemek
-        'order': order,  # Kosár adatok
-        'cartItems': cartItems,  # Kosárban lévő elemek száma
-        'message': message,  # Üzenet a szűrésről
-        'filter_option': filter_option,  # Az eredeti filter opció
-        'display_name': display_name  
+        'products': products_page,  # Lapozott oldalak helyesen
+        'items': cart_info['items'],
+        'order': cart_info['order'],
+        'cartItems': cart_info['cartItems'],
+        'message': message,
+        'filter_option': filter_option,
+        'orderby': orderby,
+        'direction': direction,
+        'display_name': display_name,
     }
-
     return render(request, 'store/filtered_products.html', context)
+
+
+
 
 
 
@@ -304,7 +313,7 @@ def store(request):
         else:
             products = products.order_by(f'-{sort_by}')
 
-    paginator = Paginator(products, 10)  # 10 termék oldalanként
+    paginator = Paginator(products, 6)  # 6 termék oldalanként
     page_number = request.GET.get('page')
     products_page = paginator.get_page(page_number)
 

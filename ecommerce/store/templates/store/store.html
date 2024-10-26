@@ -40,7 +40,7 @@
                         <hr>
                         <ul class="custom-list">
                             <li onclick="sortBy(this, 'name', 'asc');" class="{% if sort_by == 'name' and order == 'asc' %}selected{% endif %}">
-                                ABC szerint (A-Z)
+                                ABC szerint (A-Z) 
                             </li>
                             <li onclick="sortBy(this, 'name', 'desc');" class="{% if sort_by == 'name' and order == 'desc' %}selected{% endif %}">
                                 ABC szerint (Z-A)
@@ -52,7 +52,9 @@
                                 Ár szerint (csökkenő)
                             </li>
                         </ul>
-                        
+                    </div>
+                    <div class="sidebar-menu">
+                    <a href="{% url 'reset_filters' %}" class="btn btn-outline-secondary btn-checkbox">Szűrők törlése</a>
                     </div>
                     <input type="hidden" name="order" id="order" value="{{ order }}">
 
@@ -88,8 +90,7 @@
                         }
                     </script>
 
-                    <a href="{% url 'reset_filters' %}" class="btn btn-outline-secondary btn-checkbox">Szűrők törlése</a>
-
+                   
                 </form>
             </div>
         </div>
@@ -104,7 +105,7 @@
                                 <img class="thumbnail" src="{{ product.imageURL }}" alt="{{ product.name }}">
                             </a>
                         </div>
-                        <div class="filter-card-description-trigger">Leírás</div>
+                        <div class="filter-card-description-trigger"> <a href="{% url 'product_detail' product.id %}">Leírás</a></div>
                         <div class="filter-card-description">
                             <h6><strong>{{ product.name }}</strong></h6>
                             <p>{{ product.description|markdown|safe }}</p>
