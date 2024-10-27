@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Playfair+Display&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon-32x32.png' %}">
+
+
     <title>Saka-Fa Bt Webshopja</title>
 </head>
 
@@ -37,7 +40,7 @@
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Kategóriák
                 </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown ">
                   <a class="dropdown-item" href="{% url 'filtered_products' %}?filter=fabol">Fából készült</a>
                   <a class="dropdown-item" href="{% url 'filtered_products' %}?filter=kotott">Kötött-horgolt</a>
                   <a class="dropdown-item" href="{% url 'filtered_products' %}?filter=pottos">Pöttyös cicák</a>

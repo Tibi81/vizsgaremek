@@ -13,6 +13,17 @@ body{
     background-color: #6090f7 !important; 
   }
 
+  /* Alapértelmezett háttérszín a dropdown elemekre */
+
+  
+  /* A háttérszín módosítása az elem fölé helyezett egér esetén */
+  .dropdown-item:hover {
+    background-color: #6090f7; /* Ugyanaz a szín, mint az alapértelmezett */
+    color: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Árnyék hozzáadása */
+  }
+  
+
 .separator {
     height: 3px; /* Csík vastagsága */
     background-color:#fd7e14; /* Csík színe, állítsd be a kívánt színre */
@@ -381,8 +392,18 @@ h6 {
 }
 
 .user-btn{
-    color: white !important;
+    color: white !important;  
+    border-color: #fc9038;  
+    font-weight: 400;
 }
+.user-btn:hover {
+    background-color: #fc9038 ; 
+    color: white;
+    border-color: #fc9038; 
+
+    
+  }
+
 .custom-button {
     border-radius: 0 8px 8px 0; /* Itt állítsd be a kívánt értéket */
   }
@@ -443,7 +464,7 @@ h6 {
     font-weight: 400;
     color: #212529; /* Fekete szöveg */
     background-color: #fff; /* Fehér háttér */
-    border: 1px solid #ffc107; /* Sárga keret */
+    border: 1px solid #fc9038; /* Sárga keret */
     border-radius: 0px;
     transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
     white-space: nowrap;
@@ -453,6 +474,11 @@ h6 {
     border-radius: 5px;
     margin-right: 5px;
 	
+}
+
+.order {
+    background-color: #add8e6;
+    border-radius: 5px;
 }
 
 table {
@@ -520,6 +546,19 @@ td.left-align {
 .product-detail img {
     margin-bottom: 20px;
     border-radius: 10px;
+}
+
+.product-img {
+    background-color: #add8e6;
+    border-radius: 5px;
+    max-width: 500px;
+    height: 500px;
+    margin-right: 20px;
+}
+
+.product-description {
+    background-color: #add8e6;
+    border-radius: 5px;
 }
 
 .footer {

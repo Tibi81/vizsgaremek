@@ -10,7 +10,7 @@
     </div>
 
     <div class="row justify-content-center">
-        <div class="col-12 col-md-10">
+        <div class="order col-12 col-md-10">
         {% if user.is_authenticated %}
             {% if orders_by_transaction %}
                 {% for transaction_id, orders in orders_by_transaction.items %}
@@ -30,17 +30,19 @@
                             {% for order in orders %}
                                 {% for order_item in order.orderitem_set.all %}
                                 <tr>
-                                    <td><img src="{{ order_item.product.image.url }}" alt="{{ order_item.product.name }}"></td>
+                                    <td><a href="{% url 'product_detail' order_item.product.id %}">
+                                        <img src="{{ order_item.product.image.url }}" alt="{{ order_item.product.name }}">
+                                    </a></td>
                                     <td>{{ order_item.product.name }}</td>
                                     <td>{{ order_item.quantity }}</td>
                                     <td>{{ order_item.date_added|date:"Y-m-d H:i:s" }}</td> <!-- Rendelési dátum -->
-                                    <td>{{ order_item.product.price }} Ft</td>
-                                    <td>{{ order_item.total_price }} Ft</td>
+                                    <td>{{ order_item.product.price|floatformat:0 }} Ft</td>
+                                    <td>{{ order_item.total_price|floatformat:0 }} Ft</td>
                                 </tr>
                                 {% endfor %}
                                 <tr>
                                     <td colspan="6" class="text-right">
-                                        <h3>Kosár végösszege: {{ order.get_cart_total }} Ft</h3>
+                                        <h3>Kosár végösszege: {{ order.get_cart_total|floatformat:0 }} Ft</h3>
                                     </td>
                                 </tr>
                             {% endfor %}
