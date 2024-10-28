@@ -33,6 +33,9 @@ urlpatterns = [
     path('search/', views.search, name='search'),
     path('filtered-products/', filtered_products, name='filtered_products'),
     path('reset-filters/', reset_filters, name='reset_filters'),
+    
+   
+
 ]
 
 if settings.DEBUG:

@@ -301,7 +301,7 @@ h6 {
     display: inline-block;
     margin-bottom: 20px;
     background-color: #add8e6;
-    border-radius: 20px;
+    border-radius: 5px;
     transition: transform 0.3s ease; /* Animáció simítása */
     border: 1px solid #6090f7;
   }
@@ -523,9 +523,11 @@ td.left-align {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     z-index: 1000;
     width: 500px; /* Adjust the width as needed */
-	height: 500px;
-
+    max-height: 500px; /* Limit the height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    display: none; /* Hide by default */
 }
+
 
 .row-image {
     width: 50px;
@@ -552,13 +554,32 @@ td.left-align {
     background-color: #add8e6;
     border-radius: 5px;
     max-width: 500px;
-    height: 500px;
+    max-height: 500px;
     margin-right: 20px;
+
+    
+}
+
+.product-img img {
+    display: flex;
+    align-items: center; /* Vertikális középre igazítás */
+    justify-content: center; /* Horizontális középre igazítás */    
+    width: 100%;
+    height: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0px 0px 1px #add8e6;
 }
 
 .product-description {
-    background-color: #add8e6;
-    border-radius: 5px;
+    
+    border-radius: 5px #add8e6;
+}
+
+.product-description hr {
+    border: none;      /* Távolítsd el a `border: none;` sort, ha benne van */
+    height: 1px;       /* Állítsd be a kívánt magasságot */
+    background-color: black; /* Adj meg egy látható színt */
 }
 
 .footer {
@@ -983,15 +1004,22 @@ td.left-align {
 
 /* login-login-login-login-login-login-login-login-login-login-login-login-login-login-login-login*/
 
+
 .login-container {
-    max-width: 500px; /* Maximális szélesség */
-    margin: 0 auto; /* Középre igazítás */
-    padding: 20px; /* Belső margó */
-    border: 1px solid #ddd; /* Szürke keret */
-    border-radius: 8px; /* Lekerekített sarkok */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Árnyék hozzáadása */
-    background-color: #add8e6; /* Háttérszín */
+    width: 100%;
+    max-width: 400px; /* Maximális szélesség */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #add8e6;
 }
+
+.info-container {
+    width: 100%;
+    max-width: 400px; /* Maximális szélesség */
+}
+
+
 
 .login-container .form-group {
     margin-bottom: 15px; /* Alsó margó */
@@ -1011,10 +1039,27 @@ td.left-align {
 
 .login-btn {
     text-align: center;
-    color: white !important;
+    /*color: white !important;*/
     font-size: 1em;
-    font-weight: 400; 
+    font-weight: 300; 
     text-shadow: 2px  #6090f7;
-    
+    background-color: transparent;
+    color: #2577fd;
+    transition: 0.5s;
+    text-transform: uppercase;
 }
 
+.custom-quantity-input {
+    height: 38px; /* A gomb magassága */
+    padding: 6px 12px; /* A belső távolságok */
+    font-size: 16px; /* A betűméret */
+    border: 1px solid #6c757d; /* A keret színe */
+    border-radius: 4px; /* A sarkok lekerekítése */
+    margin-right: 10px; /* Távolság a gombtól */
+}
+
+.custom-quantity-input-btn {
+    height: 68px; /* A gomb magassága */
+    padding: 6px 12px; /* A belső távolságok */
+    font-size: 16px; /* A betűméret */
+}

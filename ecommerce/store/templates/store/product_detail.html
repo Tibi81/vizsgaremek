@@ -9,19 +9,22 @@
             <img src="{{ product.imageURL }}" alt="{{ product.name }}" class="thumbnail">
         </div>
         <div class="product-description col-12 col-md-6">
-            <h4>Ár: {{ product.price|floatformat:0}} Ft</h4>
-        <div>
-            <strong>{{ product.description|markdown|safe }}</strong>
-        </div>
+            <h6 class="product-name"><strong>{{ product.name }}</strong></h6>
+            <br>
+            <h4>Ár: {{ product.price|floatformat:0 }} Ft</h4>
+            <hr>
+            <div>
+                <p>{{ product.description|markdown|safe }}</p>
+            </div>
+            <div style="margin-top: 20px; display: flex; align-items: center;">
+                <input type="number" min="1" value="1" id="quantity-{{ product.id }}" class="custom-quantity-input" style="width: 60px;">
+                <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">
+                    Kosárba
+                </button>
+                <hr>
+            </div>
         </div>
     </div>
-        <div style="margin-top: 20px;">
-            <a href="{% url 'store' %}" class="btn btn-outline-secondary">Vissza az üzletbe</a>
-            <button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Kosárba</button>
-        </div>
 </div>
 
-
 {% endblock content %}
-
-

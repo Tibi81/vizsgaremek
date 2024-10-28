@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Playfair+Display&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
     <link rel="icon" type="image/x-icon" href="{% static 'images/favicon-32x32.png' %}">
-
+    
 
     <title>Saka-Fa Bt Webshopja</title>
 </head>
@@ -123,17 +123,28 @@
     document.addEventListener('DOMContentLoaded', function() {
         var cartIconLink = document.getElementById('cart-icon-link');
         var cartTooltip = document.getElementById('cart-tooltip');
-
+    
         if (cartIconLink && cartTooltip) {
-            cartIconLink.addEventListener('mouseover', function() {
+            // Tooltip megjelenítése
+            cartIconLink.addEventListener('mouseenter', function() {
                 cartTooltip.style.display = 'block';
             });
-
-            cartIconLink.addEventListener('mouseout', function() {
+    
+            // Tooltip eltüntetése, ha elhagyja a kosár ikont vagy a tooltip-et
+            cartIconLink.addEventListener('mouseleave', function() {
                 cartTooltip.style.display = 'none';
+            });
+            
+            cartTooltip.addEventListener('mouseenter', function() {
+                cartTooltip.style.display = 'block'; // Tooltip megjelenítése, ha ráviszi az egeret
+            });
+    
+            cartTooltip.addEventListener('mouseleave', function() {
+                cartTooltip.style.display = 'none'; // Tooltip eltüntetése, ha elhagyja
             });
         }
     });
+    
 </script>
 <!-- Footer -->
 <footer class="footer  text-white mt-5 py-4">
