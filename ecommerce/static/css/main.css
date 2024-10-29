@@ -391,6 +391,11 @@ h6 {
     
 }
 
+.btn-delete {
+      color:#dc3545;
+    
+}
+
 .user-btn{
     color: white !important;  
     border-color: #fc9038;  

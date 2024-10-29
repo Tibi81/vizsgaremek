@@ -121,12 +121,17 @@ def updateItem(request):
         orderItem.quantity += 1
     elif action == 'remove':
         orderItem.quantity -= 1
+    elif action == 'delete':
+        itemTotal = orderItem.get_total
+        orderItem.delete()
+        return JsonResponse({'message': 'Item was deleted', 'itemTotal': itemTotal}, safe=False)
 
     orderItem.save()
     if orderItem.quantity <= 0:
         orderItem.delete()
 
     return JsonResponse('Item was added', safe=False)
+
 
 def cart(request):
     data = cartData(request)
