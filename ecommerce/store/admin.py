@@ -39,7 +39,8 @@ from django.utils.html import format_html
 
 class OrderAdmin(admin.ModelAdmin):
     inlines = [OrderItemInline]
-    list_display = ('id', 'customer', 'date_order', 'complete', 'transaction_id', 'display_products', 'display_quantities', 'display_shipping_address' )
+    list_display = ('id', 'customer', 'date_order', 'complete', 'transaction_id', 'display_products', 'display_quantities', 'discount_percentage','display_shipping_address' )
+    
     search_fields = ['customer__username', 'transaction_id']
 
     def display_products(self, obj):
@@ -58,13 +59,9 @@ class OrderAdmin(admin.ModelAdmin):
     display_shipping_address.short_description = 'Szállítási cím'
 
 
-
-
-'''
-class OrderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'customer', 'date_order', 'complete', 'transaction_id', 'get_order_summary')  # Hozzáadjuk az összegzőt
-'''
-
 admin.site.register(Order, OrderAdmin)
 admin.site.register(OrderItem)
 admin.site.register(ShippingAddress)
+
+
+

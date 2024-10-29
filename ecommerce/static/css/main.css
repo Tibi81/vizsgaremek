@@ -1068,3 +1068,7 @@ td.left-align {
     padding: 6px 12px; /* A belső távolságok */
     font-size: 16px; /* A betűméret */
 }
+
+.product p {
+    font-size: 1rem;
+}

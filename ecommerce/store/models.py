@@ -26,10 +26,10 @@ class Product(models.Model):
 
     name = models.CharField(max_length=200)
     price = models.FloatField()
-    #digital = models.BooleanField(default=False, null=True, blank=True)
+    discount_percentage = models.FloatField(default=0)  # Kedvezmény százalék mező
     image = models.ImageField(null=True, blank=True)
-    description = models.TextField(blank=True)  # Új mező a leíráshoz
-    category = models.CharField(max_length=10, choices=CATEGORY_CHOICES, default='option1')  # Legördülő menü mező
+    description = models.TextField(blank=True)
+    category = models.CharField(max_length=10, choices=CATEGORY_CHOICES, default='option1')
 
     class Meta:
         verbose_name = "Termék"
@@ -37,7 +37,7 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
-    
+
     @property
     def imageURL(self):
         try:
@@ -46,12 +46,23 @@ class Product(models.Model):
             url = ''
         return url
 
+    @property
+    def discounted_price(self):
+        """Kiszámítja az akciós árat a kedvezmény százalék alapján."""
+        if self.discount_percentage > 0:
+            discount_amount = (self.discount_percentage / 100) * self.price
+            return round(self.price - discount_amount, 2)
+        return self.price
+
+
+
     
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Vásárló")
     date_order = models.DateTimeField(auto_now_add=True, verbose_name="Rendelés dátuma")
     complete = models.BooleanField(default=False, verbose_name="Befejezett")
     transaction_id = models.CharField(max_length=100, null=True, verbose_name="Tranzakció azonosító")
+    discount_percentage = models.FloatField(default=0) 
 
     class Meta:
         verbose_name = "Rendelés"

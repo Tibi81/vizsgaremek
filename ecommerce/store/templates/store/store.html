@@ -115,7 +115,15 @@
                             <hr>
                             <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart"><i class="fas fa-shopping-cart"></i></button>
                             <h4 style="display: inline-block; float: right;">
-                                <strong>{{ product.price|floatformat:0 }} Ft</strong>
+                                <div class="product">
+                                    {% if product.discount_percentage > 0 %}
+                                        <p>Akciós ár: <strong>{{ product.discounted_price|floatformat:0 }} Ft</strong></p>
+                                        <p>Normál ár: <span style="text-decoration: line-through;">{{ product.price|floatformat:0 }} Ft</span></p>
+                                    {% else %}
+                                        <p>Ár: <strong>{{ product.price|floatformat:0 }} Ft</strong></p>
+                                    {% endif %}
+                                </div>
+                                
                             </h4><br>
                         </div>
                     </div>

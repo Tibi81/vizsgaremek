@@ -11,7 +11,14 @@
         <div class="product-description col-12 col-md-6">
             <h6 class="product-name"><strong>{{ product.name }}</strong></h6>
             <br>
-            <h4>Ár: {{ product.price|floatformat:0 }} Ft</h4>
+            <div class="product">
+                {% if product.discount_percentage > 0 %}
+                    <p>Akciós ár: <strong>{{ product.discounted_price|floatformat:0 }} Ft</strong></p>
+                    <p>Normál ár: <span style="text-decoration: line-through;">{{ product.price|floatformat:0 }} Ft</span></p>
+                {% else %}
+                    <p>Ár: <strong>{{ product.price|floatformat:0 }} Ft</strong></p>
+                {% endif %}
+            </div>
             <hr>
             <div>
                 <p>{{ product.description|markdown|safe }}</p>
