@@ -7,7 +7,7 @@ for (let i = 0; i < updateBtns.length; i++) {
         var productId = this.dataset.product;
         var action = this.dataset.action;
         var quantityInput = document.getElementById(`quantity-${productId}`);
-        var quantity = quantityInput ? quantityInput.value : 1;
+        var quantity = quantityInput ? parseInt(quantityInput.value) || 1 : 1; // Számra konvertálás
         console.log('productId:', productId, 'Action:', action);
 
         console.log('USER:', user);  // Ellenőrizd, hogy helyes felhasználó van-e betöltve
@@ -17,7 +17,7 @@ for (let i = 0; i < updateBtns.length; i++) {
             // Opcionálisan átirányíthatod a felhasználót a bejelentkezési oldalra:
             // window.location.href = '/login/';
         } else {
-            updateUserOrder(productId, action, quantity);
+            updateUserOrder(productId, action, quantity); // Mennyiség átkonvertálva
         }
     });
 }
@@ -36,10 +36,11 @@ for (let i = 0; i < deleteBtns.length; i++) {
     });
 }
 
-function updateUserOrder(productId, action) {
+function updateUserOrder(productId, action, quantity) {
     console.log('User is authenticated, sending data...');
 
     const url = '/update_item/'; // Cseréld le a helyes URL-re
+    
 
     fetch(url, {
         method: 'POST',
@@ -47,8 +48,10 @@ function updateUserOrder(productId, action) {
             'Content-Type': 'application/json',
             'X-CSRFToken': csrftoken,
         },
-        body: JSON.stringify({ 'productId': productId, 'action': action })
+        body: JSON.stringify({ 'productId': productId, 'action': action, 'quantity': quantity })
+            
     })
+    
     .then((response) => {
         return response.json();
     })
@@ -66,6 +69,7 @@ function updateUserOrder(productId, action) {
             // Frissítsd a kosár összes elemének számát
             const cartItems = document.querySelector('#cart-items');
             cartItems.innerText = parseInt(cartItems.innerText) - 1;
+            alert('A termék eltávolítva a kosárból.');
 
         } else {
             location.reload(); // Vagy frissítheted az UI-t más módon
@@ -73,6 +77,7 @@ function updateUserOrder(productId, action) {
     })
     .catch((error) => {
         console.error('Error:', error);
+        alert('Hiba történt a kosár frissítésekor. Kérlek próbáld újra.');
     });
 }
 

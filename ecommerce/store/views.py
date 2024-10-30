@@ -105,6 +105,10 @@ def processOrder(request):
 
 
 
+import json
+from django.http import JsonResponse
+from .models import Product, Order, OrderItem
+
 def updateItem(request):
     if not request.user.is_authenticated:
         return JsonResponse({'message': 'A rendeléshez be kell jelentkeznie!'}, status=401)
@@ -112,25 +116,32 @@ def updateItem(request):
     data = json.loads(request.body)
     productId = data['productId']
     action = data['action']
+    quantity = int(data.get('quantity', 1))  # Konvertáld egész számra
+
     customer = request.user.customer
     product = Product.objects.get(id=productId)
     order, created = Order.objects.get_or_create(customer=customer, complete=False)
     orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
 
     if action == 'add':
-        orderItem.quantity += 1
+        orderItem.quantity += quantity
     elif action == 'remove':
-        orderItem.quantity -= 1
+        orderItem.quantity -= quantity
     elif action == 'delete':
         itemTotal = orderItem.get_total
         orderItem.delete()
         return JsonResponse({'message': 'Item was deleted', 'itemTotal': itemTotal}, safe=False)
 
     orderItem.save()
+    
     if orderItem.quantity <= 0:
         orderItem.delete()
 
-    return JsonResponse('Item was added', safe=False)
+    return JsonResponse('Item was updated', safe=False)
+
+
+
+
 
 
 def cart(request):
