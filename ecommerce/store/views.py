@@ -267,24 +267,74 @@ def order_list(request):
     return render(request, 'store/order_list.html', context)
 
 
+from .models import Product, Review
+from .forms import ReviewForm
+from django.contrib import messages
+from django.db import IntegrityError
+
 def product_detail(request, product_id):
     product = get_object_or_404(Product, id=product_id)
+    reviews = Review.objects.filter(product=product)
+    form = ReviewForm(request.POST or None)
 
-    # Kosár adatok lekérdezése a cartData függvényből
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            if form.is_valid():
+                review = form.save(commit=False)
+                review.user = request.user
+                review.product = product
+                review.save()
+                messages.success(request, "Köszönjük az értékelést!")
+                return redirect('product_detail', product_id=product.id)
+        else:
+            messages.error(request, "Bejelentkezés szükséges az értékeléshez.")
+
+    return render(request, 'store/product_detail.html', {
+        'product': product,
+        'reviews': reviews,
+        'form': form,
+        'show_cart': request.user.is_authenticated,
+        'messages': messages.get_messages(request),
+    })
+
+def product_detail(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    reviews = Review.objects.filter(product=product)
+    form = ReviewForm()
+
+     # Kosár adatok lekérdezése a cartData függvényből
     cart_data = cartData(request)  # Kosár adatok lekérdezése
     cartItems = cart_data['cartItems']  # Kosár tételek száma
     items = cart_data['items']  # Kosár tételek
+    
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            existing_review = reviews.filter(user=request.user).first()
+            if existing_review:
+                messages.warning(request, "Már írtál véleményt erről a termékről.")
+            else:
+                form = ReviewForm(request.POST)
+                if form.is_valid():
+                    review = form.save(commit=False)
+                    review.user = request.user
+                    review.product = product
+                    review.save()
+                    messages.success(request, "Köszönjük az értékelésed!")
+                else:
+                    messages.error(request, "Kérlek, ellenőrizd a mezőket.")
 
-    # Megjelenítjük a kosarat, ha a felhasználó be van jelentkezve
-    show_cart = request.user.is_authenticated
+        else:
+            messages.error(request, "Bejelentkezés szükséges az értékeléshez.")
 
-    context = {
+    return render(request, 'store/product_detail.html', {
         'product': product,
         'items': items,
         'cartItems': cartItems,
-        'show_cart': show_cart
-    }
-    return render(request, 'store/product_detail.html', context)
+        'reviews': reviews,
+        'form': form,
+        'show_cart': request.user.is_authenticated,
+        'messages': messages.get_messages(request),
+    })
 
 
 
@@ -371,3 +421,6 @@ def index(request):
     products = Product.objects.all()
     context = {'products': products, 'cartItems': cartItems, 'items': items}
     return render(request, 'store/index.html', context)
+
+
+

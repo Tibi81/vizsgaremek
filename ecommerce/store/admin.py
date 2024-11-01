@@ -64,4 +64,11 @@ admin.site.register(OrderItem)
 admin.site.register(ShippingAddress)
 
 
+from .models import Review
 
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ('product', 'user', 'rating', 'created_at')  # Megjelenítendő mezők
+    list_filter = ('product', 'user', 'rating')  # Szűrők
+    search_fields = ('user__username', 'product__name')  # Keresési mezők
+
+admin.site.register(Review, ReviewAdmin)  # Regisztráljuk a Review modellt

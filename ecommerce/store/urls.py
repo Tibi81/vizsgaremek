@@ -32,9 +32,7 @@ urlpatterns = [
     path('api/products/', ProductList.as_view(), name='product-list'),  # API a termékekhez
     path('search/', views.search, name='search'),
     path('filtered-products/', filtered_products, name='filtered_products'),
-    path('reset-filters/', reset_filters, name='reset_filters'),
-    
-   
+    path('reset-filters/', reset_filters, name='reset_filters'), 
 
 ]
 

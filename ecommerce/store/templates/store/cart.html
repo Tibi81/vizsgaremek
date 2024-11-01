@@ -29,7 +29,7 @@
                     </a>
                 </div>
                 <div style="flex:1"><p>{{ item.product.name }}</p></div>
-                <div style="flex:1"><p>{{ item.product.price|floatformat:0 }} Ft</p></div>
+                <div style="flex:1"><p>{{ item.product.discounted_price|floatformat:0 }} Ft</p></div> <!-- Akciós ár -->
                 <div style="flex:1">
                     <p class="quantity">{{ item.quantity }}</p>
                     <div class="quantity">
@@ -39,8 +39,6 @@
                     <button class="delete-btn btn btn-outline-danger btn-delete" data-action="delete"><i class="bi bi-trash"></i></button>
                 </div>
                 <div style="flex:1"><p>{{ item.get_total|floatformat:0 }} Ft</p></div>
-                
-
             </div>
             {% endfor %}
         </div>

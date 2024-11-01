@@ -54,9 +54,7 @@ class Product(models.Model):
             return round(self.price - discount_amount, 2)
         return self.price
 
-
-
-    
+import math   
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Vásárló")
     date_order = models.DateTimeField(auto_now_add=True, verbose_name="Rendelés dátuma")
@@ -75,13 +73,14 @@ class Order(models.Model):
     def get_cart_total(self):
         orderitems = self.orderitem_set.all()
         total = sum([item.get_total for item in orderitems])
-        return total
+        discount_amount = (self.discount_percentage / 100) * total
+        return total - discount_amount  # Kedvezménnyel csökkentett összeg
     
     @property
     def get_cart_items(self):
         orderitems = self.orderitem_set.all()
         total = sum([item.quantity for item in orderitems])
-        return total
+        return total 
     
     @property
     def get_order_summary(self):
@@ -113,9 +112,10 @@ class OrderItem(models.Model):
 
     @property
     def get_total(self):
-        if self.product and self.product.price is not None:
-            return self.product.price * self.quantity
-        return 0  # Visszatér 0, ha a termék nincs vagy a price null     
+        if self.product and self.product.discounted_price is not None:
+            return self.product.discounted_price * self.quantity  # Az akciós ár használata
+        return self.product.price * self.quantity  # Ha nincs akciós ár, az alapár használata
+  
 
 class ShippingAddress(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True)
@@ -134,3 +134,17 @@ class ShippingAddress(models.Model):
     def __str__(self):
         return self.address
     
+class Review(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    rating = models.IntegerField(default=1)  # 1-től 5-ig
+    comment = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Vélemény"
+        verbose_name_plural = "Vélemények"
+        unique_together = ('user', 'product')  # Egyedi kombináció a felhasználó és a termék között
+
+    def __str__(self):
+        return f'{self.user.username} - {self.product.name} - {self.rating}'

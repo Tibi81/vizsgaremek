@@ -8,6 +8,8 @@
         <div class="product-img col-12 col-md-6">
             <img src="{{ product.imageURL }}" alt="{{ product.name }}" class="thumbnail">
         </div>
+
+
         <div class="product-description col-12 col-md-6">
             <h6 class="product-name"><strong>{{ product.name }}</strong></h6>
             <br>
@@ -29,7 +31,48 @@
                 <hr>
             </div>
         </div>
+
+
+        <div class="product-description col-12 col-md-6">
+            <h2>Értékelések</h2>
+            {% for review in reviews %}
+                <div>
+                    <strong>{{ review.user.username }}:</strong>
+                    <span>{{ review.rating }} csillag</span>
+                    <p>{{ review.comment }}</p>
+                    <small>{{ review.created_at }}</small>
+                </div>
+            {% empty %}
+                <p>Nincsenek értékelések.</p>
+            {% endfor %}
+            </div>
+            
+            <div class="product-img col-12 col-md-6">
+            <h2>Új értékelés</h2>
+            {% if show_cart %}
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Beküldés</button>
+            </form>
+            {% else %}
+                <p>Bejelentkezés szükséges az értékeléshez.</p>
+            {% endif %}
+            {% if messages %}
+    <ul>
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+            </div>
+
+        
     </div>
 </div>
+
+
+
 
 {% endblock content %}

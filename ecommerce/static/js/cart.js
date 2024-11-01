@@ -90,3 +90,4 @@ function addCookieItem(productId, action) {
         alert('Kérjük, jelentkezzen be a kosár használatához!');
     }
 }
+
