@@ -80,7 +80,7 @@
                             <div class="cart-row">
                                 <div style="flex:2"><img class="row-image" src="{{ item.product.imageURL }}"></div>
                                 <div style="flex:2"><p>{{ item.product.name }}</p></div>
-                                <div style="flex:1"><p>{{ item.product.price|floatformat:0}}Ft</p></div>
+                                <div style="flex:1"><p>{{  item.product.discounted_price|floatformat:0}}Ft</p></div>
                                 
                                 <div style="flex:1"><p>x{{ item.quantity }}</p></div>
                             </div>
@@ -146,6 +146,8 @@
     });
     
 </script>
+
+<div class="separator"></div>
 <!-- Footer -->
 <footer class="footer  text-white mt-5 py-4">
     <div class="container">
@@ -174,6 +176,7 @@
             <p>&copy; 2024 Saka-Fa Bt. Minden jog fenntartva.</p>
         </div>
     </div>
+    
 </footer>
 
 

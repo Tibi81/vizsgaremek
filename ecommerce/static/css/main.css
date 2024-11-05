@@ -375,7 +375,7 @@ h6 {
     font-weight: normal;
 }
 
-.col-lg-4, .col-lg-6, .col-lg-8, .col-lg-12{
+.col-lg-4, .col-lg-6, .col-lg-8, .col-lg-12 {
 	margin-top: 10px;
     
 }
@@ -557,12 +557,7 @@ td.left-align {
 
 .product-img {
     background-color: #add8e6;
-    border-radius: 5px;
-    max-width: 500px;
-    max-height: 500px;
-    margin-right: 20px;
-
-    
+    border-radius: 5px;    
 }
 
 .product-img img {
@@ -585,6 +580,57 @@ td.left-align {
     border: none;      /* Távolítsd el a `border: none;` sort, ha benne van */
     height: 1px;       /* Állítsd be a kívánt magasságot */
     background-color: black; /* Adj meg egy látható színt */
+}
+
+.review {
+    border-radius: 5px;
+    background-color: #ccc;
+    padding-left: 10px;
+    margin-right: -20px;
+      
+}
+#review {
+    padding-top: 0px;
+    
+}
+
+.product-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Csak a product-row elemek között lesz távolság */
+}
+.product-row .content-box {
+    flex: 1 1 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 20px;
+      
+}
+
+#content-box {
+    border-radius: 5px;
+    border: 1px solid #7e7b7b;  
+}
+ #content-box .btn {
+    width: auto;
+    max-width: 100px;
+ }
+
+
+@media (min-width: 768px) {
+    .product-row .content-box {
+        flex: 1 1 calc(50% - 20px); /* Két oszlop, a gap érték levonásával */
+    }
+}
+
+.product-row .separator {
+    flex: 1 1 100%;
+    text-align: center;
+    padding: 10px 0;
+    border-top: 2px solid #ddd;
+    margin: 20px 0;
 }
 
 .footer {
@@ -1072,3 +1118,51 @@ td.left-align {
 .product p {
     font-size: 1rem;
 }
+
+.star-rating {
+    display: flex;
+    direction: row-reverse;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.star-rating input[type="radio"] {
+    display: none; /* Eltünteti a rádiógombokat */
+}
+
+.star {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #fc9038;
+    margin-right: 2px;
+}
+
+
+/* Az ellenőrzött csillagok és azok előtti csillagok színe */
+input[type="radio"]:checked ~ label.star,
+input[type="radio"]:checked ~ label.star ~ label.star {
+    color: #fc9038;
+}
+
+/* Egérrel rámutatáskor a csillag és az előtte lévő összes csillag színe */
+.star:hover,
+.star:hover ~ .star {
+    color: #fc9038;
+}
+
+
+
+
+#review-form {
+    display: flex;
+    flex-direction: column; /* Függőleges elrendezés */
+    gap: 10px; /* Térköz a mezők között */
+}
+
+
+.product-separator {
+    
+    height: 30px;
+    margin-top: 8px; /* Felső margó */
+    margin-bottom: 8px; /* Alsó margó */
+  }

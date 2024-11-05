@@ -134,17 +134,28 @@ class ShippingAddress(models.Model):
     def __str__(self):
         return self.address
     
+from django.core.validators import MinValueValidator, MaxValueValidator
+from django.conf import settings
+
 class Review(models.Model):
+    RATING_CHOICES = [(i) for i in range(1, 6)]
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    rating = models.IntegerField(default=1)  # 1-től 5-ig
+    rating = models.IntegerField(
+        default=1,
+        validators=[MinValueValidator(1), MaxValueValidator(5)]  # Csak 1 és 5 közötti értékek engedélyezettek
+    )
     comment = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name = "Vélemény"
         verbose_name_plural = "Vélemények"
-        unique_together = ('user', 'product')  # Egyedi kombináció a felhasználó és a termék között
+        unique_together = ('user', 'product')
 
     def __str__(self):
         return f'{self.user.username} - {self.product.name} - {self.rating}'
+    
+
+
+
