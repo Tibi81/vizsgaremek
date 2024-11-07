@@ -114,7 +114,7 @@
                             <h6 class="product-name"><strong>{{ product.name }}</strong></h6>
                             <hr>
                             <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart"><i class="fas fa-shopping-cart"></i></button>
-                            <h4 style="display: inline-block; float: right;">
+                            <h4 style="display: inline-block; float: left;">
                                 <div class="product">
                                     {% if product.discount_percentage > 0 %}
                                         <p>Akciós ár: <strong>{{ product.discounted_price|floatformat:0 }} Ft</strong></p>
