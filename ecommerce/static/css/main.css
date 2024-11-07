@@ -47,33 +47,40 @@ h1,h2,h3,h4,h5,h6{
     font-family: 'Lora', serif; /* Elegáns betűtípus */
 }
 
-.box-element{
-	box-shadow:hsl(0, 0%, 53%) 0 0 16px;
-	background-color: #fff;
-	border-radius: 8px;
-	padding: 1px;
+.box-element {
+    box-shadow:hsl(0, 0%, 53%) 0 0 16px;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 10px;
     flex-grow: 1;   
-    position: relative;
+    position: relative; /* Ez szükséges a pozicionálás alapjául */
     z-index: 2;
     background: rgba(255, 255, 255, 0.8);
-
     min-height: 150px; 
     display: flex; 
     flex-direction: column; 
     justify-content: space-between;    
-    padding-left: 10px;
-    padding-top: 10px;
-
 }
+
+.box-element .btn-top-left {
+    position: absolute;
+    top: 10px; /* A bal felső sarokhoz 10px-re pozicionálja */
+    left: 10px;
+}
+
+.box-element .btn-bottom-right {
+    position: absolute;
+    bottom: 10px; /* A jobb alsó sarokhoz 10px-re pozicionálja */
+    right: 10px;
+}
+
 .box-element p {
     color:hsl(0, 0%, 30%);
 }
 
-.box-element .btn {
-    position: absolute; 
-    bottom: 10px; 
-    right: 10px;
-}
+
+
+
 
 .box-element hr {
     border: none;
@@ -181,12 +188,20 @@ h1,h2,h3,h4,h5,h6{
 .filter-card-img {
     width: 100%;
     height: 300px;
+    display: flex;
+    justify-content: center; /* Kép vízszintes középre igazítása */
+    align-items: center; /* Kép függőleges középre igazítása */
     overflow: hidden;    
     transition: transform 0.3s ease;
     z-index: 1;
     margin-top: 10px;
-    
 }
+
+.filter-card-img img {
+    max-width: 100%; /* A kép nem léphet túl a konténer szélességén */
+    max-height: 100%; /* A kép nem léphet túl a konténer magasságán */
+}
+
 
 .filter-card-img:hover {
     transform: scale(1.2);
@@ -432,15 +447,28 @@ h6 {
 .custom-button {
     border-radius: 0 8px 8px 0; /* Itt állítsd be a kívánt értéket */
   }
-.form-control {
-    border-radius: 8px 0 0 8px; /* Bal oldalon lekerekítés (felül, alul), jobb oldalon nem */
+  .form-control {
+    border-radius: 8px 0 0 8px; /* Bal oldalon lekerekítés */
+    width: 100%; /* A beviteli mezők szélességét a szülőhöz igazítja */
 }
 
-.form-field{
-	width:250px;
-	display: inline-block;
-	padding: 5px;
+.form-field {
+    width: 250px;
+    display: inline-block;
+    padding: 5px;
+    margin-bottom: 10px; /* További margó, hogy a mezők között legyen távolság */
 }
+
+/* A form wrapperre alkalmazott stílusok */
+#form-wrapper {
+    position: relative; 
+    padding-bottom: 50px; /* Helyet adunk a gombnak */
+    display: flex;
+    flex-direction: column; /* Elrendezés függőlegesen */
+    justify-content: flex-start; /* Az elemek a tetejükhöz igazítva */
+}
+
+/* A gomb pozicionálása */
 
 .cart-row{
 	display: flex;
@@ -826,10 +854,11 @@ td.left-align {
     box-shadow: 10px 0px 10px 2px rgba(0, 0, 0, 0.2);        
     transition: border 0.3s ease; 
     background-color: #add8e6;
+    position: relative; 
 }
 
 .scroll-card:hover {
-    border: 8px solid #6090f7; /* Keret megjelenítése hover állapotban */
+    border: 3px solid #6090f7; /* Keret megjelenítése hover állapotban */
 }
 
 .card-container:hover {
@@ -842,7 +871,12 @@ td.left-align {
     object-fit: cover;
     overflow: hidden;
     position: relative;  
+    transition: transform 0.3s ease;
+    z-index: 1;
    
+}
+.scroll-card img:hover {
+    transform: scale(1.2);
 }
 
 .product-name {
