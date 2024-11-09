@@ -1114,7 +1114,6 @@ td.left-align {
     text-align: center;
 }
 
-/* login-login-login-login-login-login-login-login-login-login-login-login-login-login-login-login*/
 
 
 .login-container {
@@ -1181,7 +1180,7 @@ td.left-align {
     height: 38px; /* A gomb magassága */
     padding: 6px 12px; /* A belső távolságok */
     font-size: 16px; /* A betűméret */
-    border: 1px solid #6c757d; /* A keret színe */
+    border: 1px solid #6c757b; /* A keret színe */
     border-radius: 4px; /* A sarkok lekerekítése */
     margin-right: 10px; /* Távolság a gombtól */
 }
