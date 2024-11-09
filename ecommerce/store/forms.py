@@ -39,11 +39,23 @@ class CustomUserCreationForm(UserCreationForm):
             user.save()
         return user
 
+
 from .models import Review
 
 class ReviewForm(forms.ModelForm):
+    RATING_CHOICES = [(i, f"{i} csillag") for i in range(1, 6)]
+    rating = forms.ChoiceField(
+        choices=RATING_CHOICES,
+        widget=forms.RadioSelect(attrs={'class': 'star-rating'}),  # Osztály a könnyebb stílushoz
+        label="Értékelés (1-5)"
+    )
+
     class Meta:
         model = Review
         fields = ['rating', 'comment']
+        labels = {            
+            'comment': 'Hozzászólás'
+        }
+
 
    

@@ -25,6 +25,7 @@ for (let i = 0; i < updateBtns.length; i++) {
 // Törlés gombok kezelése
 for (let i = 0; i < deleteBtns.length; i++) {
     deleteBtns[i].addEventListener('click', function() {
+        
         var productId = this.closest('.cart-row').dataset.product;
         var action = 'delete'; // Törlés akció
 

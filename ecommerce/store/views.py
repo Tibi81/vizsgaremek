@@ -272,30 +272,7 @@ from .forms import ReviewForm
 from django.contrib import messages
 from django.db import IntegrityError
 
-def product_detail(request, product_id):
-    product = get_object_or_404(Product, id=product_id)
-    reviews = Review.objects.filter(product=product)
-    form = ReviewForm(request.POST or None)
 
-    if request.method == 'POST':
-        if request.user.is_authenticated:
-            if form.is_valid():
-                review = form.save(commit=False)
-                review.user = request.user
-                review.product = product
-                review.save()
-                messages.success(request, "Köszönjük az értékelést!")
-                return redirect('product_detail', product_id=product.id)
-        else:
-            messages.error(request, "Bejelentkezés szükséges az értékeléshez.")
-
-    return render(request, 'store/product_detail.html', {
-        'product': product,
-        'reviews': reviews,
-        'form': form,
-        'show_cart': request.user.is_authenticated,
-        'messages': messages.get_messages(request),
-    })
 
 def product_detail(request, product_id):
     product = get_object_or_404(Product, id=product_id)

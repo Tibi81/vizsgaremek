@@ -47,21 +47,47 @@ h1,h2,h3,h4,h5,h6{
     font-family: 'Lora', serif; /* Elegáns betűtípus */
 }
 
-.box-element{
-	box-shadow:hsl(0, 0%, 53%) 0 0 16px;
-	background-color: #fff;
-	border-radius: 8px;
-	padding: 10px;
+.box-element {
+    box-shadow:hsl(0, 0%, 53%) 0 0 16px;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 10px;
     flex-grow: 1;   
-    position: relative;
+    position: relative; /* Ez szükséges a pozicionálás alapjául */
     z-index: 2;
     background: rgba(255, 255, 255, 0.8);
-
+    min-height: 150px; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between;    
 }
-.box-elemet p {
+
+.box-element .btn-top-left {
+    position: absolute;
+    top: 10px; /* A bal felső sarokhoz 10px-re pozicionálja */
+    left: 10px;
+}
+
+.box-element .btn-bottom-right {
+    position: absolute;
+    bottom: 10px; /* A jobb alsó sarokhoz 10px-re pozicionálja */
+    right: 10px;
+}
+
+.box-element p {
     color:hsl(0, 0%, 30%);
 }
 
+
+
+
+
+.box-element hr {
+    border: none;
+    height: 1px;
+    background-color: #fc9038;
+    margin: 5px 0;
+}
 /* Filter Card */
 .filter-card {
     display: flex;
@@ -162,12 +188,20 @@ h1,h2,h3,h4,h5,h6{
 .filter-card-img {
     width: 100%;
     height: 300px;
+    display: flex;
+    justify-content: center; /* Kép vízszintes középre igazítása */
+    align-items: center; /* Kép függőleges középre igazítása */
     overflow: hidden;    
     transition: transform 0.3s ease;
     z-index: 1;
     margin-top: 10px;
-    
 }
+
+.filter-card-img img {
+    max-width: 100%; /* A kép nem léphet túl a konténer szélességén */
+    max-height: 100%; /* A kép nem léphet túl a konténer magasságán */
+}
+
 
 .filter-card-img:hover {
     transform: scale(1.2);
@@ -340,6 +374,7 @@ h6 {
 
 .product{
 	border-radius: 0 0 4px 4px;
+    max-height: 50px;
 }
 
 .bg-dark{
@@ -375,7 +410,7 @@ h6 {
     font-weight: normal;
 }
 
-.col-lg-4, .col-lg-6, .col-lg-8, .col-lg-12{
+.col-lg-4, .col-lg-6, .col-lg-8, .col-lg-12 {
 	margin-top: 10px;
     
 }
@@ -412,15 +447,28 @@ h6 {
 .custom-button {
     border-radius: 0 8px 8px 0; /* Itt állítsd be a kívánt értéket */
   }
-.form-control {
-    border-radius: 8px 0 0 8px; /* Bal oldalon lekerekítés (felül, alul), jobb oldalon nem */
+  .form-control {
+    border-radius: 8px 0 0 8px; /* Bal oldalon lekerekítés */
+    width: 100%; /* A beviteli mezők szélességét a szülőhöz igazítja */
 }
 
-.form-field{
-	width:250px;
-	display: inline-block;
-	padding: 5px;
+.form-field {
+    width: 250px;
+    display: inline-block;
+    padding: 5px;
+    margin-bottom: 10px; /* További margó, hogy a mezők között legyen távolság */
 }
+
+/* A form wrapperre alkalmazott stílusok */
+#form-wrapper {
+    position: relative; 
+    padding-bottom: 50px; /* Helyet adunk a gombnak */
+    display: flex;
+    flex-direction: column; /* Elrendezés függőlegesen */
+    justify-content: flex-start; /* Az elemek a tetejükhöz igazítva */
+}
+
+/* A gomb pozicionálása */
 
 .cart-row{
 	display: flex;
@@ -557,12 +605,7 @@ td.left-align {
 
 .product-img {
     background-color: #add8e6;
-    border-radius: 5px;
-    max-width: 500px;
-    max-height: 500px;
-    margin-right: 20px;
-
-    
+    border-radius: 5px;    
 }
 
 .product-img img {
@@ -585,6 +628,64 @@ td.left-align {
     border: none;      /* Távolítsd el a `border: none;` sort, ha benne van */
     height: 1px;       /* Állítsd be a kívánt magasságot */
     background-color: black; /* Adj meg egy látható színt */
+}
+
+.review {
+    border-radius: 5px;
+    background-color: #ccc;
+    padding-left: 10px;
+    margin-right: -20px;
+      
+}
+#review {
+    padding-top: 0px;
+    
+}
+
+.product-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Csak a product-row elemek között lesz távolság */
+}
+.product-row .content-box {
+    flex: 1 1 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 20px;
+      
+}
+
+#content-box {
+    border-radius: 5px;
+    border: 1px solid #7e7b7b;  
+}
+ #content-box .btn {
+    width: auto;
+    max-width: 100px;
+ }
+
+.content-box hr {
+    border: none;
+    height: 1px;
+    background-color: #fc9038;
+    margin: 5px 0;
+}
+
+
+@media (min-width: 768px) {
+    .product-row .content-box {
+        flex: 1 1 calc(50% - 20px); /* Két oszlop, a gap érték levonásával */
+    }
+}
+
+.product-row .separator {
+    flex: 1 1 100%;
+    text-align: center;
+    padding: 10px 0;
+    border-top: 2px solid #ddd;
+    margin: 20px 0;
 }
 
 .footer {
@@ -753,10 +854,11 @@ td.left-align {
     box-shadow: 10px 0px 10px 2px rgba(0, 0, 0, 0.2);        
     transition: border 0.3s ease; 
     background-color: #add8e6;
+    position: relative; 
 }
 
 .scroll-card:hover {
-    border: 8px solid #6090f7; /* Keret megjelenítése hover állapotban */
+    border: 3px solid #6090f7; /* Keret megjelenítése hover állapotban */
 }
 
 .card-container:hover {
@@ -769,7 +871,12 @@ td.left-align {
     object-fit: cover;
     overflow: hidden;
     position: relative;  
+    transition: transform 0.3s ease;
+    z-index: 1;
    
+}
+.scroll-card img:hover {
+    transform: scale(1.2);
 }
 
 .product-name {
@@ -1044,7 +1151,6 @@ td.left-align {
 
 .login-btn {
     text-align: center;
-    /*color: white !important;*/
     font-size: 1em;
     font-weight: 300; 
     text-shadow: 2px  #6090f7;
@@ -1052,8 +1158,25 @@ td.left-align {
     color: #2577fd;
     transition: 0.5s;
     text-transform: uppercase;
+    margin: 10px;
 }
 
+.register-btn {
+    text-align: center;
+    font-size: 1em;
+    font-weight: 300; 
+    text-shadow: 2px  #fc9038;
+    background-color: transparent;
+    color: #2577fd;
+    transition: 0.5s;
+    text-transform: uppercase;
+    margin: 10px;
+    border-color: #fc9038; 
+}
+.register-btn:hover {
+    background-color: #fc9038;
+    color: white;
+}
 .custom-quantity-input {
     height: 38px; /* A gomb magassága */
     padding: 6px 12px; /* A belső távolságok */
@@ -1072,3 +1195,51 @@ td.left-align {
 .product p {
     font-size: 1rem;
 }
+
+.star-rating {
+    display: flex;
+    direction: row-reverse;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.star-rating input[type="radio"] {
+    display: none; /* Eltünteti a rádiógombokat */
+}
+
+.star {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #fc9038;
+    margin-right: 2px;
+}
+
+
+/* Az ellenőrzött csillagok és azok előtti csillagok színe */
+input[type="radio"]:checked ~ label.star,
+input[type="radio"]:checked ~ label.star ~ label.star {
+    color: #fc9038;
+}
+
+/* Egérrel rámutatáskor a csillag és az előtte lévő összes csillag színe */
+.star:hover,
+.star:hover ~ .star {
+    color: #fc9038;
+}
+
+
+
+
+#review-form {
+    display: flex;
+    flex-direction: column; /* Függőleges elrendezés */
+    gap: 10px; /* Térköz a mezők között */
+}
+
+
+.product-separator {
+    
+    height: 30px;
+    margin-top: 8px; /* Felső margó */
+    margin-bottom: 8px; /* Alsó margó */
+  }

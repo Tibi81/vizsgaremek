@@ -3,42 +3,53 @@
 {% block content %}
 <div class="row">
     <div class="col-lg-12">
-        <div class="box-element">
-            <a class="btn btn-outline-dark" href="{% url 'store' %}">&#x2190; Vásárlás folytatása</a><br><br>
-            <table class="table">
+        <div class="box-element ">
+            <a class="btn btn-outline-dark btn-top-left"  href="{% url 'store' %}">&#x2190; Vásárlás folytatása</a>
+            <table class="table"><br><br>
                 <tr>
                     <th><h5>Termékek: <strong>{{order.get_cart_items}}</strong></h5></th>
                     <th><h5>Összesen: <strong>{{order.get_cart_total|floatformat:0}}Ft</strong></h5></th>
-                    <th><a style="float:right; margin:5px;" class="btn btn-success" href="{% url 'checkout' %}">Rendelés</a></th>
                 </tr>
-            </table>
+            </table><br><br>
+            <a class="btn btn-outline-dark btn-bottom-right" href="{% url 'checkout' %}">Tovább a kosárhoz &#x2192;</a>
         </div><br>
         <div class="box-element">
             <div class="cart-row">
-                <div style="flex:1"><strong>Termék</strong></div>
-                <div style="flex:1"><strong>Megnevezés</strong></div>
-                <div style="flex:1"><strong>Ár</strong></div>
-                <div style="flex:1"><strong>Mennyiség</strong></div>
-                <div style="flex:1"><strong>Összesen</strong></div>
+                <div style="flex-basis: 15%"><strong>Termék</strong></div>
+                <div style="flex-basis: 30%"><strong>Megnevezés</strong></div>
+                
+                <div style="flex-basis: 10%"><strong>Ár</strong></div>
+                <div style="flex-basis: 10%"><strong>Mennyiség</strong></div>
+                <div style="flex-basis: 15%"><strong>Összesen</strong></div>
+                <div style="flex-basis: 20%"><strong>Törlés</strong></div>
+                
+                
             </div>
             {% for item in items %}
             <div class="cart-row" data-product="{{ item.product.id }}">
-                <div style="flex:1">
+                <div style="flex-basis: 15%">
                     <a href="{% url 'product_detail' item.product.id %}">
                         <img class="row-image" src="{{ item.product.imageURL }}">
                     </a>
                 </div>
-                <div style="flex:1"><p>{{ item.product.name }}</p></div>
-                <div style="flex:1"><p>{{ item.product.discounted_price|floatformat:0 }} Ft</p></div> <!-- Akciós ár -->
-                <div style="flex:1">
-                    <p class="quantity">{{ item.quantity }}</p>
-                    <div class="quantity">
-                        <img data-product="{{ item.product.id }}" data-action="add" class="chg-quantity update-cart" src="{% static 'images/arrow-up.png' %}">
-                        <img data-product="{{ item.product.id }}" data-action="remove" class="chg-quantity update-cart" src="{% static 'images/arrow-down.png' %}">
+                <div style="flex-basis: 30%"><p>{{ item.product.name }}</p></div>
+                <div style="flex-basis: 10%"><p>{{ item.product.discounted_price|floatformat:0 }} Ft</p></div> <!-- Akciós ár -->
+                <div style="flex-basis: 10%; display: flex; justify-content: flex-start; align-items: center;">
+                    <div style="display: inline-flex; align-items: center; gap: 5px;">
+                        <p class="quantity" style="margin: 0;">{{ item.quantity }}</p>
+                        <div class="quantity">
+                            <img data-product="{{ item.product.id }}" data-action="add" class="chg-quantity update-cart" src="{% static 'images/arrow-up.png' %}">
+                            <img data-product="{{ item.product.id }}" data-action="remove" class="chg-quantity update-cart" src="{% static 'images/arrow-down.png' %}">
+                        </div>
                     </div>
-                    <button class="delete-btn btn btn-outline-danger btn-delete" data-action="delete"><i class="bi bi-trash"></i></button>
+                    
+                    
                 </div>
-                <div style="flex:1"><p>{{ item.get_total|floatformat:0 }} Ft</p></div>
+                
+                
+                
+                <div style="flex-basis: 15%"><p>{{ item.get_total|floatformat:0 }} Ft</p></div>
+                <div style="flex-basis: 20%"><button class="delete-btn btn btn-outline-danger btn-delete" data-action="delete"><i class="bi bi-trash">Törlés</i></button></div>
             </div>
             {% endfor %}
         </div>

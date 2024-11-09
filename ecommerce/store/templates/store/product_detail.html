@@ -4,15 +4,16 @@
 {% block content %}
 
 <div class="container">
-    <div class="row">
-        <div class="product-img col-12 col-md-6">
+    <div class="row product-row">
+        <!-- Termék képe -->
+        <div class="product-img col-12 col-md-6 content-box">
             <img src="{{ product.imageURL }}" alt="{{ product.name }}" class="thumbnail">
         </div>
 
-
-        <div class="product-description col-12 col-md-6">
+        <!-- Termék leírása -->
+        <div class="product-description col-12 col-md-6 content-box">
             <h6 class="product-name"><strong>{{ product.name }}</strong></h6>
-            <br>
+            <hr>
             <div class="product">
                 {% if product.discount_percentage > 0 %}
                     <p>Akciós ár: <strong>{{ product.discounted_price|floatformat:0 }} Ft</strong></p>
@@ -27,52 +28,105 @@
             </div>
             <div style="margin-top: 20px; display: flex; align-items: center;">
                 <input type="number" min="1" value="1" id="quantity-{{ product.id }}" class="custom-quantity-input" style="width: 60px;">
-                <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Kosárba</button>
+                <button data-product="{{ product.id }}" data-action="add" class="btn btn-outline-secondary add-btn update-cart"><i class="fas fa-shopping-cart"></i> Kosárba</button>
                 <hr>
             </div>
         </div>
 
-
-        <div class="product-description col-12 col-md-6">
+        <!-- Értékelések -->
+        <div class="col-12 product-separator">
             <h2>Értékelések</h2>
+        </div>
+        <div class="col-12 col-md-6 content-box" id="review">
             {% for review in reviews %}
-                <div>
+                <div class="review">
                     <strong>{{ review.user.username }}:</strong>
-                    <span>{{ review.rating }} csillag</span>
-                    <p>{{ review.comment }}</p>
-                    <small>{{ review.created_at }}</small>
+                    <span class="star-rating" data-rating="{{ review.rating}}">
+                        {% for i in '12345' %}
+                            {% if forloop.counter <= review.rating|add:0 %}
+                                <label class="star">★</label>
+                            {% else %}
+                                <label class="star">☆</label>
+                            {% endif %}
+                        {% endfor %}
+                    </span>
+                    <p>{{ review.created_at}}<br><small>{{ review.comment }}</small></p>
                 </div>
             {% empty %}
                 <p>Nincsenek értékelések.</p>
             {% endfor %}
-            </div>
-            
-            <div class="product-img col-12 col-md-6">
+        </div>
+
+        <!-- Új értékelés -->
+        <div class="col-12 col-md-6 content-box" id="content-box">
             <h2>Új értékelés</h2>
             {% if show_cart %}
-            <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit">Beküldés</button>
-            </form>
+                <form method="post" id="review-form">
+                    {% csrf_token %}
+                    <div class="star-rating">
+                        <input type="radio" id="1-star" name="rating" value="1">
+                        <label for="1-star" class="star">☆</label>
+                        <input type="radio" id="2-stars" name="rating" value="2">
+                        <label for="2-stars" class="star">☆</label>
+                        <input type="radio" id="3-stars" name="rating" value="3">
+                        <label for="3-stars" class="star">☆</label>
+                        <input type="radio" id="4-stars" name="rating" value="4">
+                        <label for="4-stars" class="star">☆</label>
+                        <input type="radio" id="5-stars" name="rating" value="5">
+                        <label for="5-stars" class="star">☆</label>
+                    </div>                    
+                    
+                    <textarea name="comment" rows="3" placeholder="Hozzászólás" required></textarea>
+                    <button class="btn btn-outline-secondary" type="submit">Beküldés</button>
+                </form>
             {% else %}
                 <p>Bejelentkezés szükséges az értékeléshez.</p>
             {% endif %}
             {% if messages %}
-    <ul>
-        {% for message in messages %}
-            <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
-{% endif %}
-
-            </div>
-
-        
+                <ul class="message-list">
+                    {% for message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
     </div>
 </div>
+<script>
+    // Üres és tele csillag karakterek
+const emptyStar = '☆';
+const filledStar = '★';
 
+// Minden csillagra kattintás esemény figyelő
+document.querySelectorAll('.star-rating .star').forEach(star => {
+    star.addEventListener('click', () => {
+        const ratingValue = star.previousElementSibling.value;
 
+        // Az összes csillag frissítése kattintás után
+        document.querySelectorAll('.star-rating .star').forEach(s => {
+            s.textContent = s.previousElementSibling.value <= ratingValue ? filledStar : emptyStar;
+        });
+    });
 
+    // Hover események figyelése az adott csillagra és az előző csillagokra
+    star.addEventListener('mouseover', () => {
+        document.querySelectorAll('.star-rating .star').forEach(s => {
+            s.textContent = s.previousElementSibling.value <= star.previousElementSibling.value ? filledStar : emptyStar;
+        });
+    });
 
+    // Ha nem kattintottál, akkor visszaállítjuk az eredeti állapotba
+    star.addEventListener('mouseout', () => {
+        const checkedRadio = document.querySelector('.star-rating input[type="radio"]:checked');
+        const ratingValue = checkedRadio ? checkedRadio.value : 0;
+
+        // Csillagok visszaállítása az aktuálisan beállított értékelés szerint
+        document.querySelectorAll('.star-rating .star').forEach(s => {
+            s.textContent = s.previousElementSibling.value <= ratingValue ? filledStar : emptyStar;
+        });
+    });
+});
+
+    
+</script>
 {% endblock content %}
