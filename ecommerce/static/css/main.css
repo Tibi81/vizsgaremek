@@ -4,7 +4,7 @@ body{
 
 .custom-banner {
     background-color: #fc9038;
-    color: #721c24; /* Sötét piros szöveg */
+    color: black; /* Sötét piros szöveg */
     padding: 5px 0; /* Függőleges padding */
     text-align: center; /* Középre igazítás */
   }
