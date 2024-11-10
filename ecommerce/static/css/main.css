@@ -4,7 +4,7 @@ body{
 
 .custom-banner {
     background-color: #fc9038;
-    color: #721c24; /* Sötét piros szöveg */
+    color: black; /* Sötét piros szöveg */
     padding: 5px 0; /* Függőleges padding */
     text-align: center; /* Középre igazítás */
   }
@@ -820,7 +820,7 @@ td.left-align {
 }
 
 .footer {
-    background-color: #007bff; /* Sötétszürke háttér */
+    background-color: #6090f7; /* Kék háttér */
     color: #ffffff; /* Fehér szöveg */
     padding: 40px 0; /* Függőleges tér */
     width: 100%;
@@ -1222,7 +1222,6 @@ td.left-align {
     text-align: center;
 }
 
-/* login-login-login-login-login-login-login-login-login-login-login-login-login-login-login-login*/
 
 
 .login-container {
@@ -1289,7 +1288,7 @@ td.left-align {
     height: 38px; /* A gomb magassága */
     padding: 6px 12px; /* A belső távolságok */
     font-size: 16px; /* A betűméret */
-    border: 1px solid #6c757d; /* A keret színe */
+    border: 1px solid #6c757b; /* A keret színe */
     border-radius: 4px; /* A sarkok lekerekítése */
     margin-right: 10px; /* Távolság a gombtól */
 }
