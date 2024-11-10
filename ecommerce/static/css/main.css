@@ -526,6 +526,18 @@ h6 {
     }
 }
 
+.btn-delete:hover {
+    color: white; /* Az egész gomb színét fehérre állítjuk */
+}
+
+.btn-delete:hover .bi-trash {
+    color: white; /* Az ikon színét fehérre állítjuk hover esetén */
+}
+
+.btn-delete:hover #delete-text {
+    color: white; /* A szöveg színét fehérre állítjuk hover esetén */
+}
+
 
 .user-btn{
     color: white !important;  
@@ -760,6 +772,92 @@ td.left-align {
     }
 }
 
+#myImg {
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  #myImg:hover {opacity: 0.7;}
+  
+  /* The Modal (background) */
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 50px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(173, 216, 230, 0.8);
+
+
+  }
+  
+  /* Modal Content (image) */
+  .modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+  }
+  
+  /* Caption of Modal Image */
+  #caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px;
+  }
+  
+  /* Add Animation */
+  .modal-content, #caption {  
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+  }
+  
+  @-webkit-keyframes zoom {
+    from {-webkit-transform:scale(0)} 
+    to {-webkit-transform:scale(1)}
+  }
+  
+  @keyframes zoom {
+    from {transform:scale(0)} 
+    to {transform:scale(1)}
+  }
+  
+  /* The Close Button */
+  .close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  /* 100% Image Width on Smaller Screens */
+  @media only screen and (max-width: 600px){
+    .modal-content {
+      width: 100%;
+    }
+  }
 
 .review {
     border-radius: 5px;
@@ -954,13 +1052,15 @@ td.left-align {
     margin-bottom: 1.5rem; /* Távolság a kártyák között */
 }
 
-
+.scroll-container {
+    overflow: hidden;
+}
     
 .card-container {
     display: inline-flex;
-    overflow: hidden;
     white-space: nowrap;
-    animation: scroll 25s linear infinite; /* Lassított animáció */
+    animation: scroll 35s linear infinite;
+    box-sizing: border-box; 
    
 }
 
