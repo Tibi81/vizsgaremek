@@ -94,7 +94,7 @@
                     {% else %}
                         <p>A kosár üres.</p>
                     {% endif %}
-                            <th><h5>Összesen:{{order.get_cart_total|floatformat:0}} Ft</h5></th>
+                            <th><h5>Összesen:{{cart_total|floatformat:0}} Ft</h5></th>
                             <th><a class="btn btn-outline-dark btn-bottom-right" href="{% url 'cart' %}">Belépés a kosárba</a><th>
                     </div>
                 </div>
@@ -127,34 +127,46 @@
 <script type="text/javascript" src="{% static 'js/cart.js' %}"></script>
 
 
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var cartIconLink = document.getElementById('cart-icon-link');
         var cartTooltip = document.getElementById('cart-tooltip');
-    
+        
+        // Mobil képernyő szélességének ellenőrzése
+        function isMobileView() {
+            return window.innerWidth <= 768; // Ha 768 px vagy kisebb, mobil nézetnek tekintjük
+        }
+
         if (cartIconLink && cartTooltip) {
-            // Tooltip megjelenítése
+            // Tooltip megjelenítése asztali nézetben
             cartIconLink.addEventListener('mouseenter', function() {
-                cartTooltip.style.display = 'block';
+                if (!isMobileView()) {
+                    cartTooltip.style.display = 'block';
+                }
             });
     
-            // Tooltip eltüntetése, ha elhagyja a kosár ikont vagy a tooltip-et
+            // Tooltip eltüntetése
             cartIconLink.addEventListener('mouseleave', function() {
-                cartTooltip.style.display = 'none';
+                if (!isMobileView()) {
+                    cartTooltip.style.display = 'none';
+                }
             });
             
             cartTooltip.addEventListener('mouseenter', function() {
-                cartTooltip.style.display = 'block'; // Tooltip megjelenítése, ha ráviszi az egeret
+                if (!isMobileView()) {
+                    cartTooltip.style.display = 'block';
+                }
             });
     
             cartTooltip.addEventListener('mouseleave', function() {
-                cartTooltip.style.display = 'none'; // Tooltip eltüntetése, ha elhagyja
+                if (!isMobileView()) {
+                    cartTooltip.style.display = 'none';
+                }
             });
         }
     });
-    
 </script>
+
 
 <div class="separator"></div>
 <!-- Footer -->

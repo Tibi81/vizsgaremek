@@ -15,7 +15,7 @@ from rest_framework import status
 
 from .forms import CustomUserCreationForm
 
-
+'''
 def cartData(request):
     if request.user.is_authenticated:
         customer = request.user.customer
@@ -34,6 +34,30 @@ def cartData(request):
         order = {'get_cart_total': 0, 'get_cart_items': 0}  # Üres kosár
 
     return {'cartItems': cartItems, 'order': order, 'items': items}
+'''
+
+def cartData(request):
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        orders = Order.objects.filter(customer=customer, complete=False)
+        if orders.exists():
+            order = orders.first()
+            items = order.orderitem_set.all()
+            cartItems = order.get_cart_items  # Kosár elemek számának lekérése
+            cart_total = order.get_cart_total  # Kosár végösszegének lekérése
+        else:
+            items = []
+            cartItems = 0
+            cart_total = 0  # Ha nincs rendelés, akkor nulla összeg
+            order = {'get_cart_total': cart_total, 'get_cart_items': cartItems}  # Üres kosár
+    else:
+        items = []
+        cartItems = 0
+        cart_total = 0  # Ha nincs bejelentkezve, akkor nulla összeg
+        order = {'get_cart_total': cart_total, 'get_cart_items': cartItems}  # Üres kosár
+
+    return {'cartItems': cartItems, 'order': order, 'items': items, 'cart_total': cart_total}
+
 
 
 class ProductList(APIView):
@@ -164,6 +188,7 @@ def filtered_products(request):
     filter_option = request.GET.get('filter', '').lower()
     orderby = request.GET.get('orderby', 'name')  # Alapértelmezett rendezés név szerint
     direction = request.GET.get('direction', 'asc')  # Alapértelmezett sorrend növekvő
+    
 
     category_map = {
         'fabol': ('option1', 'FÁBÓL KÉSZÜLT'),
@@ -191,15 +216,18 @@ def filtered_products(request):
         products = products.order_by('name')
 
     cart_info = cartData(request)
+    cart_total = cart_info['cart_total']  # Kosár végösszegének lekérése
     paginator = Paginator(products, 6)  # 6 termék oldalanként
     page_number = request.GET.get('page')
     products_page = paginator.get_page(page_number)
+    
 
     context = {
         'products': products_page,  # Lapozott oldalak helyesen
         'items': cart_info['items'],
         'order': cart_info['order'],
         'cartItems': cart_info['cartItems'],
+        'cart_total': cart_total,  # Kosár végösszegének hozzáadása
         'message': message,
         'filter_option': filter_option,
         'orderby': orderby,
@@ -228,6 +256,7 @@ def order_list(request):
         cart_items = cart_data['items']
         order = cart_data['order']
         products = Product.objects.all()
+        cart_total = cart_data['cart_total']  # Kosár végösszegének lekérése
 
         # Rendelések csoportosítása transaction_id alapján
         orders_by_transaction = {}
@@ -251,7 +280,8 @@ def order_list(request):
             'cart_items': cart_items,  # Az aktuális kosár tételei a kontextusban
             'order': order,
             'products': products,
-            'items': cart_items
+            'items': cart_items,
+            'cart_total' : cart_total,
 
         }
     else:
@@ -260,6 +290,7 @@ def order_list(request):
             'message': 'Csak bejelentkezett felhasználóknak!',
             'cartItems': 0,             
             'cart_items': []  # Üres kosár nem bejelentkezett felhasználóknál
+            
             
 
         }
@@ -283,6 +314,7 @@ def product_detail(request, product_id):
     cart_data = cartData(request)  # Kosár adatok lekérdezése
     cartItems = cart_data['cartItems']  # Kosár tételek száma
     items = cart_data['items']  # Kosár tételek
+    cart_total = cart_data['cart_total']  # Kosár végösszegének lekérése
     
     if request.method == 'POST':
         if request.user.is_authenticated:
@@ -311,6 +343,7 @@ def product_detail(request, product_id):
         'form': form,
         'show_cart': request.user.is_authenticated,
         'messages': messages.get_messages(request),
+        'cart_total' : cart_total,
     })
 
 
@@ -340,6 +373,7 @@ def store(request):
     cart_data = cartData(request)  # Kosár adatok lekérdezése
     cartItems = cart_data['cartItems']
     items = cart_data['items']
+    cart_total = cart_data['cart_total']  # Kosár végösszegének lekérése
 
     sort_by = request.GET.get('sort_by', 'name')  # Alapértelmezett rendezés név szerint
     order = request.GET.get('order', 'asc')  # Alapértelmezett sorrend növekvő
@@ -367,6 +401,7 @@ def store(request):
         'selected_categories': filter_categories,
         'sort_by': sort_by,
         'order': order,
+        'cart_total': cart_total,  # Kosár végösszegének hozzáadása
     }
     return render(request, 'store/store.html', context)
 
@@ -381,23 +416,38 @@ def search(request):
     cart_data = cartData(request)  # Kosár adatok lekérdezése
     cartItems = cart_data['cartItems']  # Kosár tételek száma
     items = cart_data['items']  # Kosár tételek
+    cart_total = cart_data['cart_total']  # Kosár végösszegének lekérése
 
     context = {
         'products': products,
         'items': items,
         'cartItems': cartItems,
+        'cart_total' : cart_total,
     }
 
     return render(request, 'store/search_results.html', context)
 
 def index(request):
     cart_data = cartData(request)  # Kosár adatok lekérdezése a cartData függvényből
-    cartItems = cart_data['cartItems']
-    items = cart_data['items']
+    cartItems = cart_data['cartItems']  # Kosárban lévő tételek száma
+    items = cart_data['items']  # Kosár tételek listája
+    order = cart_data['order']  # Kosár összesített adatai
+    cart_total = cart_data['cart_total']  # Kosár végösszegének lekérése
 
     products = Product.objects.all()
-    context = {'products': products, 'cartItems': cartItems, 'items': items}
+    
+    # A kontextusban biztosítjuk, hogy minden adat elérhető legyen a sablonban
+    context = {
+        'products': products, 
+        'cartItems': cartItems,  # Kosárban lévő tételek száma
+        'items': items,  # Kosár tételek listája
+        'order': order,  # Kosár összesített adatai (pl. végösszeg)
+        'cart_total' : cart_total,
+
+    }
+
     return render(request, 'store/index.html', context)
+
 
 
 

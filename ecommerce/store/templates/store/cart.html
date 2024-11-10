@@ -42,14 +42,16 @@
                             <img data-product="{{ item.product.id }}" data-action="remove" class="chg-quantity update-cart" src="{% static 'images/arrow-down.png' %}">
                         </div>
                     </div>
-                    
-                    
-                </div>
-                
+                </div>                
                 
                 
                 <div style="flex-basis: 15%"><p>{{ item.get_total|floatformat:0 }} Ft</p></div>
-                <div style="flex-basis: 20%"><button class="delete-btn btn btn-outline-danger btn-delete" data-action="delete"><i class="bi bi-trash">Törlés</i></button></div>
+                <div style="flex-basis: 20%">
+                    <button class="delete-btn btn btn-outline-danger btn-delete" data-action="delete">
+                        <p class="bi bi-trash"></p> <!-- Az ikon itt marad -->
+                        <span id="delete-text">Törlés</span> <!-- A szöveg itt van -->
+                    </button>
+                </div>
             </div>
             {% endfor %}
         </div>
