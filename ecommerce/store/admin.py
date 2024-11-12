@@ -16,7 +16,7 @@ admin.site.register(User, CustomUserAdmin)
 
 
 class CustomerAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email')  # Itt távolítsd el az 'action_checkbox'-t
+    list_display = ('name', 'email')  
 
     def get_queryset(self, request):
         # Itt felülírjuk az alapértelmezett querysetet, és hozzácsatoljuk a felhasználói adatokat

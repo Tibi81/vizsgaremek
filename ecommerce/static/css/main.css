@@ -47,13 +47,14 @@ h1,h2,h3,h4,h5,h6{
     font-family: 'Lora', serif; /* Elegáns betűtípus */
 }
 
+/* Alap stílusok */
 .box-element {
-    box-shadow:hsl(0, 0%, 53%) 0 0 16px;
+    box-shadow: hsl(0, 0%, 53%) 0 0 16px;
     background-color: #fff;
     border-radius: 8px;
     padding: 10px;
     flex-grow: 1;   
-    position: relative; /* Ez szükséges a pozicionálás alapjául */
+    position: relative;
     z-index: 2;
     background: rgba(255, 255, 255, 0.8);
     min-height: 150px; 
@@ -62,32 +63,84 @@ h1,h2,h3,h4,h5,h6{
     justify-content: space-between;    
 }
 
+/* Gombok pozicionálása */
 .box-element .btn-top-left {
     position: absolute;
-    top: 10px; /* A bal felső sarokhoz 10px-re pozicionálja */
+    top: 10px;
     left: 10px;
 }
 
 .box-element .btn-bottom-right {
     position: absolute;
-    bottom: 10px; /* A jobb alsó sarokhoz 10px-re pozicionálja */
+    bottom: 10px;
     right: 10px;
 }
 
-.box-element p {
-    color:hsl(0, 0%, 30%);
-}
 
 
-
-
-
+/* Elválasztó vonal */
 .box-element hr {
     border: none;
     height: 1px;
     background-color: #fc9038;
     margin: 5px 0;
 }
+
+/* Mobil optimalizálás */
+@media (max-width: 768px) {
+    .box-element {
+        padding: 8px;  /* Csökkentsd a paddingot, hogy több hely maradjon */
+        min-height: auto; /* A magasság legyen dinamikus */
+    }
+
+    .box-element .btn-top-left {
+        top: 8px;  /* Kisebb távolság */
+        left: 8px;
+    }
+
+    .box-element .btn-bottom-right {
+        bottom: 8px;
+        right: 8px;
+    }
+
+    .box-element p {
+        font-size: 14px; /* A szöveg kisebb legyen */        
+    }
+
+    .box-element hr {
+        margin: 4px 0;  /* Kisebb margó */
+    }
+
+    .box-element strong {
+        font-size: 14px; /* Kisebb szöveg mobilon */
+        margin-right: 4px;
+    }
+    
+}
+
+/* Extra mobil optimalizálás (például 480px alatt) */
+@media (max-width: 480px) {
+    .box-element {
+        padding: 6px;  /* Még kisebb padding */
+    }
+
+    .box-element p {
+        font-size: 12px; /* Még kisebb szöveg */
+        
+    }
+
+    .box-element .btn-top-left,
+    .box-element .btn-bottom-right {
+        font-size: 12px;  /* Kisebb gombok */
+        padding: 4px;  /* Kisebb gombok */
+    }
+
+    .box-element strong {
+        font-size: 12px; /* Kisebb szöveg mobilon */
+        margin-right: 4px;
+    }
+}
+
 /* Filter Card */
 .filter-card {
     display: flex;
@@ -427,9 +480,64 @@ h6 {
 }
 
 .btn-delete {
-      color:#dc3545;
-    
+    color: #dc3545;
+    display: flex; /* Flexbox használata a középre igazításhoz */
+    justify-content: center; /* Vízszintes középre igazítás */
+    align-items: center; /* Függőleges középre igazítás */
+    padding: 0.5rem 1rem; /* Igazítás mellett kényelmes padding */
 }
+
+.btn-delete p {
+    margin: 4px; /* A margó eltávolítása a p elemtől, hogy ne legyen extra térköz */
+    text-align: center; /* Szöveg középre igazítása */
+}
+
+/* Alapértelmezett stílusok - az ikon mindig látható */
+.delete-btn .bi-trash {
+    font-size: 14px; /* Az ikon mérete */
+    color: #dc3545;
+}
+
+#delete-text {
+    display: inline; /* A szöveg alapértelmezett megjelenítése */
+    color: #dc3545;  /* A szöveg színe */
+}
+
+/* Mobil nézet (max-width: 767px) */
+@media (max-width: 767px) {
+    #delete-text {
+        display: none; /* A "Törlés" szöveg elrejtése mobil nézetben */
+    }
+
+    /* A szürke ikon szín eltüntetése, ha mobilon van */
+    .delete-btn .bi-trash {
+        color: #dc3545; /* Az ikon színének visszaállítása a mobil nézetre */
+        font-size: 12px;;
+    }
+    .btn-delete {
+        color: #dc3545;
+        display: flex; /* Flexbox használata a középre igazításhoz */
+        justify-content: center; /* Vízszintes középre igazítás */
+        align-items: center; /* Függőleges középre igazítás */
+        padding: 0.3rem 0.6rem; /* Kisebb padding */
+        font-size: 0.9rem; /* Betűméret csökkentése */
+        border-width: 1px; /* Vékonyabb keret */
+        margin-left: 5px;
+    }
+}
+
+.btn-delete:hover {
+    color: white; /* Az egész gomb színét fehérre állítjuk */
+}
+
+.btn-delete:hover .bi-trash {
+    color: white; /* Az ikon színét fehérre állítjuk hover esetén */
+}
+
+.btn-delete:hover #delete-text {
+    color: white; /* A szöveg színét fehérre állítjuk hover esetén */
+}
+
 
 .user-btn{
     color: white !important;  
@@ -470,14 +578,33 @@ h6 {
 
 /* A gomb pozicionálása */
 
-.cart-row{
-	display: flex;
-    align-items: flex-stretch;
+/* Alapértelmezett nézet */
+.cart-row {
+    display: flex;
+    align-items: center;  /* Az elemek középre igazítása */
     padding-bottom: 10px;
     margin-bottom: 10px;
     border-bottom: 1px solid #ececec;
-
 }
+
+/* Mobil optimalizálás 768px és kisebb képernyőkhöz */
+@media (max-width: 768px) {
+    .cart-row {
+        padding-bottom: 8px;  /* Kisebb padding mobilon */
+        margin-bottom: 8px;  /* Kisebb margin */
+        font-size: 14px;  /* Kisebb betűméret mobilon */
+    }
+}
+
+/* Extra mobil optimalizálás 480px és kisebb képernyőkhöz */
+@media (max-width: 480px) {
+    .cart-row {
+        padding-bottom: 6px;  /* Még kisebb padding a legkisebb képernyőkön */
+        margin-bottom: 6px;  /* Még kisebb margin */
+        font-size: 12px;  /* Még kisebb betűméret */
+    }
+}
+
 
 .quantity{
 	display: inline-block;
@@ -629,6 +756,108 @@ td.left-align {
     height: 1px;       /* Állítsd be a kívánt magasságot */
     background-color: black; /* Adj meg egy látható színt */
 }
+
+/* Általános stílus mobil eszközökre */
+@media (max-width: 768px) {
+    .product-description hr {
+        margin: 10px 0; /* Függőleges távolságot ad a hr és a szöveg között */
+    }
+
+    .product-description .product-name {
+        margin-bottom: 10px; /* Távolság a termék neve és a hr között */
+    }
+
+    .product-description .product p {
+        margin: 5px 0; /* Csökkentett függőleges távolság a szövegek között */
+    }
+}
+
+#myImg {
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  #myImg:hover {opacity: 0.7;}
+  
+  /* The Modal (background) */
+  .modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 50px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(173, 216, 230, 0.8);
+
+
+  }
+  
+  /* Modal Content (image) */
+  .modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+  }
+  
+  /* Caption of Modal Image */
+  #caption {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    padding: 10px 0;
+    height: 150px;
+  }
+  
+  /* Add Animation */
+  .modal-content, #caption {  
+    -webkit-animation-name: zoom;
+    -webkit-animation-duration: 0.6s;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+  }
+  
+  @-webkit-keyframes zoom {
+    from {-webkit-transform:scale(0)} 
+    to {-webkit-transform:scale(1)}
+  }
+  
+  @keyframes zoom {
+    from {transform:scale(0)} 
+    to {transform:scale(1)}
+  }
+  
+  /* The Close Button */
+  .close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  /* 100% Image Width on Smaller Screens */
+  @media only screen and (max-width: 600px){
+    .modal-content {
+      width: 100%;
+    }
+  }
 
 .review {
     border-radius: 5px;
@@ -823,13 +1052,15 @@ td.left-align {
     margin-bottom: 1.5rem; /* Távolság a kártyák között */
 }
 
-
+.scroll-container {
+    overflow: hidden;
+}
     
 .card-container {
     display: inline-flex;
-    overflow: hidden;
     white-space: nowrap;
-    animation: scroll 25s linear infinite; /* Lassított animáció */
+    animation: scroll 35s linear infinite;
+    box-sizing: border-box; 
    
 }
 
@@ -842,7 +1073,7 @@ td.left-align {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 300px;
+    width: 280px;
     height: 450px; /* Kártya egységes magassága */
     margin: 0 20px;
     padding: 10px;
@@ -873,7 +1104,7 @@ td.left-align {
     position: relative;  
     transition: transform 0.3s ease;
     z-index: 1;
-   
+    object-fit: cover;
 }
 .scroll-card img:hover {
     transform: scale(1.2);
@@ -1062,29 +1293,6 @@ td.left-align {
     display: flex;
     justify-content: center;
     margin: 20px 0;
-}
-
-.pagination a {
-    margin: 0 5px;
-    padding: 10px 15px;
-    border: 1px solid #007bff;
-    color: #007bff;
-    text-decoration: none;
-    border-radius: 4px;
-}
-
-.pagination a:hover {
-    background-color: #007bff;
-    color: white;
-}
-
-.pagination .current {
-    margin: 0 5px;
-    padding: 10px 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    color: white;
-    background-color: #007bff;
 }
 
 
