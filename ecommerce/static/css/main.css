@@ -4,7 +4,7 @@ body{
 
 .custom-banner {
     background-color: #fc9038;
-    color: black; /* Sötét piros szöveg */
+    color: black; 
     padding: 5px 0; /* Függőleges padding */
     text-align: center; /* Középre igazítás */
   }
@@ -18,7 +18,7 @@ body{
   
   /* A háttérszín módosítása az elem fölé helyezett egér esetén */
   .dropdown-item:hover {
-    background-color: #6090f7; /* Ugyanaz a szín, mint az alapértelmezett */
+    background-color: #6090f7; 
     color: white;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Árnyék hozzáadása */
   }
