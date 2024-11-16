@@ -1157,28 +1157,29 @@ td.left-align {
         
 }
 
-/* filtered-products.html -- filtered-products.html -- filtered-products.html -- filtered-products.html -- filtered-products.html -- filtered-products.html*/
+
 .left-column {
     background-color: #bbb;
     padding: 20px;
     margin-top: 30px;
     border-radius: 5px;
-    height: auto; /* Dinamikus magasság */
+    height: auto; 
     max-height: 560px;
-    min-height: 300px; /* Minimális magasság */
-    position: sticky; /* Ragadós pozicionálás */
-    top: 30px; /* Rögzítési távolság */
-    z-index: 1000; /* Z-index a rétegezéshez */
+    min-height: 300px; 
+    position: sticky; 
+    top: 30px; 
+    z-index: 1000; 
 }
 
 
-/* Média lekérdezés kisebb képernyőkhöz (pl. mobil) */
+
 @media (max-width: 768px) { /* Példa: 768px a határérték, módosítsd igényeid szerint */
     .left-column {
         position: relative; /* Sticky eltávolítása */
         top: auto; /* Reset a top érték */
         min-height: 200px; /* Kisebb minimális magasság mobilon */
-    }    
+    }
+      
 }
 
 
