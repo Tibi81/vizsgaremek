@@ -5,30 +5,29 @@ body{
 .custom-banner {
     background-color: #fc9038;
     color: black; 
-    padding: 5px 0; /* Függőleges padding */
-    text-align: center; /* Középre igazítás */
+    padding: 5px 0; 
+    text-align: center; 
   }
 
 .navbar {
     background-color: #6090f7 !important; 
   }
 
-  /* Alapértelmezett háttérszín a dropdown elemekre */
-
   
-  /* A háttérszín módosítása az elem fölé helyezett egér esetén */
+  
+  
   .dropdown-item:hover {
     background-color: #6090f7; 
     color: white;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Árnyék hozzáadása */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); 
   }
   
 
 .separator {
-    height: 3px; /* Csík vastagsága */
-    background-color:#fd7e14; /* Csík színe, állítsd be a kívánt színre */
-    margin-top: 8px; /* Felső margó */
-    margin-bottom: 8px; /* Alsó margó */
+    height: 3px; 
+    background-color:#fd7e14; 
+    margin-top: 8px; 
+    margin-bottom: 8px; 
   }
 
 .background1 {
@@ -44,10 +43,10 @@ body{
 
 h1,h2,h3,h4,h5,h6{
 	color:hsl(0, 0%, 30%);
-    font-family: 'Lora', serif; /* Elegáns betűtípus */
+    font-family: 'Lora', serif; 
 }
 
-/* Alap stílusok */
+
 .box-element {
     box-shadow: hsl(0, 0%, 53%) 0 0 16px;
     background-color: #fff;
@@ -63,7 +62,7 @@ h1,h2,h3,h4,h5,h6{
     justify-content: space-between;    
 }
 
-/* Gombok pozicionálása */
+
 .box-element .btn-top-left {
     position: absolute;
     top: 10px;
@@ -78,7 +77,7 @@ h1,h2,h3,h4,h5,h6{
 
 
 
-/* Elválasztó vonal */
+
 .box-element hr {
     border: none;
     height: 1px;
@@ -86,15 +85,15 @@ h1,h2,h3,h4,h5,h6{
     margin: 5px 0;
 }
 
-/* Mobil optimalizálás */
+
 @media (max-width: 768px) {
     .box-element {
-        padding: 8px;  /* Csökkentsd a paddingot, hogy több hely maradjon */
-        min-height: auto; /* A magasság legyen dinamikus */
+        padding: 8px;  
+        min-height: auto; 
     }
 
     .box-element .btn-top-left {
-        top: 8px;  /* Kisebb távolság */
+        top: 8px;  
         left: 8px;
     }
 
@@ -104,50 +103,50 @@ h1,h2,h3,h4,h5,h6{
     }
 
     .box-element p {
-        font-size: 14px; /* A szöveg kisebb legyen */        
+        font-size: 14px;       
     }
 
     .box-element hr {
-        margin: 4px 0;  /* Kisebb margó */
+        margin: 4px 0;  
     }
 
     .box-element strong {
-        font-size: 14px; /* Kisebb szöveg mobilon */
+        font-size: 14px; 
         margin-right: 4px;
     }
     
 }
 
-/* Extra mobil optimalizálás (például 480px alatt) */
+
 @media (max-width: 480px) {
     .box-element {
-        padding: 6px;  /* Még kisebb padding */
+        padding: 6px;  
     }
 
     .box-element p {
-        font-size: 12px; /* Még kisebb szöveg */
+        font-size: 12px; 
         
     }
 
     .box-element .btn-top-left,
     .box-element .btn-bottom-right {
-        font-size: 12px;  /* Kisebb gombok */
-        padding: 4px;  /* Kisebb gombok */
+        font-size: 12px;  
+        padding: 4px;  
     }
 
     .box-element strong {
-        font-size: 12px; /* Kisebb szöveg mobilon */
+        font-size: 12px; 
         margin-right: 4px;
     }
 }
 
-/* Filter Card */
+
 .filter-card {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
-    height: 450px; /* Kártya egységes magassága */
+    height: 450px; 
     padding: 10px;
     margin: 20px 0;
     box-sizing: border-box;    
@@ -160,7 +159,7 @@ h1,h2,h3,h4,h5,h6{
     color: white;
 }
 
-/* Leírás gomb a kártya tetején */
+
 .filter-card-description-trigger {
     position: absolute;
     top: 0;
@@ -182,38 +181,38 @@ h1,h2,h3,h4,h5,h6{
     color: white;
 }
 
-/* A termékleírás alapértelmezés szerint rejtve */
+
 .filter-card-description {
     position: absolute;
-    top: -100%; /* Kiindulási helyzet (kártyán kívül) */
+    top: -100%; 
     left: 0;
     width: 100%;
     height: 100%;
     padding: 20px;
     text-align: center;
     display: flex;
-    flex-direction: column; /* A tartalmat egymás alatt jeleníti meg */
+    flex-direction: column; 
     align-items: center;
     justify-content: center;
     transition: all 0.5s ease;
     z-index: 5;
-    opacity: 0; /* Láthatatlan, míg nem történik hover */
+    opacity: 0; 
     font-family: "Montserrat", sans-serif;
-    background: #add8e6; /* Kicsit sötétebb háttér a jobb olvashatóság érdekében */
+    background: #add8e6; 
     border-radius: 8px;
     margin-top: 20px;
 }
 
 .filter-card-description h6 {
     font-size: 1.2em;
-    font-weight: 300; /* Vékonyabb cím */
-    color: #fc9038; /* Aranyszín a címhez */
+    font-weight: 300; 
+    color: #fc9038; 
     margin-bottom: 8px;
 }
 
 .filter-card-description h4, h5 {
     font-size: 1em;
-    font-weight: 400; /* Vékonyabb szöveg */
+    font-weight: 400; 
     color: #1E1F20;
     margin-bottom: 8px;
 }
@@ -221,7 +220,7 @@ h1,h2,h3,h4,h5,h6{
 .filter-card-description p {
     line-height: 1.5;
     font-family: 'Poppins', sans-serif;
-    font-weight: 300; /* Még vékonyabb a leíráshoz */
+    font-weight: 300; 
     font-size: 0.9em;
     color: #1E1F20;
     
@@ -231,19 +230,19 @@ h1,h2,h3,h4,h5,h6{
 }
 
 
-/* Hover esemény: A leírás becsúszik felülről */
+
 .filter-card-description-trigger:hover + .filter-card-description {
     top: 0;
-    opacity: 1; /* Láthatóvá válik */
+    opacity: 1; 
 }
 
-/* Filter Card Image */
+
 .filter-card-img {
     width: 100%;
     height: 300px;
     display: flex;
-    justify-content: center; /* Kép vízszintes középre igazítása */
-    align-items: center; /* Kép függőleges középre igazítása */
+    justify-content: center; 
+    align-items: center; 
     overflow: hidden;    
     transition: transform 0.3s ease;
     z-index: 1;
@@ -251,8 +250,8 @@ h1,h2,h3,h4,h5,h6{
 }
 
 .filter-card-img img {
-    max-width: 100%; /* A kép nem léphet túl a konténer szélességén */
-    max-height: 100%; /* A kép nem léphet túl a konténer magasságán */
+    max-width: 100%; 
+    max-height: 100%; 
 }
 
 
@@ -260,7 +259,7 @@ h1,h2,h3,h4,h5,h6{
     transform: scale(1.2);
 }
 
-/* Thumbnail - a képek méretezése */
+
 .thumbnail {
     width: 100%;
     max-height: 300px;
@@ -272,9 +271,9 @@ h1,h2,h3,h4,h5,h6{
 
 
 .box-element h4, h6 {    
-    font-family: 'Lora', serif; /* Elegáns betűtípus */
-    font-size: 2em; /* Nagy betűméret */
-    color: #333; /* Sötétszürke szín */
+    font-family: 'Lora', serif; 
+    font-size: 2em; 
+    color: #333; 
     font-weight: bold; 
 }
 
@@ -288,14 +287,14 @@ h1,h2,h3,h4,h5,h6{
     
 }
 .card-hover-trigger:hover + .card-body {
-    left: 0; /* Hover esetén a kép fölé csúszik */
+    left: 0; 
 }
 .card-body {
     position: absolute;
     bottom: 0;
-    left: -100%; /* Kezdés a kép bal oldalán kívül */
-    width: 100%; /* Csak a kép szélességében */
-    height: 100%; /* A kép magasságában marad */
+    left: -100%; 
+    width: 100%; 
+    height: 100%; 
     background: rgba(107, 120, 189, 0.9); 
     color: white;
     display: flex;
@@ -317,15 +316,15 @@ h1,h2,h3,h4,h5,h6{
     padding: 10px 20px;
     border-radius: 10px;
     cursor: pointer;
-    z-index: 10; /* Fent tartjuk a hover elem */
+    z-index: 10; 
 }
 
-/* .card-body szövegek stílusai */
+
 .card-body h6 {
-    font-family: 'Montserrat', sans-serif; /* Modern betűtípus */
-    font-size: 1.5em; /* Kicsit nagyobb betűméret */
-    color: #ffffff; /* Fehér szín */
-    font-weight: 600; /* Közepesen vastag betűk */
+    font-family: 'Montserrat', sans-serif; 
+    font-size: 1.5em; 
+    color: #ffffff; 
+    font-weight: 600; 
     margin-bottom: 10px;
 }
 
@@ -1197,17 +1196,17 @@ td.left-align {
 }
 
 
-/* Média lekérdezés kisebb képernyőkhöz (pl. mobil) */
-@media (max-width: 768px) { /* Példa: 768px a határérték, módosítsd igényeid szerint */
+
+@media (max-width: 768px) { 
     .left-column {
-        position: relative; /* Sticky eltávolítása */
-        top: auto; /* Reset a top érték */
-        min-height: 200px; /* Kisebb minimális magasság mobilon */
+        position: relative; 
+        top: auto; 
+        min-height: 200px; 
     }
     .left-column-category {
-            position: relative; /* Sticky eltávolítása */
-            top: auto; /* Reset a top érték */
-            min-height: 200px; /* Kisebb minimális magasság mobilon */
+            position: relative; 
+            top: auto; 
+            min-height: 200px; 
         }
     }
 
@@ -1215,12 +1214,12 @@ td.left-align {
 
 
 .sidebar-menu {
-    display: inline-block; /* Igazítja a méretet a tartalomhoz */
+    display: inline-block; 
     background-color: #f8f9fa;
-    padding: 15px; /* Módosítsd a paddingot, ha szükséges */
+    padding: 15px; 
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin-bottom: 15px; /* Adjunk egy kis távolságot a menük között */
+    margin-bottom: 15px; 
 }
 
 .sidebar-menu h3 {
@@ -1243,7 +1242,7 @@ td.left-align {
 
 .custom-list li {
     cursor: pointer;
-    padding: 5px 10px; /* A padding csökkenthető, ha szükséges */
+    padding: 5px 10px; 
     transition: color 0.3s, text-decoration 0.3s;
 }
 
@@ -1258,19 +1257,19 @@ td.left-align {
 }
 
 .custom-list a {
-    text-decoration: none; /* Eltávolítja az alapértelmezett aláhúzást */
-    color: inherit; /* Örökli a szülő elem színét */
+    text-decoration: none; 
+    color: inherit; 
 }
 
 .custom-list a:hover {
-    color: #3b3939; /* Hover szín */
-    text-decoration: underline; /* Hover alatt aláhúzás */
+    color: #3b3939; 
+    text-decoration: underline; 
 }
 
 .custom-list a.active-link {
-    text-decoration: underline; /* Aktív link aláhúzás */
+    text-decoration: underline; 
     text-decoration-color: #fc9038;
-    color: #3b3939; /* Aktív link szín */
+    color: #3b3939; 
 }
 
 
@@ -1279,7 +1278,7 @@ td.left-align {
 
 
     
-/* Jobb oldali oszlop: termékek */
+
 .right-column {
     padding-left: 20px;
 }
@@ -1326,7 +1325,7 @@ td.left-align {
 
 .login-container {
     width: 100%;
-    max-width: 400px; /* Maximális szélesség */
+    max-width: 400px; 
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
@@ -1335,25 +1334,25 @@ td.left-align {
 
 .info-container {
     width: 100%;
-    max-width: 400px; /* Maximális szélesség */
+    max-width: 400px; 
 }
 
 
 
 .login-container .form-group {
-    margin-bottom: 15px; /* Alsó margó */
+    margin-bottom: 15px; 
 }
 
 .login-container .form-control {
-    width: calc(100% - 40px); /* Szélesség beállítása az ikon figyelembevételével */
-    padding: 10px; /* Belső margó */
-    border-radius: 4px; /* Lekerekített sarkok */
-    border: 1px solid #ccc; /* Szürke keret */
-    margin-left: 10px; /* Belső margó balra az ikonhoz képest */
+    width: calc(100% - 40px); 
+    padding: 10px; 
+    border-radius: 4px; 
+    border: 1px solid #ccc;
+    margin-left: 10px; 
 }
 
 .login-container label {
-    margin-right: 10px; /* Jobb oldali margó */
+    margin-right: 10px; 
 }
 
 .login-btn {
@@ -1385,18 +1384,18 @@ td.left-align {
     color: white;
 }
 .custom-quantity-input {
-    height: 38px; /* A gomb magassága */
-    padding: 6px 12px; /* A belső távolságok */
-    font-size: 16px; /* A betűméret */
-    border: 1px solid #6c757b; /* A keret színe */
-    border-radius: 4px; /* A sarkok lekerekítése */
-    margin-right: 10px; /* Távolság a gombtól */
+    height: 38px; 
+    padding: 6px 12px; 
+    font-size: 16px; 
+    border: 1px solid #6c757b;
+    border-radius: 4px; 
+    margin-right: 10px;
 }
 
 .custom-quantity-input-btn {
-    height: 68px; /* A gomb magassága */
-    padding: 6px 12px; /* A belső távolságok */
-    font-size: 16px; /* A betűméret */
+    height: 68px; 
+    padding: 6px 12px; 
+    font-size: 16px; 
 }
 
 .product p {
@@ -1411,7 +1410,7 @@ td.left-align {
 }
 
 .star-rating input[type="radio"] {
-    display: none; /* Eltünteti a rádiógombokat */
+    display: none; 
 }
 
 .star {
@@ -1422,13 +1421,13 @@ td.left-align {
 }
 
 
-/* Az ellenőrzött csillagok és azok előtti csillagok színe */
+
 input[type="radio"]:checked ~ label.star,
 input[type="radio"]:checked ~ label.star ~ label.star {
     color: #fc9038;
 }
 
-/* Egérrel rámutatáskor a csillag és az előtte lévő összes csillag színe */
+
 .star:hover,
 .star:hover ~ .star {
     color: #fc9038;
@@ -1439,14 +1438,14 @@ input[type="radio"]:checked ~ label.star ~ label.star {
 
 #review-form {
     display: flex;
-    flex-direction: column; /* Függőleges elrendezés */
-    gap: 10px; /* Térköz a mezők között */
+    flex-direction: column; 
+    gap: 10px; 
 }
 
 
 .product-separator {
     
     height: 30px;
-    margin-top: 8px; /* Felső margó */
-    margin-bottom: 8px; /* Alsó margó */
+    margin-top: 8px; 
+    margin-bottom: 8px; 
   }
