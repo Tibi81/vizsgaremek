@@ -451,8 +451,8 @@ h6 {
     position: absolute;
     top: 5px;
     left: 20px;
-    background-color: green; /* Zöld háttér a piros helyett */
-    color: white;
+    background-color:#fc9038; /* Zöld háttér a piros helyett */
+    color: black;
     width: 20px;
     height: 25px;
     border-radius: 50%;
@@ -548,9 +548,21 @@ h6 {
     color: white;
     border-color: #fc9038; 
 
+
     
   }
+.user-status p {
+    border-radius: 8px 0 0 8px;
+    margin-right: 0;
+}
 
+.user-status .logout {
+    border-radius: 0 8px 8px 0;
+}
+
+.user-status .login {
+    border-radius: 8px;
+}
 .custom-button {
     border-radius: 0 8px 8px 0; /* Itt állítsd be a kívánt értéket */
   }

@@ -164,7 +164,7 @@ def processOrder(request):
 
         # Felhasználónak küldendő e-mail
         user_subject = "Rendelés megerősítése"
-        user_message = f"Kedves {customer.user.username},\n\nA rendelésedet sikeresen leadtuk. Íme a rendelés tételei:\n\n{item_details}\n\nKöszönjük a vásárlást!"
+        user_message = f"Kedves {customer.user.username},\n\nA rendelésedet sikeresen fogadtuk. Íme a rendelés tételei:\n\n{item_details}\n\nKöszönjük a vásárlást!"
         send_mail(
             user_subject,
             user_message,
