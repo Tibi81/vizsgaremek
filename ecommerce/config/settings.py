@@ -27,7 +27,7 @@ DEBUG = True
 
 #ALLOWED_HOSTS = []  EZ az alap az alsó csak teszthez kell!!!!!!!!!!!!!!
 
-ALLOWED_HOSTS = ['7d51-185-29-80-89.ngrok-free.app', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['8eea-81-0-89-101.ngrok-free.app', 'localhost', '127.0.0.1']
 
 #Ez törölhető csak a teszteléshez kell!
 CSRF_TRUSTED_ORIGINS = [
@@ -193,3 +193,19 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ],
 }
+
+import environ # type: ignore
+
+env = environ.Env()
+environ.Env.read_env()
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+ADMIN_EMAIL = 'djangorendeles@gmail.com'

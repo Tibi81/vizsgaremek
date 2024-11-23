@@ -15,6 +15,11 @@ from rest_framework import status
 
 from .forms import CustomUserCreationForm
 
+
+
+from django.template import Template, RequestContext
+from django.http import HttpResponse
+
 '''
 def cartData(request):
     if request.user.is_authenticated:
@@ -100,7 +105,7 @@ class CustomLoginView(LoginView):
 
         context['cartItems'] = cartItems
         return context
-
+'''
 def processOrder(request):
     transaction_id = datetime.datetime.now().timestamp()
     data = json.loads(request.body)
@@ -126,6 +131,65 @@ def processOrder(request):
     
     else:
         return JsonResponse({'message': 'A rendelés feldolgozásához be kell jelentkezni!'}, status=401)
+'''
+
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.conf import settings
+
+def processOrder(request):
+    transaction_id = datetime.datetime.now().timestamp()
+    data = json.loads(request.body)
+
+    if request.user.is_authenticated:
+        customer, created = Customer.objects.get_or_create(user=request.user)
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        order.complete = True
+        order.transaction_id = transaction_id
+        order.save()
+
+        # Cím és szállítási adatok mentése
+        ShippingAddress.objects.create(
+            customer=customer,
+            order=order,
+            address=data['shipping']['address'],
+            city=data['shipping']['city'],
+            street_number=data['shipping']['street_number'],
+            zipcode=data['shipping']['zipcode'],
+        )
+
+        # Rendelés tételeinek összeállítása
+        items = order.orderitem_set.all()
+        item_details = "\n".join([f"{item.product.name} - {item.quantity} db" for item in items])
+
+        # Felhasználónak küldendő e-mail
+        user_subject = "Rendelés megerősítése"
+        user_message = f"Kedves {customer.user.username},\n\nA rendelésedet sikeresen leadtuk. Íme a rendelés tételei:\n\n{item_details}\n\nKöszönjük a vásárlást!"
+        send_mail(
+            user_subject,
+            user_message,
+            settings.EMAIL_HOST_USER,
+            [customer.user.email],
+            fail_silently=False,
+        )
+
+        # Adminnak küldendő e-mail
+        admin_subject = "Új rendelés érkezett"
+        admin_message = f"Új rendelés érkezett a(z) {transaction_id} tranzakciós azonosítóval. Rendelés tételei:\n\n{item_details}"
+        send_mail(
+            admin_subject,
+            admin_message,
+            settings.EMAIL_HOST_USER,
+            [settings.EMAIL_HOST_USER],
+            fail_silently=False,
+        )
+
+        return JsonResponse('A rendelés feldolgozása sikeresen megtörtént', safe=False)
+    
+    else:
+        return JsonResponse({'message': 'A rendelés feldolgozásához be kell jelentkezni!'}, status=401)
+
+
 
 
 
@@ -347,12 +411,27 @@ def product_detail(request, product_id):
     })
 
 
+from django.core.mail import send_mail
+from django.contrib import messages
+from django.shortcuts import redirect, render
+from .forms import CustomUserCreationForm
+
 
 def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
+
+            # Email küldése
+            send_mail(
+                subject='Sikeres regisztráció',
+                message=f'Kedves {user.username},\n\nSikeresen regisztráltál az oldalunkon!',
+                from_email='djangorendeles@gmail.com',
+                recipient_list=[user.email],
+                fail_silently=False,
+            )
+
             messages.success(request, 'Fiókja létrejött! Most már bejelentkezhet.')
             return redirect('login')
     else:
@@ -365,9 +444,8 @@ def register(request):
     context = {'form': form, 'cartItems': cartItems}
     return render(request, 'store/register.html', context)
 
-from django.core.paginator import Paginator
 
-from django.core.paginator import Paginator
+
 
 def store(request):
     cart_data = cartData(request)  # Kosár adatok lekérdezése
