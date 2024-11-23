@@ -55,12 +55,15 @@ class Product(models.Model):
         return self.price
 
 import math   
+from decimal import Decimal
+
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Vásárló")
     date_order = models.DateTimeField(auto_now_add=True, verbose_name="Rendelés dátuma")
     complete = models.BooleanField(default=False, verbose_name="Befejezett")
     transaction_id = models.CharField(max_length=100, null=True, verbose_name="Tranzakció azonosító")
-    discount_percentage = models.FloatField(default=0) 
+    discount_percentage = models.FloatField(default=0)
+    shipping_cost = models.FloatField(default=500)  # Szállítási díj, alapértelmezett értékkel
 
     class Meta:
         verbose_name = "Rendelés"
@@ -68,20 +71,26 @@ class Order(models.Model):
 
     def __str__(self):
         return str(self.id)
-    
+
     @property
     def get_cart_total(self):
         orderitems = self.orderitem_set.all()
         total = sum([item.get_total for item in orderitems])
         discount_amount = (self.discount_percentage / 100) * total
-        return total - discount_amount  # Kedvezménnyel csökkentett összeg
-    
+        
+        # Convert to Decimal to handle the addition of shipping cost
+        total_after_discount = Decimal(total - discount_amount)
+        shipping_cost = Decimal(self.shipping_cost)
+        
+        # Return the total after discount + shipping cost
+        return total_after_discount + shipping_cost  # Kedvezménnyel csökkentett összeg + szállítási költség
+
     @property
     def get_cart_items(self):
         orderitems = self.orderitem_set.all()
         total = sum([item.quantity for item in orderitems])
         return total 
-    
+
     @property
     def get_order_summary(self):
         order_items = self.orderitem_set.all()
@@ -89,7 +98,7 @@ class Order(models.Model):
         for item in order_items:
             summary.append(f"{item.product.name} (x{item.quantity})")  # Termék név és mennyiség
         return ", ".join(summary)  # Összesített szöveg
-    
+
     def get_item_names(self):
         return ", ".join([f"{item.product.name}" for item in self.orderitem_set.all()])
 
@@ -98,6 +107,8 @@ class Order(models.Model):
 
     def get_item_prices(self):
         return ", ".join([f"{item.product.price} Ft" for item in self.orderitem_set.all()])
+
+
         
 
 class OrderItem(models.Model):
@@ -168,5 +179,11 @@ class TopBarText(models.Model):
 
     
 
+class ShippingConfig(models.Model):
+    shipping_cost = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Szállítási díj (Ft)")
+    free_shipping_threshold = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Ingyenes szállítás küszöb (Ft)")
+
+    def __str__(self):
+        return "Szállítási beállítások"
 
 

@@ -43,13 +43,18 @@ def cartData(request):
     return {'cartItems': cartItems, 'order': order, 'items': items}
 '''
 
+# store/utils.py vagy ahol a cartData függvényed található
+
+from .models import ShippingConfig
+
 def cartData(request):
     if request.user.is_authenticated:
+        # Bejelentkezett felhasználó adatainak lekérése
         customer = request.user.customer
         orders = Order.objects.filter(customer=customer, complete=False)
         if orders.exists():
             order = orders.first()
-            items = order.orderitem_set.all()
+            items = order.orderitem_set.all()  # Kosár tételek lekérése
             cartItems = order.get_cart_items  # Kosár elemek számának lekérése
             cart_total = order.get_cart_total  # Kosár végösszegének lekérése
         else:
@@ -63,7 +68,30 @@ def cartData(request):
         cart_total = 0  # Ha nincs bejelentkezve, akkor nulla összeg
         order = {'get_cart_total': cart_total, 'get_cart_items': cartItems}  # Üres kosár
 
-    return {'cartItems': cartItems, 'order': order, 'items': items, 'cart_total': cart_total}
+    # Szállítási költség lekérése a ShippingConfig modellből
+    try:
+        shipping_config = ShippingConfig.objects.first()  # Az első szállítási beállítás
+        if shipping_config:
+            shipping = shipping_config.shipping_cost
+            free_shipping_threshold = shipping_config.free_shipping_threshold
+            # Ha a kosár értéke meghaladja a küszöböt, akkor ingyenes szállítás
+            if cart_total >= free_shipping_threshold:
+                shipping = 0
+        else:
+            shipping = 0
+    except ShippingConfig.DoesNotExist:
+        shipping = 0  # Ha nincs beállítva, akkor nulla költség
+
+    return {
+        'cartItems': cartItems,  # Kosár elemek számának lekérése
+        'order': order,
+        'items': items,
+        'cart_total': cart_total,
+        'shipping': shipping  # Szállítási költség
+    }
+
+
+
 
 
 
@@ -239,11 +267,29 @@ def cart(request):
     context = {'items': data['items'], 'order': data['order'], 'cartItems': data['cartItems']}
     return render(request, 'store/cart.html', context)
 
+from decimal import Decimal
 
 def checkout(request):
+    # Kosár adatok lekérése a cartData függvényből
     data = cartData(request)
-    context = {'items': data['items'], 'order': data['order'], 'cartItems': data['cartItems']}
+
+    # Teljes összeg számítása
+    total_with_shipping = data['cart_total'] + data['shipping']
+
+    context = {
+        'cartItems': data['cartItems'],
+        'cart_total': data['cart_total'],
+        'items': data['items'],
+        'order': data['order'],
+        'shipping_cost': data['shipping'],  # Eredeti változónév használata
+        'total_with_shipping': total_with_shipping
+    }
+
     return render(request, 'store/checkout.html', context)
+
+
+
+
 
 
 
@@ -301,12 +347,6 @@ def filtered_products(request):
         'display_name': display_name,
     }
     return render(request, 'store/filtered_products.html', context)
-
-
-
-
-
-
 
 
 def order_list(request):

@@ -81,3 +81,8 @@ class TopBarTextAdmin(admin.ModelAdmin):
     list_display = ('title', 'updated_at')
     ordering = ('-updated_at',)
 
+from .models import ShippingConfig
+
+@admin.register(ShippingConfig)
+class ShippingConfigAdmin(admin.ModelAdmin):
+    list_display = ('shipping_cost', 'free_shipping_threshold')
