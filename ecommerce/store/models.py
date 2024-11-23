@@ -158,4 +158,15 @@ class Review(models.Model):
     
 
 
+class TopBarText(models.Model):
+    title = models.CharField(max_length=100, verbose_name="Cím")
+    content = models.TextField(verbose_name="Szöveg")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Utolsó frissítés")
+
+    def __str__(self):
+        return self.title
+
+    
+
+
 

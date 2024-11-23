@@ -1,13 +1,67 @@
 body{
 	background-color: hsl(0, 0%, 98%);
 }
-
-.custom-banner {
+.TopBar {
     background-color: #fc9038;
-    color: black; 
-    padding: 5px 0; 
-    text-align: center; 
-  }
+    
+}
+.custom-banner {    
+    padding: 10px;
+    font-family: 'Poppins', sans-serif;  
+    text-align: center;  
+    color: #333333;
+}
+
+
+.marquee {
+    overflow: hidden; /* Elrejti a kilógó tartalmat */
+    white-space: nowrap; /* Egy sorban tartja a szöveget */
+    box-sizing: border-box;
+    position: relative;
+}
+
+.marquee h4 {
+    display: inline-block;
+    animation: marquee 10s linear infinite; /* Mozgás animáció */
+}
+
+
+/* Mozgás animáció definiálása */
+@keyframes marquee {
+    0% {
+        transform: translateX(100%); /* Jobbról indul */
+    }
+    100% {
+        transform: translateX(-100%); /* Balra mozog */
+    }
+}
+
+.TopBar .row {
+    display: flex;
+    flex-direction: column; /* A div elemek egymás alatt helyezkednek el */
+    align-items: center; /* Középre igazítja a tartalmat */
+}
+.animated-divider {
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, #f7b731, #fc9038);
+    animation: slide 2s infinite;
+}
+
+@keyframes slide {
+    0% {
+        transform: scaleX(0);
+    }
+    50% {
+        transform: scaleX(1);
+    }
+    100% {
+        transform: scaleX(0);
+    }
+}
+
+
+
 
 .navbar {
     background-color: #6090f7 !important; 

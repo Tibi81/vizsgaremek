@@ -20,6 +20,8 @@ from .forms import CustomUserCreationForm
 from django.template import Template, RequestContext
 from django.http import HttpResponse
 
+from .models import TopBarText
+
 '''
 def cartData(request):
     if request.user.is_authenticated:
@@ -513,6 +515,7 @@ def index(request):
     cart_total = cart_data['cart_total']  # Kosár végösszegének lekérése
 
     products = Product.objects.all()
+    topbar_texts = TopBarText.objects.all()
     
     # A kontextusban biztosítjuk, hogy minden adat elérhető legyen a sablonban
     context = {
@@ -521,6 +524,8 @@ def index(request):
         'items': items,  # Kosár tételek listája
         'order': order,  # Kosár összesített adatai (pl. végösszeg)
         'cart_total' : cart_total,
+        'topbar_texts' : topbar_texts,
+
 
     }
 

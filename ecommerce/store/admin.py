@@ -72,3 +72,12 @@ class ReviewAdmin(admin.ModelAdmin):
     search_fields = ('user__username', 'product__name')  # Keresési mezők
 
 admin.site.register(Review, ReviewAdmin)  # Regisztráljuk a Review modellt
+
+
+from .models import TopBarText
+
+@admin.register(TopBarText)
+class TopBarTextAdmin(admin.ModelAdmin):
+    list_display = ('title', 'updated_at')
+    ordering = ('-updated_at',)
+
