@@ -701,6 +701,27 @@ h6 {
 }
 
 
+.rule {
+    color: #6090f7;
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.rule.valid {
+    color: #fc9038;
+}
+
+input.invalid {
+    border-color: red; /* vagy más szín, ami jól látható */
+}
+
+input.valid {
+    border-color: green; /* vagy más szín, ami pozitív visszajelzést ad */
+}
+
+
+
+
 
 .user {
     display: inline-block;

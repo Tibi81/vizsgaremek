@@ -114,6 +114,10 @@ from django.contrib.auth.views import LoginView
 from .models import Order
 
 
+from django.contrib import messages
+from django.contrib.auth.views import LoginView
+from store.models import Order  # Feltételezve, hogy itt van a `Order` modell
+
 class CustomLoginView(LoginView):
     template_name = 'store/login.html'
 
@@ -123,18 +127,22 @@ class CustomLoginView(LoginView):
 
         if self.request.user.is_authenticated:
             customer = getattr(self.request.user, 'customer', None)
-            # Csak bejelentkezett felhasználók esetén kérdezzük le a kosár tartalmát
             if customer:
                 orders = Order.objects.filter(customer=customer, complete=False)
                 if orders.exists():
                     order = orders.first()
                     cartItems = order.get_cart_items
-                else:
-                    # Ha nincs létező kosár, ne hozzunk létre újat
-                    order = None
 
         context['cartItems'] = cartItems
         return context
+
+    def form_invalid(self, form):
+        """
+        Kezeli az érvénytelen bejelentkezési kísérleteket.
+        """
+        messages.error(self.request, "Hibás felhasználónév vagy jelszó. Kérlek, próbáld újra!")
+        return super().form_invalid(form)
+
 '''
 def processOrder(request):
     transaction_id = datetime.datetime.now().timestamp()

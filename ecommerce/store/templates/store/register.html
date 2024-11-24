@@ -21,6 +21,7 @@
                 <label for="username"><i class="bi bi-person" class="mr-2"></i></label>
                 <input type="text" class="form-control ml-2" id="username" name="username" required placeholder="Felhasználónév...">
             </div>
+            <p class="rule" id="username-rule">Add meg a felhasználónevedet.</p>
             {% for error in form.username.errors %}
                 <div class="text-danger">{{ error }}</div>
             {% endfor %}
@@ -31,6 +32,7 @@
                 <label for="first_name"><i class="bi bi-person" class="mr-2"></i></label>
                 <input type="text" class="form-control ml-2" id="first_name" name="first_name" required placeholder="Vezetéknév...">
             </div>
+            <p class="rule" id="first-name-rule">Add meg a vezetéknevedet.</p>
             {% for error in form.first_name.errors %}
                 <div class="text-danger">{{ error }}</div>
             {% endfor %}
@@ -39,8 +41,9 @@
         <div class="form-group">
             <div class="d-flex align-items-center mb-3">
                 <label for="last_name"><i class="bi bi-person" class="mr-2"></i></label>
-                <input type="text" class="form-control ml-2" id="last_name" name="last_name" required  placeholder="Keresztnév...">
+                <input type="text" class="form-control ml-2" id="last_name" name="last_name" required placeholder="Keresztnév...">
             </div>
+            <p class="rule" id="last-name-rule">Add meg a keresztnevedet.</p>
             {% for error in form.last_name.errors %}
                 <div class="text-danger">{{ error }}</div>
             {% endfor %}
@@ -51,48 +54,137 @@
                 <label for="email"><i class="bi bi-envelope"></i></label>            
                 <input type="email" class="form-control ml-2" id="email" name="email" required placeholder="Email cím...">
             </div>
+            <p class="rule" id="email-rule">Add meg az e-mail címedet.</p>
             {% for error in form.email.errors %}
                 <div class="text-danger">{{ error }}</div>
             {% endfor %}
         </div>
-
         <div class="form-group">
             <div class="d-flex align-items-center mb-3"> 
-            <label for="password1"><i class="bi bi-lock"></i></label>
-            <input type="password" class="form-control ml-2" id="password1" name="password1" required placeholder="Jelszó...">
+                <label for="password1"><i class="bi bi-lock"></i></label>
+                <input type="password" class="form-control ml-2" id="password1" name="password1" required placeholder="Jelszó...">
+            </div>
+            <div id="password-rules">
+                <p class="rule" id="length-rule">Jelszónak legalább 8 karakter hosszúnak kell lennie.</p>
+                <p class="rule" id="number-rule">Jelszónak tartalmaznia kell legalább egy számot.</p>
+                <p class="rule" id="special-rule">Jelszónak tartalmaznia kell legalább egy speciális karaktert.</p>
             </div>
             {% for error in form.password1.errors %}
                 <div class="text-danger">{{ error }}</div>
             {% endfor %}
         </div>
-
-        <div class="form-group">
-            <div class="d-flex align-items-center mb-3">
-            <label for="password2"><i class="bi bi-lock"></i></label>
-            <input type="password" class="form-control ml-2" id="password2" name="password2" required placeholder="Jelszó megerősítése...">
-            </div>
-            {% for error in form.password2.errors %}
-                <div class="text-danger">{{ error }}</div>
-            {% endfor %}
-        </div>
+        
         <div class="login-btn">
-        <button type="submit" class="btn btn-warning register-btn">Regisztráció</button>
-        <a href="{% url 'login' %}" class="btn btn-primary login-btn">Vissza a bejelentkezéshez</a>
+            <button type="submit" class="btn btn-warning register-btn">Regisztráció</button>
+            <a href="{% url 'login' %}" class="btn btn-primary login-btn">Vissza a bejelentkezéshez</a>
         </div>
     </form>
-        
-     
 </div>
 
-    
-    
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const usernameInput = document.getElementById('username');
+        const firstNameInput = document.getElementById('first_name');
+        const lastNameInput = document.getElementById('last_name');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password1');
 
-</div>
+        const usernameRule = document.getElementById('username-rule');
+        const firstNameRule = document.getElementById('first-name-rule');
+        const lastNameRule = document.getElementById('last-name-rule');
+        const emailRule = document.getElementById('email-rule');
+
+        const lengthRule = document.getElementById('length-rule');
+        const numberRule = document.getElementById('number-rule');
+        const specialRule = document.getElementById('special-rule');
+
+        // Helper function to validate email format
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // Field validation listeners
+        usernameInput.addEventListener('input', () => {
+            if (usernameInput.value.trim().length > 0) {
+                usernameInput.classList.add('valid');
+                usernameInput.classList.remove('invalid');
+                usernameRule.classList.add('valid');
+            } else {
+                usernameInput.classList.add('invalid');
+                usernameInput.classList.remove('valid');
+                usernameRule.classList.remove('valid');
+            }
+        });
+
+        firstNameInput.addEventListener('input', () => {
+            if (firstNameInput.value.trim().length > 0) {
+                firstNameInput.classList.add('valid');
+                firstNameInput.classList.remove('invalid');
+                firstNameRule.classList.add('valid');
+            } else {
+                firstNameInput.classList.add('invalid');
+                firstNameInput.classList.remove('valid');
+                firstNameRule.classList.remove('valid');
+            }
+        });
+
+        lastNameInput.addEventListener('input', () => {
+            if (lastNameInput.value.trim().length > 0) {
+                lastNameInput.classList.add('valid');
+                lastNameInput.classList.remove('invalid');
+                lastNameRule.classList.add('valid');
+            } else {
+                lastNameInput.classList.add('invalid');
+                lastNameInput.classList.remove('valid');
+                lastNameRule.classList.remove('valid');
+            }
+        });
+
+        emailInput.addEventListener('input', () => {
+            if (isValidEmail(emailInput.value)) {
+                emailInput.classList.add('valid');
+                emailInput.classList.remove('invalid');
+                emailRule.classList.add('valid');
+            } else {
+                emailInput.classList.add('invalid');
+                emailInput.classList.remove('valid');
+                emailRule.classList.remove('valid');
+            }
+        });
+
+        // Password validation
+        passwordInput.addEventListener('input', () => {
+            const password = passwordInput.value;
+
+            // Hosszúság ellenőrzése
+            if (password.length >= 8) {
+                lengthRule.classList.add('valid');
+                lengthRule.classList.remove('invalid');
+            } else {
+                lengthRule.classList.add('invalid');
+                lengthRule.classList.remove('valid');
+            }
+
+            // Szám ellenőrzése
+            if (/\d/.test(password)) {
+                numberRule.classList.add('valid');
+                numberRule.classList.remove('invalid');
+            } else {
+                numberRule.classList.add('invalid');
+                numberRule.classList.remove('valid');
+            }
+
+            // Speciális karakter ellenőrzése
+            if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+                specialRule.classList.add('valid');
+                specialRule.classList.remove('invalid');
+            } else {
+                specialRule.classList.add('invalid');
+                specialRule.classList.remove('valid');
+            }
+        });
+    });
+</script>
+
 {% endblock %}
-
-
-
-
-
-
-

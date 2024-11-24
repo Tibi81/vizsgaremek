@@ -5,7 +5,8 @@
 
 <div class="title-banner">
     <div class="title-text-section">
-        <h2>Bejelentkezés</h2>          
+        <h2>Bejelentkezés</h2> 
+                
     </div>
     <div class="image-section">
         <img src="{% static 'images/hamvas.png' %}" style="width:100%">
@@ -14,6 +15,13 @@
 
 <!-- templates/store/login.html -->
 <div class="container mt-5">
+    {% if messages %}
+        <div class="alert alert-danger">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
     <div class="row">
         <!-- Login Form Container -->
         <div class="col-md-6 d-flex align-items-center justify-content-center">

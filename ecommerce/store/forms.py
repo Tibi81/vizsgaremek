@@ -28,6 +28,8 @@ class CustomUserCreationForm(UserCreationForm):
             raise ValidationError("A jelszónak legalább 8 karakter hosszúnak kell lennie.")
         if not re.search(r'\d', password):  # Ellenőrizzük, hogy tartalmaz-e számot
             raise ValidationError("A jelszónak tartalmaznia kell legalább egy számot.")
+        if not re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
+            raise ValidationError("A jelszónak tartalmaznia kell legalább egy speciális karaktert.")
         return password
 
     def save(self, commit=True):
