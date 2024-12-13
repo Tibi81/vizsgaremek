@@ -27,11 +27,13 @@ DEBUG = True
 
 #ALLOWED_HOSTS = []  EZ az alap az alsó csak teszthez kell!!!!!!!!!!!!!!
 
-ALLOWED_HOSTS = ['8eea-81-0-89-101.ngrok-free.app', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['a62a-84-236-54-44.ngrok-free.app', 'localhost', '127.0.0.1']
 
 #Ez törölhető csak a teszteléshez kell!
 CSRF_TRUSTED_ORIGINS = [
-    'https://7d51-185-29-80-89.ngrok-free.app',  # Az Ngrok URL itt
+    'https://a62a-84-236-54-44.ngrok-free.app',  # Az Ngrok URL itt
+
+    
 ]
 
 

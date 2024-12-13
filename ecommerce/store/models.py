@@ -174,6 +174,10 @@ class TopBarText(models.Model):
     content = models.TextField(verbose_name="Szöveg")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Utolsó frissítés")
 
+    class Meta:
+        verbose_name = "Top Bar szöveg"
+        verbose_name_plural = "Top Bar szövegek"
+
     def __str__(self):
         return self.title
 
@@ -182,6 +186,10 @@ class TopBarText(models.Model):
 class ShippingConfig(models.Model):
     shipping_cost = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Szállítási díj (Ft)")
     free_shipping_threshold = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Ingyenes szállítás küszöb (Ft)")
+
+    class Meta:
+        verbose_name = "Szállítási díj"
+        verbose_name_plural = "Szállítási díjak"
 
     def __str__(self):
         return "Szállítási beállítások"

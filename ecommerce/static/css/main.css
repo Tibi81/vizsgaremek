@@ -65,6 +65,8 @@ body{
 
 .navbar {
     background-color: #6090f7 !important; 
+    padding-left: 15px;
+    padding-right: 15px;
   }
 
   
@@ -619,6 +621,7 @@ h6 {
 }
 .custom-button {
     border-radius: 0 8px 8px 0; /* Itt állítsd be a kívánt értéket */
+    margin-left: -8px;
   }
   .form-control {
     border-radius: 8px 0 0 8px; /* Bal oldalon lekerekítés */

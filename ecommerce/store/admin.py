@@ -41,7 +41,7 @@ class OrderAdmin(admin.ModelAdmin):
     inlines = [OrderItemInline]
     list_display = ('id', 'customer', 'date_order', 'complete', 'transaction_id', 'display_products', 'display_quantities', 'discount_percentage','display_shipping_address' )
     
-    search_fields = ['customer__username', 'transaction_id']
+    search_fields = ['customer__user__username', 'transaction_id']
 
     def display_products(self, obj):
         return format_html("<br>".join([str(item.product) for item in obj.orderitem_set.all()]))
