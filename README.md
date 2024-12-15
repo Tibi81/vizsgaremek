@@ -34,7 +34,7 @@ cd config
 EMAIL_HOST_USER=your_email@example.com
 EMAIL_HOST_PASSWORD=your_password
 ```
-***Figyelem! Cserélje le a `"your_email@example.com"` és `"your_password"` helyét a saját email címére és jelszavára.***
+***Figyelem! Cserélje le a `"your_email@example.com"` és `"your_password"` helyét a saját email címére és jelszavára.***  
 **Most már futtathatja a projektet ezzel a paranccsal**
 ```bash
 python manage.py runserver
