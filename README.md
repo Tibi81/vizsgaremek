@@ -1,4 +1,4 @@
-####A projekt futtatása  
+#### A projekt futtatása  
 
 Klónozd a projektet a GitHubról:   
 ``` bash
