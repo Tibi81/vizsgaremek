@@ -1,9 +1,9 @@
 Klónozd a projektet a GitHubról:   
 ``` bash
-git clone https://github.com/Tibi81/vizsgaremek.git
+git clone https://github.com/Tibi81/vizsgaremek.git```
 Lépj be a projekt mappájába:
 ```bash
-cd vizsgaremek
+cd vizsgaremek```
 Hozzd létre a virtuális környezetet:
 ```bash
 python -m venv ven
