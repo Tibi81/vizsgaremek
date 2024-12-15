@@ -10,9 +10,9 @@ cd vizsgaremek
 ```
 **Hozzd létre a virtuális környezetet:**  
 ```bash
-python -m venv ven
+python -m venv venv
 ```
-**Aktiváld:**  
+**Aktiváld a virtuális környezetet:**  
 ```bash
 venv\Scripts\activate
 ```
