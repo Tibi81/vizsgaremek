@@ -12,7 +12,7 @@ cd vizsgaremek
 ```bash
 python -m venv ven
 ```
-**És aktiváld:**  
+**Aktiváld:**  
 ```bash
 venv\Scripts\activate
 ```
@@ -34,4 +34,4 @@ cd config
 EMAIL_HOST_USER=your_email@example.com
 EMAIL_HOST_PASSWORD=your_password
 ```
-***Figyelem! Cseréld le a your_email@example.com és your_password helyét a saját email címedre és jelszavadra.***
+***Figyelem! Cseréld le a `"your_email@example.com"` és `"your_password"` helyét a saját email címedre és jelszavadra.***
