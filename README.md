@@ -26,7 +26,7 @@ Lépj be a config mappába:
 ```bash
 cd config
 ```
-Hozz létre egy .env nevű fájlt
+Hozz létre egy .env nevű fájlt  
 Ird bele az alábbi tartalmat majd mentsd el:
 ```bash
 EMAIL_HOST_USER=your_email@example.com
