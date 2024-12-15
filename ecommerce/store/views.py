@@ -22,26 +22,7 @@ from django.http import HttpResponse
 
 from .models import TopBarText
 
-'''
-def cartData(request):
-    if request.user.is_authenticated:
-        customer = request.user.customer
-        orders = Order.objects.filter(customer=customer, complete=False)
-        if orders.exists():
-            order = orders.first()
-            items = order.orderitem_set.all()
-            cartItems = order.get_cart_items
-        else:
-            items = []
-            cartItems = 0
-            order = {'get_cart_total': 0, 'get_cart_items': 0}  # Üres kosár
-    else:
-        items = []
-        cartItems = 0
-        order = {'get_cart_total': 0, 'get_cart_items': 0}  # Üres kosár
 
-    return {'cartItems': cartItems, 'order': order, 'items': items}
-'''
 
 # store/utils.py vagy ahol a cartData függvényed található
 
@@ -143,33 +124,7 @@ class CustomLoginView(LoginView):
         messages.error(self.request, "Hibás felhasználónév vagy jelszó. Kérlek, próbáld újra!")
         return super().form_invalid(form)
 
-'''
-def processOrder(request):
-    transaction_id = datetime.datetime.now().timestamp()
-    data = json.loads(request.body)
 
-    if request.user.is_authenticated:
-        customer, created = Customer.objects.get_or_create(user=request.user)
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        order.complete = True
-        order.transaction_id = transaction_id
-        order.save()
-
-        ShippingAddress.objects.create(
-            customer=customer,
-            order=order,
-            address=data['shipping']['address'],
-            city=data['shipping']['city'],
-            street_number=data['shipping']['street_number'],
-            zipcode=data['shipping']['zipcode'],
-        )
-        
-        return JsonResponse('A rendelés feldolgozása sikeresen megtörtént', safe=False)
-    
-    
-    else:
-        return JsonResponse({'message': 'A rendelés feldolgozásához be kell jelentkezni!'}, status=401)
-'''
 
 from django.core.mail import send_mail
 from django.template.loader import render_to_string
@@ -294,13 +249,6 @@ def checkout(request):
     }
 
     return render(request, 'store/checkout.html', context)
-
-
-
-
-
-
-
 
 from django.core.paginator import Paginator
 
