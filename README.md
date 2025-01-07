@@ -53,7 +53,7 @@ Kipróbálhatod az oldal élő <a href="https://sakafa.pythonanywhere.com" targe
 
 ## Funkciók
 
-- Felhasználói regisztráció és hitelesítés
+- Felhasználói regisztráció
 - Termékek listázása és részletező oldalak
 - Bevásárlókosár funkció
 - Rendelés feldolgozás
