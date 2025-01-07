@@ -38,3 +38,24 @@ EMAIL_HOST_PASSWORD=your_password
 **Most már futtathatja a projektet ezzel a paranccsal**
 ```bash
 python manage.py runserver
+
+
+
+# E-commerce Project
+
+Ez egy Django alapú e-kereskedelmi weboldal, amelyet vizsgamunka bemutatásaként fejlesztettünk.
+
+## Élő Demó
+
+⚠️ **Figyelem**: Ez az élő demó csak tesztelési célokat szolgál. Nem valós e-kereskedelmi oldal, és nem történik valódi tranzakció.
+
+Kipróbálhatod az oldal élő demó verzióját [itt](https://sakafa.pythonanywhere.com).
+
+## Funkciók
+
+- Felhasználói regisztráció és hitelesítés
+- Termékek listázása és részletező oldalak
+- Bevásárlókosár funkció
+- Rendelés feldolgozás
+- Felhasználói vélemények és értékelések
+
