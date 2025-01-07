@@ -40,7 +40,7 @@ EMAIL_HOST_PASSWORD=your_password
 python manage.py runserver
 
 
-
+```
 # E-commerce Project
 
 Ez egy Django alapú e-kereskedelmi weboldal, amelyet vizsgamunka bemutatásaként fejlesztettünk.
