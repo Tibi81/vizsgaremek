@@ -49,7 +49,7 @@ Ez egy Django alapú e-kereskedelmi weboldal, amelyet vizsgamunka bemutatásaké
 
 ⚠️ **Figyelem**: Ez az élő demó csak tesztelési célokat szolgál. Nem valós e-kereskedelmi oldal, és nem történik valódi tranzakció.
 
-Kipróbálhatod az oldal élő demó verzióját [ITT] <a href="https://sakafa.pythonanywhere.com" target="_blank">itt</a>.
+Kipróbálhatod az oldal élő demó verzióját  <a href="https://sakafa.pythonanywhere.com" target="_blank">[ITT]</a>.
 
 ## Funkciók
 
