@@ -49,7 +49,7 @@ Ez egy Django alapú e-kereskedelmi weboldal, amelyet vizsgamunka bemutatásaké
 
 ⚠️ **Figyelem**: Ez az élő demó csak tesztelési célokat szolgál. Nem valós e-kereskedelmi oldal, és nem történik valódi tranzakció.
 
-A webalkalmazás elérhető a következő linken: <a href="https://username.pythonanywhere.com" target="_blank" rel="noopener noreferrer">www.sakafa.pythonanywhere.com</a>
+A webalkalmazás elérhető a következő linken: [sakafa.pythonanywhere.com](https://sakafa.pythonanywhere.com)
 
 
 
