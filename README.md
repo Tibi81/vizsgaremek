@@ -49,7 +49,10 @@ Ez egy Django alapú e-kereskedelmi weboldal, amelyet vizsgamunka bemutatásaké
 
 ⚠️ **Figyelem**: Ez az élő demó csak tesztelési célokat szolgál. Nem valós e-kereskedelmi oldal, és nem történik valódi tranzakció.
 
-Kipróbálhatod az oldal élő <a href="https://sakafa.pythonanywhere.com" target="_blank">[DEMO]</a> verzióját
+A webalkalmazás elérhető a következő linken: <a href="https://username.pythonanywhere.com" target="_blank" rel="noopener noreferrer">www.sakafa.pythonanywhere.com</a>
+
+
+
 
 ## Funkciók
 
@@ -58,4 +61,9 @@ Kipróbálhatod az oldal élő <a href="https://sakafa.pythonanywhere.com" targe
 - Bevásárlókosár funkció
 - Rendelés feldolgozás
 - Felhasználói vélemények és értékelések
+
+### Fontos információk
+- Az alkalmazás ingyenes hosztolási platformon fut (PythonAnywhere), ezért előfordulhat, hogy az oldal lassabban töltődik be az első látogatáskor, mivel inaktivitás esetén az alkalmazás "elalszik".
+- A platform forgalmi korlátozásokkal működik, ezért nagy látogatószám esetén az oldal ideiglenesen lassulhat vagy elérhetetlenné válhat.
+- Az oldal HTTPS-en keresztül érhető el, PythonAnywhere által biztosított SSL-tanúsítvánnyal.
 
